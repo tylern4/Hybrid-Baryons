@@ -51,16 +51,19 @@ Short_t wbin, q2bin;
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_065_" <<14125 + 250*ww << ".dat";
 file_names[ww] = PATH.str();
+cout << file_names[ww]<<"\n";
 PATH.str("");
 };
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_095_" <<14125 + 250*ww << ".dat";
 file_names[ww+17] = PATH.str();
+cout << file_names[ww+17]<<"\n";
 PATH.str("");
 };
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_130_" <<14125 + 250*ww << ".dat";
 file_names[ww+34] = PATH.str();
+cout << file_names[ww+34]<<"\n";
 PATH.str("");
 };
 
@@ -466,19 +469,7 @@ getline(input,xsect);
 getline(input,dummy);
 
 
-/*
-if ((is23==1)&&(itheta==1)&&(ialpha==1)&&(is12==1)) s12_min = S12_val;
-if ((is23==1)&&(itheta==1)&&(ialpha==1)&&(is12==16)) s12_max = S12_val;
 
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) s23_min = S23_val;
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==16)) s23_max = S23_val;
-
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) th_min = TH_val;
-if ((is12==1)&&(itheta==14)&&(ialpha==1)&&(is23==1)) th_max = TH_val;
-
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) alp_min = ALP_val;
-if ((is12==1)&&(itheta==1)&&(ialpha==14)&&(is23==1)) alp_max = ALP_val;
-*/
 };
 };
 };
@@ -2569,79 +2560,7 @@ if (i==29) SIGMA_ARR_GOL[i][14][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_GOL[i][1
 };
 };
 
-/*
-Xsect_int = 0.;
 
-
-//Determine the with of the bin over all variables 
-ds12 = (s12_max - s12_min)/15;
-ds23 = (s23_max - s23_min)/15;
-dalpha = (alp_max - alp_min)/13;
-dtheta = (th_max - th_min)/13;
-
-ds12_tmp = ds12; 
-ds23_tmp = ds23; 
-dalpha_tmp = dalpha; 
-dtheta_tmp = dtheta;
-
-
-dm12 = (sqrt(s12_max) - sqrt(s12_min))/15;
-dm23 = (sqrt(s23_max) - sqrt(s23_min))/15;
-
-
-cout << "\n";
-cout << "s12_min = "<< s12_min<<", s12_max = "<< s12_max <<", ds12 = " << ds12<< "\n";
-cout << "s23_min = "<< s23_min<<", s23_max = "<< s23_max <<", ds23 = " << ds23<< "\n";
-cout << "th_min = "<< th_min<<", th_max = "<< th_max <<", dtheta = " << dtheta<< "\n";
-cout << "alp_min = "<< alp_min<<", alp_max = "<< alp_max <<", dalpha = " << dalpha<< "\n";
-
-
-for (Int_t is23 = 1; is23 <=16; is23++) {
-for (Int_t is12 = 1; is12 <=16; is12++) {
-for (Int_t itheta = 1; itheta <=14; itheta++) {
-for (Int_t ialpha = 1; ialpha <=14; ialpha++) {
-//I am doing this to force this variables renew each time loops run, beceuse they are determied outside the loop and sometimes change inside the loop
-ds12=ds12_tmp;
-ds23=ds23_tmp;
-dalpha = dalpha_tmp;
-dtheta = dtheta_tmp;
-cross_sect = SIGMA_ARR_GOL[i][is23-1][is12-1][itheta-1][ialpha-1];
-//(S12_ARR_GOL[15][i]-S12_ARR_GOL[0][i])/(S23_ARR_GOL[15][i]-S23_ARR_GOL[0][i]);
-
-//cout << W << "\n";
-
-//if the point is the first or the last then the width of the bin is smaller 
-if ((is12==1)||(is12==16)) ds12=ds12_tmp/2;
-//if ((is12==16)) cout << ds12 << "\n";
-
-if ((is23==1)||(is23==16)) ds23=ds23_tmp/2;
-//if ((is23==14)) cout << ds23 << "\n";
-
-if ((ialpha==1)||(ialpha==14)) dalpha=dalpha_tmp/2+0.01;
-//if ((ialpha==2)) cout << dalpha << "\n";
-
-
-//left and right edge for theta if the point is not first or last
-th_l = th_min + dtheta/2.+(itheta - 2.)*dtheta;
-th_r = th_min + dtheta/2.+(itheta -1.)*dtheta;
-
-//left and right edge for theta if the point is first or last
-if ((itheta==1)) th_l = th_min-0.01;
-if ((itheta==1)) th_r = th_min+dtheta/2.;
-
-if ((itheta==14)) th_l = th_max - dtheta/2.;
-if ((itheta==14)) th_r = th_max+0.01;
-
-Xsect_int = Xsect_int + cross_sect*(cos(th_l)-cos(th_r))*ds12*ds23*dalpha; 
-
-};
-};
-};
-};
-
-
-
-cout << i << " " << Xsect_int <<"\n";*/
 };//end loop-golovach
 
 

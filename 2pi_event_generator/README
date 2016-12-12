@@ -27,14 +27,22 @@ rot.cxx - contains the subroutine that calculates hadron variables in the CMS fr
 
 radcorr.cxx - performs radiative effects.
 -------------------------------------------------------------------
+There are two compiling options: 
+
+"make nobos" - to compile without BOS libraries, no output in BOS format is possible in this case.
+"make bos" - to compile with BOS libraries. BOS output can be created according to the flag in the input file. Some of the libraries are located at "/u/home/gleb/lib/LinuxRHFC8" and sooner or later they will become irrelevant.
+
+------------------------------------------------
 It should compile on the ifarms.
 
-to run it type ./genev_clas12 < inp1
+to run it type "./twopeg_bos < inp1" or "./twopeg_nobos < inp1" depending on the compiling options.
 
 inp1 is in the same directory and contains input parameters with comments. 
 
 --------------------------------------------------
-The generator also includes subdirectories that contain cross section files and fit parameters that are needed to EG to work.
+The generator needs .dat files with tabulated structure functions and fit parameters. They are located in the "data" subfolder inside the EG directory. If you move it, you need to define environment variable "data_dir_2pi" that poit to the new folder location (for example in csh use "setenv data_dir_2pi new_path/").
+
+---------------------------------------------------
 
 More details you also can find on Iullia Skorodumina's wiki page: https://clasweb.jlab.org/wiki/index.php/NEW_2PI_EVENT_GENERATOR  
 -------------
