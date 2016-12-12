@@ -30,6 +30,7 @@ void out_file_write(int i,Float_t sigma, Float_t W, Float_t Q2, TLorentzVector &
  
  //------CREATE BOS OUTPUT WITH DIFFERENT BANKS IF NEEDED
  
+ #ifdef BOS
  
  if ((flag_bos == 1)||(flag_bos == 2)){
  
@@ -225,7 +226,7 @@ void out_file_write(int i,Float_t sigma, Float_t W, Float_t Q2, TLorentzVector &
       dropAllBanks( &bcs_, "E");
       cleanBanks( &bcs_ );
 };//end if ((flag_bos == 1)||(flag_bos == 2))
-
+#endif
       
    if (flag_lund == 1){   
    

@@ -17,6 +17,8 @@ int out_file_open() {
 
 //Create BOS output if needed
 
+#ifdef BOS
+
  if ((flag_bos == 1)||(flag_bos == 2)){
  
   remove(out_bos_file.c_str());
@@ -27,7 +29,8 @@ char mess[256];
      sprintf( mess, "OPEN BOSOUTPUT UNIT=1 FILE=\"%s\" WRITE STATUS=NEW RECL=3600", out_bos_file.c_str() );
      fparm_c( mess );
 };//end of BOS output flag check
-     
+  #endif     
+  
 //Create BOS output if needed 
   
   if (flag_lund == 1){ 
@@ -42,5 +45,7 @@ char mess[256];
   
   
   };
+  
+
   
 };

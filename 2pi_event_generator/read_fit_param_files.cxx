@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "global.h"
+#include <sstream>
 
 using namespace std;
 
@@ -18,16 +19,36 @@ string file_names[10];
 Short_t wbin, q2bin;
 
 //files' names
-file_names[0] = "fit_param/sigma_t_fit_param.dat";
-file_names[1] = "fit_param/sigma_l_fit_param.dat";
-file_names[2] = "fit_param/sigma_c2f_fit_param.dat";
-file_names[3] = "fit_param/sigma_cf_fit_param.dat";
-file_names[4] = "fit_param/sigmas_int_rip_065_new.dat";
-file_names[5] = "fit_param/golova_photon.dat";
-file_names[6] = "fit_param/sigma_t_fit_param_fed_lin.dat";
-file_names[7] = "fit_param/sigma_l_fit_param_fed.dat";
-file_names[8] = "fit_param/sigma_c2f_fit_param_fed.dat";
-file_names[9] = "fit_param/sigma_cf_fit_param_fed.dat";
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_t_fit_param.dat";
+file_names[0] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_l_fit_param.dat";
+file_names[1] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_c2f_fit_param.dat";
+file_names[2] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_cf_fit_param.dat";
+file_names[3] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigmas_int_rip_065_new.dat";
+file_names[4] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/golova_photon.dat";
+file_names[5] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_t_fit_param_fed_lin.dat";
+file_names[6] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_l_fit_param_fed.dat";
+file_names[7] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_c2f_fit_param_fed.dat";
+file_names[8] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fit_param/sigma_cf_fit_param_fed.dat";
+file_names[9] = PATH.str();
 
 
 string dummy,xsect;

@@ -1,11 +1,13 @@
 #include <iomanip>
 #include <string>
 #include <stdio.h> 
+#include <stdlib.h>  
 #include <math.h>
 #include <TLorentzVector.h>
 #include <iostream>
 #include <fstream>
 #include "global.h"
+#include <sstream>
 
 using namespace std;
 
@@ -24,7 +26,7 @@ using namespace std;
 //ALPHA_ARR_GOL[14];
 //SIGMA_ARR_GOL[30][16][16][14][14]; - correspond for sigma_t
 
-void read_xsect_files(){
+void  read_xsect_files(){
 Float_t S12_val, S23_val, TH_val, ALP_val;
 Float_t s12_min, s12_max,s23_min, s23_max, th_min, th_max, alp_min, alp_max;
 Float_t dm12,dm23;
@@ -43,214 +45,192 @@ string file_names_int[27];
 
 Float_t Xsect_int,cross_sect,cross_sect_t,cross_sect_l,eps_l_rip2;
 Short_t wbin, q2bin;
+
 //Float_t th_l, th_r,dm12,dm23;
 //files' names (Ripani_cr_sects)
-file_names[0] = "ripani_cr_sect/rip_4diffsec_065_14125.dat";
-file_names[1] = "ripani_cr_sect/rip_4diffsec_065_14375.dat";
-file_names[2] = "ripani_cr_sect/rip_4diffsec_065_14625.dat";
-file_names[3] = "ripani_cr_sect/rip_4diffsec_065_14875.dat";
-file_names[4] = "ripani_cr_sect/rip_4diffsec_065_15125.dat";
-file_names[5] = "ripani_cr_sect/rip_4diffsec_065_15375.dat";
-file_names[6] = "ripani_cr_sect/rip_4diffsec_065_15625.dat";
-file_names[7] = "ripani_cr_sect/rip_4diffsec_065_15875.dat";
-file_names[8] = "ripani_cr_sect/rip_4diffsec_065_16125.dat";
-file_names[9] = "ripani_cr_sect/rip_4diffsec_065_16375.dat";
-file_names[10] = "ripani_cr_sect/rip_4diffsec_065_16625.dat";
-file_names[11] = "ripani_cr_sect/rip_4diffsec_065_16875.dat";
-file_names[12] = "ripani_cr_sect/rip_4diffsec_065_17125.dat";
-file_names[13] = "ripani_cr_sect/rip_4diffsec_065_17375.dat";
-file_names[14] = "ripani_cr_sect/rip_4diffsec_065_17625.dat";
-file_names[15] = "ripani_cr_sect/rip_4diffsec_065_17875.dat";
-file_names[16] = "ripani_cr_sect/rip_4diffsec_065_18125.dat";
-file_names[17] = "ripani_cr_sect/rip_4diffsec_095_14125.dat";
-file_names[18] = "ripani_cr_sect/rip_4diffsec_095_14375.dat";
-file_names[19] = "ripani_cr_sect/rip_4diffsec_095_14625.dat";
-file_names[20] = "ripani_cr_sect/rip_4diffsec_095_14875.dat";
-file_names[21] = "ripani_cr_sect/rip_4diffsec_095_15125.dat";
-file_names[22] = "ripani_cr_sect/rip_4diffsec_095_15375.dat";
-file_names[23] = "ripani_cr_sect/rip_4diffsec_095_15625.dat";
-file_names[24] = "ripani_cr_sect/rip_4diffsec_095_15875.dat";
-file_names[25] = "ripani_cr_sect/rip_4diffsec_095_16125.dat";
-file_names[26] = "ripani_cr_sect/rip_4diffsec_095_16375.dat";
-file_names[27] = "ripani_cr_sect/rip_4diffsec_095_16625.dat";
-file_names[28] = "ripani_cr_sect/rip_4diffsec_095_16875.dat";
-file_names[29] = "ripani_cr_sect/rip_4diffsec_095_17125.dat";
-file_names[30] = "ripani_cr_sect/rip_4diffsec_095_17375.dat";
-file_names[31] = "ripani_cr_sect/rip_4diffsec_095_17625.dat";
-file_names[32] = "ripani_cr_sect/rip_4diffsec_095_17875.dat";
-file_names[33] = "ripani_cr_sect/rip_4diffsec_095_18125.dat";
-file_names[34] = "ripani_cr_sect/rip_4diffsec_130_14125.dat";
-file_names[35] = "ripani_cr_sect/rip_4diffsec_130_14375.dat";
-file_names[36] = "ripani_cr_sect/rip_4diffsec_130_14625.dat";
-file_names[37] = "ripani_cr_sect/rip_4diffsec_130_14875.dat";
-file_names[38] = "ripani_cr_sect/rip_4diffsec_130_15125.dat";
-file_names[39] = "ripani_cr_sect/rip_4diffsec_130_15375.dat";
-file_names[40] = "ripani_cr_sect/rip_4diffsec_130_15625.dat";
-file_names[41] = "ripani_cr_sect/rip_4diffsec_130_15875.dat";
-file_names[42] = "ripani_cr_sect/rip_4diffsec_130_16125.dat";
-file_names[43] = "ripani_cr_sect/rip_4diffsec_130_16375.dat";
-file_names[44] = "ripani_cr_sect/rip_4diffsec_130_16625.dat";
-file_names[45] = "ripani_cr_sect/rip_4diffsec_130_16875.dat";
-file_names[46] = "ripani_cr_sect/rip_4diffsec_130_17125.dat";
-file_names[47] = "ripani_cr_sect/rip_4diffsec_130_17375.dat";
-file_names[48] = "ripani_cr_sect/rip_4diffsec_130_17625.dat";
-file_names[49] = "ripani_cr_sect/rip_4diffsec_130_17875.dat";
-file_names[50] = "ripani_cr_sect/rip_4diffsec_130_18125.dat";
-//files' names (Golovach_cr_sects)
+for (Short_t ww=0; ww<17;ww++) {
+PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_065_" <<14125 + 250*ww << ".dat";
+file_names[ww] = PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<17;ww++) {
+PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_095_" <<14125 + 250*ww << ".dat";
+file_names[ww+17] = PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<17;ww++) {
+PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_130_" <<14125 + 250*ww << ".dat";
+file_names[ww+34] = PATH.str();
+PATH.str("");
+};
 
-file_names_gol[0] = "golovach_cr_sect/5diffsec161.dat";
-file_names_gol[1] = "golovach_cr_sect/5diffsec164.dat";
-file_names_gol[2] = "golovach_cr_sect/5diffsec166.dat";
-file_names_gol[3] = "golovach_cr_sect/5diffsec169.dat";
-file_names_gol[4] = "golovach_cr_sect/5diffsec171.dat";
-file_names_gol[5] = "golovach_cr_sect/5diffsec174.dat";
-file_names_gol[6] = "golovach_cr_sect/5diffsec176.dat";
-file_names_gol[7] = "golovach_cr_sect/5diffsec179.dat";
-file_names_gol[8] = "golovach_cr_sect/5diffsec181.dat";
-file_names_gol[9] = "golovach_cr_sect/5diffsec184.dat";
-file_names_gol[10] = "golovach_cr_sect/5diffsec186.dat";
-file_names_gol[11] = "golovach_cr_sect/5diffsec189.dat";
-file_names_gol[12] = "golovach_cr_sect/5diffsec191.dat";
-file_names_gol[13] = "golovach_cr_sect/5diffsec194.dat";
-file_names_gol[14] = "golovach_cr_sect/5diffsec196.dat";
-file_names_gol[15] = "golovach_cr_sect/5diffsec199.dat";
-file_names_gol[16] = "golovach_cr_sect/5diffsec201.dat";
-file_names_gol[17] = "golovach_cr_sect/5diffsec204.dat";
-file_names_gol[18] = "golovach_cr_sect/5diffsec206.dat";
-file_names_gol[19] = "golovach_cr_sect/5diffsec209.dat";
-file_names_gol[20] = "golovach_cr_sect/5diffsec211.dat";
-file_names_gol[21] = "golovach_cr_sect/5diffsec214.dat";
-file_names_gol[22] = "golovach_cr_sect/5diffsec219.dat";
-file_names_gol[23] = "golovach_cr_sect/5diffsec224.dat";
-file_names_gol[24] = "golovach_cr_sect/5diffsec228.dat";
-file_names_gol[25] = "golovach_cr_sect/5diffsec234.dat";
-file_names_gol[26] = "golovach_cr_sect/5diffsec239.dat";
-file_names_gol[27] = "golovach_cr_sect/5diffsec244.dat";
-file_names_gol[28] = "golovach_cr_sect/5diffsec249.dat";
-file_names_gol[29] = "golovach_cr_sect/5diffsec254.dat";
+
+
+//files' names (Golovach_cr_sects)
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec161.dat";
+file_names_gol[0] =  PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec164.dat";
+file_names_gol[1] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec166.dat";
+file_names_gol[2] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec169.dat";
+file_names_gol[3] =PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec171.dat";
+file_names_gol[4] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec174.dat";
+file_names_gol[5] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec176.dat";
+file_names_gol[6] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec179.dat";
+file_names_gol[7] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec181.dat";
+file_names_gol[8] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec184.dat";
+file_names_gol[9] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec186.dat";
+file_names_gol[10] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec189.dat";
+file_names_gol[11] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec191.dat";
+file_names_gol[12] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec194.dat";
+file_names_gol[13] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec196.dat";
+file_names_gol[14] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec199.dat";
+file_names_gol[15] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec201.dat";
+file_names_gol[16] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec204.dat";
+file_names_gol[17] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec206.dat";
+file_names_gol[18] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec209.dat";
+file_names_gol[19] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec211.dat";
+file_names_gol[20] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec214.dat";
+file_names_gol[21] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec219.dat";
+file_names_gol[22] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec224.dat";
+file_names_gol[23] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec228.dat";
+file_names_gol[24] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec234.dat";
+file_names_gol[25] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec239.dat";
+file_names_gol[26] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec244.dat";
+file_names_gol[27] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec249.dat";
+file_names_gol[28] = PATH.str();
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec254.dat";
+file_names_gol[29] = PATH.str();
 
 //files' names (Fedotov_cr_sects)
-file_names_fed[0] =  "fedotov_cr_sect/fedotov_4diffsec_0225_15125.dat";
-file_names_fed[1] =  "fedotov_cr_sect/fedotov_4diffsec_0225_15375.dat";
-file_names_fed[2] =  "fedotov_cr_sect/fedotov_4diffsec_0225_15625.dat";
-file_names_fed[3] =  "fedotov_cr_sect/fedotov_4diffsec_0225_15875.dat";
-file_names_fed[4] =  "fedotov_cr_sect/fedotov_4diffsec_0275_13125.dat";
-file_names_fed[5] =  "fedotov_cr_sect/fedotov_4diffsec_0275_13375.dat";
-file_names_fed[6] =  "fedotov_cr_sect/fedotov_4diffsec_0275_13625.dat";
-file_names_fed[7] =  "fedotov_cr_sect/fedotov_4diffsec_0275_13875.dat";
-file_names_fed[8] =  "fedotov_cr_sect/fedotov_4diffsec_0275_14125.dat";
-file_names_fed[9] =  "fedotov_cr_sect/fedotov_4diffsec_0275_14375.dat";
-file_names_fed[10] =  "fedotov_cr_sect/fedotov_4diffsec_0275_14625.dat";
-file_names_fed[11] =  "fedotov_cr_sect/fedotov_4diffsec_0275_14875.dat";
-file_names_fed[12] =  "fedotov_cr_sect/fedotov_4diffsec_0275_15125.dat";
-file_names_fed[13] =  "fedotov_cr_sect/fedotov_4diffsec_0275_15375.dat";
-file_names_fed[14] =  "fedotov_cr_sect/fedotov_4diffsec_0275_15625.dat";
-file_names_fed[15] =  "fedotov_cr_sect/fedotov_4diffsec_0325_13125.dat";
-file_names_fed[16] =  "fedotov_cr_sect/fedotov_4diffsec_0325_13375.dat";
-file_names_fed[17] =  "fedotov_cr_sect/fedotov_4diffsec_0325_13625.dat";
-file_names_fed[18] =  "fedotov_cr_sect/fedotov_4diffsec_0325_13875.dat";
-file_names_fed[19] =  "fedotov_cr_sect/fedotov_4diffsec_0325_14125.dat";
-file_names_fed[20] =  "fedotov_cr_sect/fedotov_4diffsec_0325_14375.dat";
-file_names_fed[21] =  "fedotov_cr_sect/fedotov_4diffsec_0325_14625.dat";
-file_names_fed[22] =  "fedotov_cr_sect/fedotov_4diffsec_0325_14875.dat";
-file_names_fed[23] =  "fedotov_cr_sect/fedotov_4diffsec_0325_15125.dat";
-file_names_fed[24] =  "fedotov_cr_sect/fedotov_4diffsec_0325_15375.dat";
-file_names_fed[25] =  "fedotov_cr_sect/fedotov_4diffsec_0425_13125.dat";
-file_names_fed[26] =  "fedotov_cr_sect/fedotov_4diffsec_0425_13375.dat";
-file_names_fed[27] =  "fedotov_cr_sect/fedotov_4diffsec_0425_13625.dat";
-file_names_fed[28] =  "fedotov_cr_sect/fedotov_4diffsec_0425_13875.dat";
-file_names_fed[29] =  "fedotov_cr_sect/fedotov_4diffsec_0425_14125.dat";
-file_names_fed[30] =  "fedotov_cr_sect/fedotov_4diffsec_0425_14375.dat";
-file_names_fed[31] =  "fedotov_cr_sect/fedotov_4diffsec_0425_14625.dat";
-file_names_fed[32] =  "fedotov_cr_sect/fedotov_4diffsec_0425_14875.dat";
-file_names_fed[33] =  "fedotov_cr_sect/fedotov_4diffsec_0425_15125.dat";
-file_names_fed[34] =  "fedotov_cr_sect/fedotov_4diffsec_0475_13125.dat";
-file_names_fed[35] =  "fedotov_cr_sect/fedotov_4diffsec_0475_13375.dat";
-file_names_fed[36] =  "fedotov_cr_sect/fedotov_4diffsec_0475_13625.dat";
-file_names_fed[37] =  "fedotov_cr_sect/fedotov_4diffsec_0475_13875.dat";
-file_names_fed[38] =  "fedotov_cr_sect/fedotov_4diffsec_0475_14125.dat";
-file_names_fed[39] =  "fedotov_cr_sect/fedotov_4diffsec_0475_14375.dat";
-file_names_fed[40] =  "fedotov_cr_sect/fedotov_4diffsec_0475_14625.dat";
-file_names_fed[41] =  "fedotov_cr_sect/fedotov_4diffsec_0475_14875.dat";
-file_names_fed[42] =  "fedotov_cr_sect/fedotov_4diffsec_0525_13125.dat";
-file_names_fed[43] =  "fedotov_cr_sect/fedotov_4diffsec_0525_13375.dat";
-file_names_fed[44] =  "fedotov_cr_sect/fedotov_4diffsec_0525_13625.dat";
-file_names_fed[45] =  "fedotov_cr_sect/fedotov_4diffsec_0525_13875.dat";
-file_names_fed[46] =  "fedotov_cr_sect/fedotov_4diffsec_0525_14125.dat";
-file_names_fed[47] =  "fedotov_cr_sect/fedotov_4diffsec_0525_14375.dat";
-file_names_fed[48] =  "fedotov_cr_sect/fedotov_4diffsec_0525_14625.dat";
-file_names_fed[49] =  "fedotov_cr_sect/fedotov_4diffsec_0525_14875.dat";
-file_names_fed[50] =  "fedotov_cr_sect/fedotov_4diffsec_0575_13125.dat";
-file_names_fed[51] =  "fedotov_cr_sect/fedotov_4diffsec_0575_13375.dat";
-file_names_fed[52] =  "fedotov_cr_sect/fedotov_4diffsec_0575_13625.dat";
-file_names_fed[53] =  "fedotov_cr_sect/fedotov_4diffsec_0575_13875.dat";
-file_names_fed[54] =  "fedotov_cr_sect/fedotov_4diffsec_0575_14125.dat";
-file_names_fed[55] =  "fedotov_cr_sect/fedotov_4diffsec_0575_14375.dat";
-
-file_names_rip2[0] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_18375.dat";
-file_names_rip2[1] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_18625.dat";
-file_names_rip2[2] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_18875.dat";
-file_names_rip2[3] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_19125.dat";
-file_names_rip2[4] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_19375.dat";
-file_names_rip2[5] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_19625.dat";
-file_names_rip2[6] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_19875.dat";
-file_names_rip2[7] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_20125.dat";
-file_names_rip2[8] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_20375.dat";
-file_names_rip2[9] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_20625.dat";
-file_names_rip2[10] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_20875.dat";
-
-file_names_rip2[11] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_21125.dat";
-file_names_rip2[12] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_21375.dat";
-file_names_rip2[13] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_21875.dat";
-file_names_rip2[14] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_22375.dat";
-file_names_rip2[15] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_22875.dat";
-file_names_rip2[16] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_23375.dat";
-file_names_rip2[17] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_23875.dat";
-file_names_rip2[18] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_24375.dat";
-file_names_rip2[19] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_24875.dat";
-file_names_rip2[20] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_25375.dat";
+for (Short_t ww=0; ww<4;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0225_" << 15125 + 250*ww << ".dat";
+file_names_fed[ww] = PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<11;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0275_" << 13125 + 250*ww << ".dat";
+file_names_fed[ww+4] =  PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<10;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0325_" << 13125 + 250*ww << ".dat";
+file_names_fed[ww+15] =  PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<9;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0425_" << 13125 + 250*ww << ".dat";
+file_names_fed[ww+25] = PATH.str(); 
+PATH.str("");
+};
+for (Short_t ww=0; ww<8;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0475_" << 13125 + 250*ww << ".dat";
+file_names_fed[ww+34] = PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<8;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0525_" << 13125 + 250*ww << ".dat";
+file_names_fed[ww+42] =  PATH.str();
+PATH.str("");
+};
+for (Short_t ww=0; ww<5;ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() << "data/fedotov_cr_sect/fedotov_4diffsec_0575_" << 13125 + 250*ww << ".dat"; 
+file_names_fed[ww+50] =  PATH.str();
+PATH.str("");
+};
 
 
-file_names_rip3[0] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_25875.dat";
-file_names_rip3[1] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_26375.dat";
-file_names_rip3[2] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_26875.dat";
-file_names_rip3[3] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_27375.dat";
-file_names_rip3[4] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_27875.dat";
-file_names_rip3[5] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_28375.dat";
-file_names_rip3[6] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_28875.dat";
-file_names_rip3[7] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_29375.dat";
-file_names_rip3[8] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_29875.dat";
-file_names_rip3[9] =  "rip_q2_130_w_18_21/wgt18_4diffsec_130_30375.dat";
+PATH.str("");
+for (Short_t ww=0; ww<13; ww++) {
+PATH << data_dir_2pi.str() << "data/rip_q2_130_w_18_21/wgt18_4diffsec_130_"<< 18375 + 250*ww << ".dat";
+file_names_rip2[ww] = PATH.str(); 
+PATH.str("");
+};
+for (Short_t ww=13; ww<21; ww++) {
+PATH << data_dir_2pi.str() << "data/rip_q2_130_w_18_21/wgt18_4diffsec_130_"<<  21875+ 500*(ww-13) << ".dat";
+file_names_rip2[ww] = PATH.str(); 
+PATH.str("");
+};
+
+for (Short_t ww=0; ww<10; ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<   "data/rip_q2_130_w_18_21/wgt18_4diffsec_130_" << 25875 + ww*500 << ".dat";
+file_names_rip3[ww] = PATH.str(); 
+PATH.str("");
+};
 
 
+for (Short_t ww=0; ww<27; ww++) {
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/int_sec_new/intsec_q2_" << ww << ".dat";
+file_names_int[ww] = PATH.str();
+PATH.str("");
+};
 
-file_names_int[0] = "int_sec_new/intsec_q2_0.dat";
-file_names_int[1] = "int_sec_new/intsec_q2_1.dat";
-file_names_int[2] = "int_sec_new/intsec_q2_2.dat";
-file_names_int[3] = "int_sec_new/intsec_q2_3.dat";
-file_names_int[4] = "int_sec_new/intsec_q2_4.dat";
-file_names_int[5] = "int_sec_new/intsec_q2_5.dat";
-file_names_int[6] = "int_sec_new/intsec_q2_6.dat";
-file_names_int[7] = "int_sec_new/intsec_q2_7.dat";
-file_names_int[8] = "int_sec_new/intsec_q2_8.dat";
-file_names_int[9] = "int_sec_new/intsec_q2_9.dat";
-file_names_int[10] = "int_sec_new/intsec_q2_10.dat";
-file_names_int[11] = "int_sec_new/intsec_q2_11.dat";
-file_names_int[12] = "int_sec_new/intsec_q2_12.dat";
-file_names_int[13] = "int_sec_new/intsec_q2_13.dat";
-file_names_int[14] = "int_sec_new/intsec_q2_14.dat";
-file_names_int[15] = "int_sec_new/intsec_q2_15.dat";
-file_names_int[16] = "int_sec_new/intsec_q2_16.dat";
-file_names_int[17] = "int_sec_new/intsec_q2_17.dat";
-file_names_int[18] = "int_sec_new/intsec_q2_18.dat";
-file_names_int[19] = "int_sec_new/intsec_q2_19.dat";
-file_names_int[20] = "int_sec_new/intsec_q2_20.dat";
-file_names_int[21] = "int_sec_new/intsec_q2_21.dat";
-file_names_int[22] = "int_sec_new/intsec_q2_22.dat";
-file_names_int[23] = "int_sec_new/intsec_q2_23.dat";
-file_names_int[24] = "int_sec_new/intsec_q2_24.dat";
-file_names_int[25] = "int_sec_new/intsec_q2_25.dat";
-file_names_int[26] = "int_sec_new/intsec_q2_26.dat";
+
 
 
 
@@ -286,8 +266,9 @@ input.close();
 
 string xsect;
 
-
-string file="xsect_int_genev_0_7.dat";
+PATH.str("");
+PATH << data_dir_2pi.str() <<  "data/xsect_int_genev_0_7.dat";
+string file=PATH.str();
 ifstream input(file.c_str());
 if(input.is_open()){
 for (Int_t iwint = 1; iwint <=227; iwint++) {

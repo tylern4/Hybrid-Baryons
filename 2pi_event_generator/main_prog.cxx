@@ -73,8 +73,9 @@
 #include <sstream>
 #include <TRandom3.h>
 #include <fstream>
-//for BOS-files creation
+
 /*
+#ifdef BOS
 extern "C" 
 {
 
@@ -111,13 +112,14 @@ extern "C"
   int ranset_( float* );
   void ranlux_( float* , const int* ) ;
  
-
+# define BOS_F 1
 
 //  time_t   time( time_t );
 //  int   clock();
 }
-
+#endif
 */
+
  using namespace std;      
      
      
@@ -132,7 +134,6 @@ extern "C"
 
 
 int main(int argc, char** argv) {
-
 
 
 
@@ -179,6 +180,11 @@ system("root_home=`root-config --etcdir`");
 HOME_ROOT = getenv("root_home");
 ostringstream ROOT_DIR;
 ROOT_DIR << HOME_ROOT << "/pdg_table.txt";
+
+
+data_dir = getenv("data_dir_2pi");
+data_dir_2pi << data_dir;
+cout << "DATA DIR IS " << data_dir_2pi.str() << endl;
 
 
 
@@ -231,7 +237,6 @@ Me= part1->Mass();
    
     };
     
-    cout << "ttt1 \n";
     TH1F *h_0_miss = new TH1F("h_0_miss","h_0_miss",1000,-0.05,0.05);
     TH1F *h_pim_miss = new TH1F("h_pim_miss","h_pim_miss",200,MPIM*MPIM-0.05,MPIM*MPIM+0.05);
    

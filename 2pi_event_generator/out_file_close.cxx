@@ -10,14 +10,16 @@
 #include <fstream>
  using namespace std;
 
+
 int out_file_close() {
 //Close BOS output if exist
 
+#ifdef BOS
  if ((flag_bos == 1)||(flag_bos == 2)){
 close_fpack_unit("BOSOUTPUT");
      
   };  
-  
+  #endif
  
    if (flag_lund == 1){
   

@@ -125,6 +125,9 @@ extern "C"
     
     extern  Float_t SIGMA_ARR_FED_THRESH[6][7][3][10][10][8][8];
    extern  Float_t W_ARR_FED_THRESH[3];  
+   extern const char *data_dir;
    
-   extern std::ofstream out_lund_stream;
+   extern std::ofstream out_lund_stream; 
+   extern std::ostringstream data_dir_2pi;
+   extern std::ostringstream PATH;
 #endif
