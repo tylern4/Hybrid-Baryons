@@ -10,7 +10,7 @@
 #include <dlfcn.h>
  #include <sstream>
  #include <fstream>
- 
+
  //This is needed for BOS output creation
  extern "C" 
 {     
@@ -32,6 +32,7 @@
 #include <bosddl.h>
 #include <tagtnorm.h>
 #include <vertex.h>
+
 
   void initbos(); 
   int  getBOS(BOSbank *bcs, int lun, char *list);
@@ -59,8 +60,10 @@
     Float_t W_min, W_max, Q2_min,Q2_max,Theta_min,Theta_max,E_eprime_min;
     Float_t Targ_rad, Targ_len, Targ_off, Targ_dens, Targ_radlen;
     Float_t  Twi_thick, Twf_thick,Twi_dens, Twf_dens,Twi_radlen, Twf_radlen;
+   Float_t E_beam;
     //Particles' masses. They will be taken fom PDG-tables later in the main_prog 
     Float_t MP, MPIP, MPIM,Me; 
+   
 
     Float_t px_fermi,py_fermi,pz_fermi;
     //Variables from files with cross section
@@ -134,7 +137,7 @@
     Float_t SIGMA_T_ARR_2pi_INT[27][71];
       Float_t SIGMA_L_ARR_2pi_INT[27][71];
       
-       Float_t SIGMA_INT_ARR_GENEV_OLD[227];
+      
       
     
    Float_t SIGMA_T_INT_RIPANI[17];

@@ -213,6 +213,7 @@ getline (cin,qqq);
      case 1:  cout << "Flux flag " << flag_flux << "  -  under influence of electrons (like data)" << "\n";
     break;
     };
-    
-
+cout<<"\n";    
+cout <<"----------------------------------------\n";
+cout<<"\n";    
      };

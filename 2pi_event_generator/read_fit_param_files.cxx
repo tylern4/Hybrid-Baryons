@@ -56,6 +56,7 @@ string dummy,xsect;
 
 string file=file_names[0];
 ifstream input_t(file.c_str());
+if (input_t.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_t.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -75,6 +76,7 @@ input_t.close();
 
 file=file_names[1];
 ifstream input_l(file.c_str());
+if (input_l.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_l.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -92,6 +94,7 @@ input_l.close();
 
 file=file_names[2];
 ifstream input_c2f(file.c_str());
+if (input_c2f.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_c2f.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -109,6 +112,7 @@ input_c2f.close();
 
 file=file_names[3];
 ifstream input_cf(file.c_str());
+if (input_cf.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_cf.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -126,6 +130,7 @@ input_cf.close();
 
 file=file_names[4];
 ifstream input_int_rip065(file.c_str());
+if (input_int_rip065.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_int_rip065.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -145,6 +150,7 @@ input_int_rip065.close();
 
 file=file_names[5];
 ifstream input_int_gol0(file.c_str());
+if (input_int_gol0.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_int_gol0.is_open()){
 
 for (Int_t iw = 0; iw <=16; iw++) {
@@ -159,6 +165,7 @@ input_int_gol0.close();
 
 file=file_names[6];
 ifstream input_fed_t(file.c_str());
+if (input_fed_t.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_fed_t.is_open()){
 
 for (Int_t iw = 0; iw <=9; iw++) {
@@ -174,6 +181,7 @@ input_fed_t.close();
 
 file=file_names[7];
 ifstream input_fed_l(file.c_str());
+if (input_fed_l.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_fed_l.is_open()){
 
 for (Int_t iw = 0; iw <=9; iw++) {
@@ -194,6 +202,7 @@ input_fed_l.close();
 
 file=file_names[8];
 ifstream input_fed_c2f(file.c_str());
+if (input_fed_c2f.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_fed_c2f.is_open()){
 
 for (Int_t iw = 0; iw <=9; iw++) {
@@ -213,6 +222,7 @@ input_fed_c2f.close();
 
 file=file_names[9];
 ifstream input_fed_cf(file.c_str());
+if (input_fed_cf.fail()) cout<< "ALARM! File with fit parameters FAILED to open! \n";
 if(input_fed_cf.is_open()){
 
 for (Int_t iw = 0; iw <=9; iw++) {

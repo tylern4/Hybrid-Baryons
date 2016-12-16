@@ -22,6 +22,7 @@ extern "C"
 #include <tagtnorm.h>
 #include <vertex.h>  
 
+
    extern void initbos();
    extern int  getBOS(BOSbank *bcs, int lun, char *list);
    extern void cleanBanks(BOSbank *bcs);
@@ -44,9 +45,9 @@ extern "C"
    extern  Float_t W_min, W_max, Q2_min,Q2_max,Theta_min,Theta_max,E_eprime_min;
    extern  Float_t Targ_rad, Targ_len, Targ_off, Targ_dens, Targ_radlen;
    extern  Float_t  Twi_thick, Twf_thick,Twi_dens, Twf_dens,Twi_radlen, Twf_radlen;
-   
+  
    extern   Float_t MP, MPIP, MPIM, Me; 
-   
+  
    extern    Float_t px_fermi,py_fermi,pz_fermi;
    
    
@@ -116,8 +117,7 @@ extern "C"
     extern     Float_t SIGMA_T_ARR_2pi_INT[27][71];
     extern     Float_t SIGMA_L_ARR_2pi_INT[27][71];
     
-      extern     Float_t SIGMA_INT_ARR_GENEV_OLD[227];
-     
+         
     extern   Float_t sigma_wright_q2left[6];
     extern  Float_t sigma_wright_q2right[6];
     extern  Float_t sigma_wleft_q2right[6];

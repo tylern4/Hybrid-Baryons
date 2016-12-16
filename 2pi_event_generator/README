@@ -1,6 +1,6 @@
 Generator is exclusive and electroproduction (but at low Q2 it uses photoproduction data as limiting point). It works for all Q2 starting from very small (0.005 GeV^2) and W from the threshold to 3 GeV.
 
-The generator works in the following way: firstly, it generates phase space (flat) distributions and then for each event multidimentional cross section is applied as a weight. 
+The generator works in the following way: firstly, it generates phase space (flat) distributions and then for each event multidimensional cross section is applied as a weight. 
 
 The generator produces output in lund format with minor changes:  in the Header in field 6* instead of "x" I put event number, and in field 10* instead of "nu" I put the cross section value.  (see also this slide https://clasweb.jlab.org/wiki/images/d/dc/Hybrid_Jan15_2016.pdf )
 
@@ -40,7 +40,7 @@ to run it type "./twopeg_bos < inp1" or "./twopeg_nobos < inp1" depending on the
 inp1 is in the same directory and contains input parameters with comments. 
 
 --------------------------------------------------
-The generator needs .dat files with tabulated structure functions and fit parameters. They are located in the "data" subfolder inside the EG directory. If you move it, you need to define environment variable "data_dir_2pi" that poit to the new folder location (for example in csh use "setenv data_dir_2pi new_path/").
+The generator needs .dat files with tabulated structure functions and fit parameters. They are located in the "data" subfolder inside the EG directory. If you move it, you need to define environment variable "data_dir_2pi" that points to the new folder location (for example in csh use "setenv data_dir_2pi new_path/").
 
 ---------------------------------------------------
 

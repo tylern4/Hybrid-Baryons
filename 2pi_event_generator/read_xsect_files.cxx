@@ -27,12 +27,7 @@ using namespace std;
 //SIGMA_ARR_GOL[30][16][16][14][14]; - correspond for sigma_t
 
 void  read_xsect_files(){
-Float_t S12_val, S23_val, TH_val, ALP_val;
-Float_t s12_min, s12_max,s23_min, s23_max, th_min, th_max, alp_min, alp_max;
-Float_t dm12,dm23;
-Float_t ds12_tmp,ds23_tmp, dalpha_tmp;
-Float_t dalpha, ds12, ds23;
-Float_t th_l, th_r, dtheta, dtheta_tmp;
+
 string file_names[51];
 string file_names_gol[30];
 string file_names_fed[56];
@@ -46,30 +41,30 @@ string file_names_int[27];
 Float_t Xsect_int,cross_sect,cross_sect_t,cross_sect_l,eps_l_rip2;
 Short_t wbin, q2bin;
 
-//Float_t th_l, th_r,dm12,dm23;
+
 //files' names (Ripani_cr_sects)
+//Ripani cross sections (1.4125 < W < 1.8125 GeV, 0.65 < Q2 < 1.3 GeV2) \n";
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_065_" <<14125 + 250*ww << ".dat";
 file_names[ww] = PATH.str();
-cout << file_names[ww]<<"\n";
 PATH.str("");
 };
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_095_" <<14125 + 250*ww << ".dat";
 file_names[ww+17] = PATH.str();
-cout << file_names[ww+17]<<"\n";
 PATH.str("");
 };
 for (Short_t ww=0; ww<17;ww++) {
 PATH << data_dir_2pi.str() << "data/ripani_cr_sect/rip_4diffsec_130_" <<14125 + 250*ww << ".dat";
 file_names[ww+34] = PATH.str();
-cout << file_names[ww+34]<<"\n";
 PATH.str("");
 };
 
 
 
 //files' names (Golovach_cr_sects)
+// Golovach cross sections (1.6125 < W < 2.5375 GeV at photon point) \n";
+
 PATH.str("");
 PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec161.dat";
 file_names_gol[0] =  PATH.str();
@@ -162,6 +157,8 @@ PATH << data_dir_2pi.str() << "data/golovach_cr_sect/5diffsec254.dat";
 file_names_gol[29] = PATH.str();
 
 //files' names (Fedotov_cr_sects)
+//Fedotov cross sections (1.3125 < W < 1.5875 GeV, 0.225 < Q2 < 0.575 GeV2) \n";
+
 for (Short_t ww=0; ww<4;ww++) {
 PATH.str("");
 PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0225_" << 15125 + 250*ww << ".dat";
@@ -198,7 +195,7 @@ PATH << data_dir_2pi.str() <<  "data/fedotov_cr_sect/fedotov_4diffsec_0525_" << 
 file_names_fed[ww+42] =  PATH.str();
 PATH.str("");
 };
-for (Short_t ww=0; ww<5;ww++) {
+for (Short_t ww=0; ww<6;ww++) {
 PATH.str("");
 PATH << data_dir_2pi.str() << "data/fedotov_cr_sect/fedotov_4diffsec_0575_" << 13125 + 250*ww << ".dat"; 
 file_names_fed[ww+50] =  PATH.str();
@@ -206,10 +203,11 @@ PATH.str("");
 };
 
 
+//model cross sections (1.8375 < W < 2 GeV, Q2 = 1.3 GeV2) \n";
 PATH.str("");
 for (Short_t ww=0; ww<13; ww++) {
 PATH << data_dir_2pi.str() << "data/rip_q2_130_w_18_21/wgt18_4diffsec_130_"<< 18375 + 250*ww << ".dat";
-file_names_rip2[ww] = PATH.str(); 
+file_names_rip2[ww] = PATH.str();
 PATH.str("");
 };
 for (Short_t ww=13; ww<21; ww++) {
@@ -225,7 +223,7 @@ file_names_rip3[ww] = PATH.str();
 PATH.str("");
 };
 
-
+//Integral cr sect
 for (Short_t ww=0; ww<27; ww++) {
 PATH.str("");
 PATH << data_dir_2pi.str() <<  "data/int_sec_new/intsec_q2_" << ww << ".dat";
@@ -236,7 +234,7 @@ PATH.str("");
 
 
 
-
+cout<< "Reading integral cross sections for rad eff \n";
 for (Short_t i=0; i<27; i++) {
 
 
@@ -249,6 +247,7 @@ string dummy,xsect;
 
 string file=file_names_int[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File # "<< i<< " with integral cross sections FAILED to open! \n"; 
 if(input.is_open()){
 for (Int_t iwint = 1; iwint <=71; iwint++) {
 getline(input,xsect);
@@ -267,20 +266,9 @@ input.close();
 };
 
 
-string xsect;
 
-PATH.str("");
-PATH << data_dir_2pi.str() <<  "data/xsect_int_genev_0_7.dat";
-string file=PATH.str();
-ifstream input(file.c_str());
-if(input.is_open()){
-for (Int_t iwint = 1; iwint <=227; iwint++) {
 
-getline(input,xsect);
-SIGMA_INT_ARR_GENEV_OLD[iwint-1] = atof(xsect.c_str());
-};
-};
-input.close();
+
 
 
 
@@ -310,7 +298,7 @@ Q2_ARR[2] = 1.30;
 //Float_t dtheta = (THETA_ARR[5] - THETA_ARR[0])/5.;
 
 
-
+cout<<"Reading Ripani cross sections \n";
 //loop over files for Ripani
 for (Short_t i=0; i<=50; i++) {
 
@@ -325,6 +313,7 @@ string dummy,xsect;
 
 string file=file_names[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File for q2bin = "<< q2bin<<", W = "<<  W_ARR[i - Int_t(i/17)*17]<<" GeV with Ripani cr sect FAILED to open! \n";
 if(input.is_open()){
 
 for (Int_t is23 = 1; is23 <=12; is23++) {
@@ -428,7 +417,7 @@ ALPHA_ARR_GOL[11] = 5.309618;
 ALPHA_ARR_GOL[12] = 5.791402;
 ALPHA_ARR_GOL[13] = 6.283185;
 
-
+cout<<"Reading Golovach cross sections \n";
 //loop over files for Golovach
 for (Short_t i=0; i<=29; i++) {
 
@@ -444,6 +433,7 @@ string dummy,xsect;
 
 string file=file_names_gol[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File for W = "<< W_ARR_GOL[i] <<"GeV with Golovach photoproduction cr sect FAILED to open! \n";
 if(input.is_open()){
 
 for (Int_t is23 = 1; is23 <=16; is23++) {
@@ -452,18 +442,13 @@ for (Int_t itheta = 1; itheta <=14; itheta++) {
 for (Int_t ialpha = 1; ialpha <=14; ialpha++) {
 getline(input,xsect);
 //Define 2dim s12 and s23 arrays
-//S12_val = atof(xsect.c_str());
 S12_ARR_GOL[is12-1][i] = atof(xsect.c_str());
 getline(input,xsect);
-//S23_val = atof(xsect.c_str());
 S23_ARR_GOL[is23-1][i] = atof(xsect.c_str());
 getline(input,dummy);
-//TH_val = atof(dummy.c_str());
 getline(input,dummy);
-//ALP_val = atof(dummy.c_str());
 getline(input,xsect);
 //sigma_t
-
 SIGMA_ARR_GOL[i][is23-1][is12-1][itheta-1][ialpha-1] = atof(xsect.c_str());
 getline(input,xsect);
 getline(input,dummy);
@@ -2652,7 +2637,7 @@ SIGMA_ARR_FED[i][6][11][is23-1][is12-1][itheta-1][ialpha-1] = 0.;
 };
 
 
-
+cout<<"Reading Fedotov cross sections \n";
 
 for (Short_t i=0; i<=55; i++) {
 
@@ -2702,6 +2687,7 @@ string dummy,xsect;
 
 string file=file_names_fed[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File for Q2 = "<< Q2_ARR_FED[q2bin]<<" GeV2 and W = "<<W_ARR_FED[wbin]<<" GeV with Fedotov cr sect FAILED to open! \n";
 if(input.is_open()){
 
 for (Int_t is23 = 1; is23 <=10; is23++) {
@@ -2774,14 +2760,7 @@ SIGMA_ARR_FED_THRESH[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_AR
 SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1]*0.4;
 SIGMA_ARR_FED_THRESH[j][q2bin][2][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1]*0.7;
 
-//SIGMA_ARR_FED_THRESH[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1];
-//SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1];
-//SIGMA_ARR_FED_THRESH[j][q2bin][2][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][0][is23-1][is12-1][itheta-1][ialpha-1];
 
-
-//if (q2bin==4) SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1]*1.07;
-//if (q2bin==6) SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1]*1.07;
-//if (q2bin==5) SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED_THRESH[j][q2bin][1][is23-1][is12-1][itheta-1][ialpha-1]*1.07;
 
 
 SIGMA_ARR_FED[j][q2bin][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_FED[j][q2bin][wbin][is23-1][is12-1][itheta-1][ialpha-1]*M_PI*M_PI*2.*M_PI;
@@ -2872,23 +2851,19 @@ if ((q2bin==6)&&(wbin==4)) SIGMA_ARR_FED[j][q2bin][wbin][is23-1][is12-1][itheta-
 };
 
 
-
+cout<< "Reading model cross sections at Q2 = 1.3 GeV2 \n";
 for (Short_t i=0; i<=20; i++) {
 wbin = i;
 
 if ((i>=0)&&(i<=12))  W_ARR_RIP2[i] = 1.8375 + 0.025*i;
 if ((i>=13)&&(i<=20)) W_ARR_RIP2[i] = 2.1875 + 0.05*(i-13);
  
- 
-
-
-
-cout << "Reading RIPANI diff cross sections for Q^2 = 1.3 GeV^2, W = "<< W_ARR_RIP2[i] << " GeV \n";
 
 string dummy,xsect;
 
 string file=file_names_rip2[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File for W = "<< W_ARR_RIP2[i]<< " GeV with model cr sect at Q2 = 1.3 GeV FAILED to open! \n";
 if(input.is_open()){
 
 for (Int_t is23 = 1; is23 <=12; is23++) {
@@ -2897,15 +2872,11 @@ for (Int_t itheta = 1; itheta <=6; itheta++) {
 for (Int_t ialpha = 1; ialpha <=6; ialpha++) {
 getline(input,xsect);
 //Define 2dim s12 and s23 arrays
-S12_val = atof(xsect.c_str());
 S12_ARR_RIP2[is12-1][wbin] = atof(xsect.c_str());
 getline(input,xsect);
-S23_val = atof(xsect.c_str());
 S23_ARR_RIP2[is23-1][wbin] = atof(xsect.c_str());
 getline(input,dummy);
-TH_val = atof(dummy.c_str());
 getline(input,dummy);
-ALP_val = atof(dummy.c_str());
 getline(input,xsect);
 //sigma_t
 SIGMA_ARR_RIP2[0][wbin][is23-1][is12-1][itheta-1][ialpha-1] = atof(xsect.c_str());
@@ -2928,17 +2899,7 @@ getline(input,xsect);
 EPS_L_RIP2[wbin] = atof(xsect.c_str());
 getline(input,dummy);
 
-if ((is23==1)&&(itheta==1)&&(ialpha==1)&&(is12==1)) s12_min = S12_val;
-if ((is23==1)&&(itheta==1)&&(ialpha==1)&&(is12==12)) s12_max = S12_val;
 
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) s23_min = S23_val;
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==12)) s23_max = S23_val;
-
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) th_min = TH_val;
-if ((is12==1)&&(itheta==6)&&(ialpha==1)&&(is23==1)) th_max = TH_val;
-
-if ((is12==1)&&(itheta==1)&&(ialpha==1)&&(is23==1)) alp_min = ALP_val;
-if ((is12==1)&&(itheta==1)&&(ialpha==6)&&(is23==1)) alp_max = ALP_val;
 
 };
 };
@@ -3738,77 +3699,6 @@ if (i==20) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][4] = SIGMA_ARR_RIP2
 
 };
 
-Xsect_int = 0.;
-
-
-//Determine the with of the bin over all variables 
-ds12 = (s12_max - s12_min)/11;
-ds23 = (s23_max - s23_min)/11;
-dalpha = (alp_max - alp_min)/5;
-dtheta = (th_max - th_min)/5;
-
-ds12_tmp = ds12; 
-ds23_tmp = ds23; 
-dalpha_tmp = dalpha; 
-dtheta_tmp = dtheta;
-
-
-dm12 = (sqrt(s12_max) - sqrt(s12_min))/11;
-dm23 = (sqrt(s23_max) - sqrt(s23_min))/11;
-
-
-
-
-
-for (Int_t is23 = 1; is23 <=12; is23++) {
-for (Int_t is12 = 1; is12 <=12; is12++) {
-for (Int_t itheta = 1; itheta <=6; itheta++) {
-for (Int_t ialpha = 1; ialpha <=6; ialpha++) {
-//I am doing this to force this variables renew each time loops run, beceuse they are determied outside the loop and sometimes change inside the loop
-ds12=ds12_tmp;
-ds23=ds23_tmp;
-dalpha = dalpha_tmp;
-dtheta = dtheta_tmp;
-cross_sect_t = SIGMA_ARR_RIP2[0][wbin][is23-1][is12-1][itheta-1][ialpha-1];
-cross_sect_l = SIGMA_ARR_RIP2[1][wbin][is23-1][is12-1][itheta-1][ialpha-1];
-eps_l_rip2 = EPS_L_RIP2[wbin];
-//(S12_ARR_GOL[15][i]-S12_ARR_GOL[0][i])/(S23_ARR_GOL[15][i]-S23_ARR_GOL[0][i]);
-
-
-
-//if the point is the first or the last then the width of the bin is smaller 
-if ((is12==1)||(is12==12)) ds12=ds12_tmp/2;
-
-
-if ((is23==1)||(is23==12)) ds23=ds23_tmp/2;
-
-
-if ((ialpha==1)||(ialpha==6)) dalpha=dalpha_tmp/2+0.01;
-
-
-
-//left and right edge for theta if the point is not first or last
-th_l = th_min + dtheta/2.+(itheta - 2.)*dtheta;
-th_r = th_min + dtheta/2.+(itheta -1.)*dtheta;
-
-//left and right edge for theta if the point is first or last
-if ((itheta==1)) th_l = th_min-0.01;
-if ((itheta==1)) th_r = th_min+dtheta/2.;
-
-if ((itheta==6)) th_l = th_max - dtheta/2.;
-if ((itheta==6)) th_r = th_max+0.01;
-//cross_sect = cross_sect_t + eps_l_rip2*cross_sect_l;
-//cross_sect = cross_sect_t;
-cross_sect =cross_sect_l;
-Xsect_int = Xsect_int + cross_sect*(cos(th_l)-cos(th_r))*ds12*ds23*dalpha; 
-
-};
-};
-};
-};
-
-
-
 
 
 
@@ -3826,12 +3716,13 @@ wbin = i;
 
 
 
-cout << "Reading RIPANI diff cross sections for Q^2 = 1.3 GeV^2, W = "<< W_ARR_RIP3[i] << " GeV \n";
+//cout << "Reading RIPANI diff cross sections for Q^2 = 1.3 GeV^2, W = "<< W_ARR_RIP3[i] << " GeV \n";
 
 string dummy,xsect;
 
 string file=file_names_rip3[i];
 ifstream input(file.c_str());
+if (input.fail()) cout << "ALARM! File for W = " << W_ARR_RIP3[i]<<" GeV with model cr sect at Q2 = 1.3 GeV2 FAILED to open! \n";
 if(input.is_open()){
 
 for (Int_t is23 = 1; is23 <=16; is23++) {
@@ -3908,32 +3799,7 @@ if (i==6) SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_AR
 if (i==7) SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.6*1.02;
 if (i==8) SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.7*1.05;
 if (i==9) SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.7*1.18;
-/*
-if (i==0) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.15*1.02*1.05*0.98;
-if (i==1) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.007*1.1;
-if (i==2) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.1*1.01*0.95*0.95;
-if (i==3) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.96*1.03*1.05*0.95;
-if (i==4) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.94*1.02*0.9;
-if (i==5) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.02*0.87;
-if (i==6) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.03*1.02*0.94;
-if (i==7) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.06*1.02*0.9;
-if (i==8) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.07*1.04*0.9;
-if (i==9) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.03*0.83;
-if (i==10) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.16*1.07;
 
-
-if ((i==3)&&(j==1)) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.8;
-if ((i==4)&&(j==1)) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.1;
-
-if ((i>=11)&&(i<=20)&&(j==0)) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.69;
-if ((i>=11)&&(i<=20)&&(j==1)) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*8.9;
-
-if (i==11) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.95;
-if (i==12) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.05;
-
-if (i==14) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.15;
-if (i==20) SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP2[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*0.8;
-*/
 
 
 if (j==0) SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][wbin][is23-1][is12-1][itheta-1][ialpha-1]*1.69*0.7;
@@ -4877,38 +4743,6 @@ SIGMA_ARR_phot_gt_3[wbin][10][is12-1][itheta-1][ialpha-1] = 1.11*SIGMA_ARR_phot_
 
 
 
-
-
-
-/*for (Int_t j = 0; j <=5; j++) {
-
-
-for (Int_t is12 = 1; is12 <=16; is12++) {
-for (Int_t itheta = 1; itheta <=6; itheta++) {
-for (Int_t ialpha = 1; ialpha <=6; ialpha++) {
-
-SIGMA_ARR_gt_3[j][wbin][14][is12-1][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][9][13][is12-1][itheta-1][ialpha-1];
-SIGMA_ARR_gt_3[j][wbin][15][is12-1][itheta-1][ialpha-1] = 0.;
-};
-};
-};
-
-
-for (Int_t is23 = 1; is23 <=16; is23++) {
-for (Int_t itheta = 1; itheta <=6; itheta++) {
-for (Int_t ialpha = 1; ialpha <=6; ialpha++) {
-
-SIGMA_ARR_gt_3[j][wbin][is23-1][14][itheta-1][ialpha-1] = SIGMA_ARR_RIP3[j][9][is23-1][13][itheta-1][ialpha-1];
-SIGMA_ARR_gt_3[j][wbin][is23-1][15][itheta-1][ialpha-1] = 0.;
-};
-};
-}
-
-
-
-
-
-};;*/
 };//end lop w.gt.3 - i
 
 

@@ -11,15 +11,7 @@
 using namespace std;
 
 
-Short_t getWbin_int_genev_old (Float_t W) {
-if ((W>1.24)&&(W<3.5)) return int((W-1.24)/0.01);
-if ((W<1.24)||(W>3.5)) {
-cout << W<< "   WRONG W-VALUE. INTERPOLATION ERROR \n";
-return -100.; 
 
-
-};
-};
 
 
 
@@ -119,23 +111,4 @@ Wgen=W_old;
 };
 
 
-void interpol_int_genev_old(Float_t Q2gen, Float_t Wgen,Float_t &sigma_t_int, Float_t &sigma_l_int){
-sigma_t_int = 0.;
 
-if ((Wgen > 1.24)&&(Q2gen <3.5)){
-Short_t Wleft_bin = getWbin_int_genev_old(Wgen);
-Short_t Wright_bin = Wleft_bin+1;
-
-
-Float_t factor;
-factor = 1./fabs(0.01);
-
-
-sigma_t_int = factor*(SIGMA_INT_ARR_GENEV_OLD[Wright_bin]*fabs(1.24 + 0.01*Wleft_bin - Wgen)+SIGMA_INT_ARR_GENEV_OLD[Wleft_bin]*fabs(1.24 + 0.01*Wright_bin-Wgen));
-
-
-//sigma_t_int = sigma_t_int*Func_q2_dep(Q2gen);
-
-};
-sigma_l_int = 0.;
-};
