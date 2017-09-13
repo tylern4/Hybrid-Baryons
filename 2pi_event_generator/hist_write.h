@@ -2,6 +2,4 @@
 #define HIST_WRITE_H
 
 
-void hist_write();
-
 #endif

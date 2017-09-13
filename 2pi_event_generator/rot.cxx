@@ -59,18 +59,24 @@ if (P4_1.Phi()<0) phi_hadr = P4_1.Phi()+2.*M_PI;
 //if (P4_3.Phi()>0) phi_hadr = P4_3.Phi();
 //if (P4_3.Phi()<0) phi_hadr = P4_3.Phi()+2.*M_PI;
 
-
-a_gamma = sqrt(1./(1-pow((P4_1.Vect().Unit() * V3_anti_z),2)));
+//a_gamma = sqrt(1./(1.-double(pow((P4_1.Vect().Unit() * V3_anti_z)),2)));
+a_gamma = sqrt(1000000000000./(1000000000000.-(1000000.*(P4_1.Vect().Unit() * V3_anti_z))*(1000000.*(P4_1.Vect().Unit() * V3_anti_z))));
+//cout << a_gamma<<" "<<(1000000.*(P4_1.Vect().Unit() * V3_anti_z))*(1000000.*(P4_1.Vect().Unit() * V3_anti_z))<<" p1 \n";
 b_gamma = -(P4_1.Vect().Unit() * V3_anti_z)*a_gamma;
+
 Vect3_gamma = a_gamma*V3_anti_z +b_gamma*P4_1.Vect().Unit();
 
-a_beta = sqrt(1./(1-pow((P4_1.Vect().Unit() * P4_2.Vect().Unit()),2)));
+a_beta = sqrt(1000000000000./(1000000000000.-(1000000.*(P4_1.Vect().Unit() * P4_2.Vect().Unit()))*(1000000.*(P4_1.Vect().Unit() * P4_2.Vect().Unit()))));
+
+//cout << a_beta<<" "<<(1000000.*(P4_1.Vect().Unit() * P4_2.Vect().Unit()))*(1000000.*(P4_1.Vect().Unit() * P4_2.Vect().Unit())) <<" p3 \n";
+
 b_beta = -(P4_1.Vect().Unit() * P4_2.Vect().Unit())*a_beta;
+
 Vect3_beta = a_beta*P4_2.Vect().Unit() + b_beta*P4_1.Vect().Unit();
 
 alpha_hadr = acos(Vect3_gamma * Vect3_beta);
 
-if (Vect3_gamma.Cross(Vect3_beta) * P4_1.Vect() < 0) alpha_hadr = 2.*M_PI - alpha_hadr;
+if (Vect3_gamma.Cross(Vect3_beta) * P4_1.Vect() < 0.) alpha_hadr = 2.*M_PI - alpha_hadr;
 
 
 /*

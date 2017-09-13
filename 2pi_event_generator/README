@@ -19,7 +19,7 @@ inp_file_read.cxx - reading information from the input file
 
 read_xsect_files.cxx - reading files with cross sections from the corresponding directories 
 
-out_file_open.cxx, out_file_write.cxx, out_file_close.cxx - needed to open write and close output files correspondingly.
+out_file_open.cxx, out_file_fill.cxx, out_file_close.cxx - needed to open fill and close output files correspondingly.
 
 anti_rot.cxx - contains the subroutine that calculates the 4-vectors of all final particles in the lab frame from  W, Q2 and hadron variables generated in the CMS.
 
@@ -44,7 +44,9 @@ The generator needs .dat files with tabulated structure functions and fit parame
 
 ---------------------------------------------------
 
-More details you also can find on Iullia Skorodumina's wiki page: https://clasweb.jlab.org/wiki/index.php/NEW_2PI_EVENT_GENERATOR  
+More details can be found on Iu. Skorodumina's wiki page: https://clasweb.jlab.org/wiki/index.php/NEW_2PI_EVENT_GENERATOR  
+And in the CLAS12-NOTE-2017-001: https://misportal.jlab.org/mis/physics/clas12/viewFile.cfm/2017-001.pdf?documentId=36
+This note in arXiv:1703.08081 [physics.data-an]
 -------------
 Contact persons:
 Gleb Fedotov - gleb@jlab.org

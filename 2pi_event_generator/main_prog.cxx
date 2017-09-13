@@ -37,11 +37,9 @@
 
 #include "inp_file_read.h"
 #include "hist_def.h"
-#include "hist_fill.h"
-#include "hist_write.h"
 #include "read_xsect_files.h"
 #include "read_fit_param_files.h"
-#include "out_file_write.h"
+#include "out_file_fill.h"
 #include "out_file_open.h"
 #include "out_file_close.h"
 #include "anti_rot.h"
@@ -57,10 +55,7 @@
 #include "get_xsect_q2_130_w_gt_18_lt_21.h"
 #include "get_xsect_25_30.h"
 #include "get_xsect_q2_13_wgt_3.h"
-#include "get_xsect_q2_130_test.h"
-
 #include "interpol_int.h"
-
 #include "radcorr.h"
 #include "fermi_bonn.h"
 #include "fermi_rot.h"
@@ -87,6 +82,8 @@
 
 int main(int argc, char** argv) {
 
+global();
+
     Float_t sigma_t_final = 0.;
     Float_t sigma_l_final = 0.; 
     Float_t sigma_c2f_final = 0.;
@@ -96,14 +93,15 @@ int main(int argc, char** argv) {
       
     Float_t sigma_t_final_1, sigma_l_final_1 , sigma_c2f_final_1, sigma_s2f_final_1,sigma_cf_final_1 ,sigma_sf_final_1 ;
     Float_t sigma_t_final_2, sigma_l_final_2 , sigma_c2f_final_2, sigma_s2f_final_2,sigma_cf_final_2 ,sigma_sf_final_2; 
-    Float_t sigma_total, sigma_total_1, sigma_total_2;
+    Float_t sigma_total_1, sigma_total_2;
     
-    Float_t E_beam, E_beam_fermi, theta_rot2,phi_rot2,E_E_prime_ferm,Theta_e_prime_ferm,W_ferm;
-    Float_t Wnew, Q2new, E_beam_new,p_el_test, W_tmp;
+    Float_t E_beam, E_beam_fermi, theta_rot2,E_E_prime_ferm,Theta_e_prime_ferm,W_ferm;
+    Float_t Wnew, Q2new, E_beam_new, W_tmp;
     Float_t W,Q2,phi_e,W_old,Q2nodata,Q2_old;
-    Float_t nu,E_E_prime,Theta_e_prime,E_E_prime_new,Theta_e_prime2,E_E_prime_new2;
+    Float_t nu,E_E_prime,Theta_e_prime,E_E_prime_new;
     Float_t M1,M2,M3;
     Float_t inv_m12,inv_m23,inv_m13,th_hadr,alph_hadr,ph_hadr,s12,s23,s13,en1,en2,en3,mag1,mag2,mag3; 
+    Float_t inv_m12_tst,inv_m23_tst,inv_m13_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst;  
     Float_t z_EL, x_EL, y_EL,r_vert, phi_vert;
     Float_t e_rad_phot, cr_rad_fact;
     
@@ -113,49 +111,29 @@ int main(int argc, char** argv) {
     const Float_t phi_e_min = 0;
     const Float_t phi_e_max = 2*M_PI;
     
-    
     TLorentzVector P4_E_prime, P4_PIP,P4_Pfin,P4_PIM;
-    TLorentzVector P4_Eini, P4_Eini_new, P4_E_prime_new, P4_Pini, P4_E_prime_new2;
+    TLorentzVector P4_Eini, P4_Eini_new, P4_E_prime_new, P4_Pini;
     TLorentzVector P4_0_miss, P4_pim_miss; 
     TLorentzVector P4_0_miss_2, P4_pim_miss_2; 
     TLorentzVector P4_0_miss_fermi, P4_pim_miss_fermi; 
     TLorentzVector P4_0_miss_fermi_2, P4_pim_miss_fermi_2; 
-    TLorentzVector P4_E_prime_boosted,P4_gamma_test, P4_Eini_fermi;
+    TLorentzVector P4_E_prime_boosted;
     TLorentzVector P4_Pini_fermi;
     
-    P4_Pini.SetXYZT(0.,0.,0.,MP); 
-    P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
-        
-       
     Int_t dummy_int;
     Int_t k=0;
-      
-    
+   
     ostringstream qqq;
     
-    px_fermi =0.;
-    py_fermi =0.;
-    pz_fermi =0.;
-    
-    
-  TTree*t21 = new TTree("h10","Tree h10"); 
-  t21->SetDirectory(0);
-  t21->Branch("sigma",&sigma_total); 
-  t21->Branch("p_el_test",&p_el_test); 
-  t21->Branch("px_fermi",&px_fermi); 
-  t21->Branch("py_fermi",&py_fermi);
-  t21->Branch("pz_fermi",&pz_fermi);
+//This is a directory for cross section files taking. By default it is /data 
+data_dir = getenv("data_dir_2pi");
+data_dir_2pi << data_dir;
+cout << "DATA DIR IS " << data_dir_2pi.str() << endl;
  
  
- data_dir = getenv("data_dir_2pi");
- data_dir_2pi << data_dir;
- cout << "DATA DIR IS " << data_dir_2pi.str() << endl;
- 
- 
-  
 //This needed for taking masses of the particles from pdg_table located in ROOT_DIR
-    const char *HOME_ROOT;
-    const char *HOME_ROOT1;
+const char *HOME_ROOT;
+const char *HOME_ROOT1;
 //HOME_ROOT = getenv("ROOT");
 system("root_home=`root-config --etcdir`");
 HOME_ROOT = getenv("root_home");
@@ -175,14 +153,16 @@ part1 = pdg->GetParticle("e-");
 Me= part1->Mass();  
 
 
-   //Reading input parameters
-   inp_file_read(E_beam);
-   //Reading diff cross section from the tables in .dat files (filling out GLOBAL arrays)
-   read_xsect_files();
-   //Reading fit parameterms, which are needed for cross section exprapolation
-   read_fit_param_files();
+//Reading input parameters
+inp_file_read(E_beam);
+//Reading diff cross section from the tables in .dat files (filling out GLOBAL arrays)
+read_xsect_files();
+//Reading fit parameterms, which are needed for cross section exprapolation
+read_fit_param_files();
    
-
+    P4_Pini.SetXYZT(0.,0.,0.,MP); 
+    P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
+ 
      
    //Reasonably changing kinematical variables if needed
     if (Q2_max > 4.*E_beam*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.)) {
@@ -204,28 +184,34 @@ Me= part1->Mass();
     
     
     
- //Defining some histograms
-    hist_def(E_beam);
+//Defining some histograms
+hist_def(E_beam);
    
      
  //Chosing variable set  
-     //Second set of variables. FOR 1-PIM, 2-PIP, 3-P
+//Second set of variables. FOR 1-PIM, 2-PIP, 3-P
      M1 = MPIM;
      M2 = MPIP;
      M3 = MP; 
-     //First set of variables. FOR 1-P, 2-PIP, 3-PIM
+//First set of variables. FOR 1-P, 2-PIP, 3-PIM
 //   M1 = MP;
 //   M2 = MPIP;
 //   M3 = MPIM;
-     //Third set of variables. FOR 1-PIP, 2-PIM, 3-P
+//Third set of variables. FOR 1-PIP, 2-PIM, 3-P
 //   M1 = MPIP;
 //   M2 = MPIM;
 //   M3 = MP;
     
-  //open input file
-     out_file_open();
-     
-       srand (time(NULL));
+//open input file
+out_file_open();
+
+
+cout <<"\n";
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%!I. GENERATION STARTS!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+
+srand (time(NULL));
        
  TRandom3 ph_e_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
  TRandom3 th_hadr_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
@@ -240,13 +226,8 @@ Me= part1->Mass();
  TRandom3 phi_vert_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
  
  
- cout <<"\n";
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//%%%%%%%%%%%%%%%%%%%%!GENERATION STARTS!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-     
-  // Start to generate electrons    
-    for (Int_t i=1; i<=Nevents; i++) {
+// Start to generate electrons    
+for (Int_t i=1; i<=Nevents; i++) {
     
 phi_e =ph_e_rndm.Uniform(phi_e_min,phi_e_max);
 z_EL = z_EL_rndm.Uniform(Targ_off  - Targ_len/2.,Targ_off  + Targ_len/2.);
@@ -256,125 +237,116 @@ phi_vert = phi_vert_rndm.Uniform(0.,6.28318);
 x_EL = r_vert*cos(phi_vert);
 y_EL = r_vert*sin(phi_vert);
 
-
 alph_hadr = alph_hadr_rndm.Uniform(0.,6.28318);
 ph_hadr = ph_hadr_rndm.Uniform(0.,6.28318);    
-    do {
-    
-    k++;
-    if ((k % 1000) == 0) cout  << "N generated = " << k << "; N accepted = " << i << "\n";
 
-    W = W_rndm.Uniform(W_min,W_max);
-    Q2 = Q2_rndm.Uniform(Q2_min,Q2_max);
+do {
+    
+k++;
+if ((k % 1000) == 0) cout  << "N generated = " << k << "; N accepted = " << i << "\n";
+
+W = W_rndm.Uniform(W_min,W_max);
+Q2 = Q2_rndm.Uniform(Q2_min,Q2_max);
   
-    nu=(W*W+Q2-MP*MP)/2./MP;
-    E_E_prime=E_beam-nu;
+nu=(W*W+Q2-MP*MP)/2./MP;
+E_E_prime=E_beam-nu;
 
-    } while ((nu > E_beam-E_eprime_min)||(isnan(acos(1.-Q2/E_beam/E_E_prime/2.)))||(isnan(acos((Q2+2.*E_beam*nu)/2./E_beam/(sqrt(Q2+nu*nu))))));
+} while ((nu > E_beam-E_eprime_min)||(isnan(acos(1.-Q2/E_beam/E_E_prime/2.)))||(isnan(acos((Q2+2.*E_beam*nu)/2./E_beam/(sqrt(Q2+nu*nu))))));
 
-    E_E_prime=E_beam-nu;
-    Theta_e_prime = acos(1.-Q2/E_beam/E_E_prime/2.);
+E_E_prime=E_beam-nu;
+Theta_e_prime = acos(1.-Q2/E_beam/E_E_prime/2.);
     
- //   cout << Theta_e_prime<< " mp\n";
-    P4_E_prime.SetXYZT(E_E_prime*cos(phi_e)*sin(Theta_e_prime),E_E_prime*sin(phi_e)*sin(Theta_e_prime),E_E_prime*cos(Theta_e_prime),E_E_prime);
+//The four-momentum of the scattered electron in the Lab frame 
+P4_E_prime.SetXYZT(E_E_prime*cos(phi_e)*sin(Theta_e_prime),E_E_prime*sin(phi_e)*sin(Theta_e_prime),E_E_prime*cos(Theta_e_prime),E_E_prime);
     
-    
-    E_beam_new = E_beam;
+E_beam_new = E_beam;
 
-    W_old = W;
-    Q2_old = Q2;
-    
-    Wnew = W;
-    Q2new = Q2;
- 
-    //Radiative effects
-    if ((flag_radmod == 1)||(flag_radmod == 2)){
+W_old = W;
+Q2_old = Q2;
+
+Wnew = W;
+W_ferm = W;
+Q2new = Q2;
+
+
+//Radiative effects
+if ((flag_radmod == 1)||(flag_radmod == 2)){
+
+radcorr(E_beam,Q2,W,Wnew,Q2new,E_beam_new,e_rad_phot,cr_rad_fact);
+h_eradgam->Fill(e_rad_phot,1.);
+W = Wnew;
+Q2 = Q2new;
+
+};//end if rad mode
    
-    radcorr(E_beam,Q2,W,Wnew,Q2new,E_beam_new,e_rad_phot,cr_rad_fact);
-    h_eradgam->Fill(e_rad_phot,1.);
-    W = Wnew;
-    Q2 = Q2new;
+//for rad_eff !!!
+P4_Eini_new.SetXYZT(0.,0.,E_beam_new, E_beam_new);
 
-    }; 
+E_E_prime_new = E_beam_new - (Wnew*Wnew+Q2new-MP*MP)/2./MP;
+
+//The four-momentum of the scattered electron in the Lab frame if rad eff happened   
+P4_E_prime_new.SetXYZT(E_E_prime_new*cos(phi_e)*sin(Theta_e_prime),E_E_prime_new*sin(phi_e)*sin(Theta_e_prime),E_E_prime_new*cos(Theta_e_prime),E_E_prime_new);
+
+E_beam_fermi = E_beam_new;
+
+//for fermi motion    
+if (flag_fermi == 1) {
+do {
+
+fermi_bonn();
+
+//The four-momentum of the moving initial proton in the Lab frame
+P4_Pini_fermi.SetXYZT(px_fermi,py_fermi,pz_fermi,sqrt(MP*MP+px_fermi*px_fermi+py_fermi*py_fermi+pz_fermi*pz_fermi));
+ 
+W_ferm = (P4_Pini_fermi + P4_Eini_new - P4_E_prime_new).Mag();
+  
+} while (W_ferm < 1.2375 );
+
+
+//for fermi motion
+fermi_rot(E_beam_fermi,theta_rot2,E_beam_new,P4_E_prime_new,P4_E_prime_boosted); 
+phi_e = P4_E_prime_boosted.Phi();
+W = W_ferm;
+h_e_beam_eff->Fill(W_ferm,1.);
+};
        
- //for rad_eff !!!
-    P4_Eini_new.SetXYZT(0.,0.,E_beam_new, E_beam_new);
-    E_E_prime_new = E_beam_new - (Wnew*Wnew+Q2new-MP*MP)/2./MP;
-                                          P4_E_prime_new.SetXYZT(E_E_prime_new*cos(phi_e)*sin(Theta_e_prime),E_E_prime_new*sin(phi_e)*sin(Theta_e_prime),E_E_prime_new*cos(Theta_e_prime),E_E_prime_new);
-    P4_gamma_test = P4_Eini_new - P4_E_prime_new;
-    
-// cout << P4_Eini_new[0]<<" "<< P4_Eini_new[1]<<" "<< P4_Eini_new[2]<<" "<< P4_Eini_new[3]<<" 1\n";  
-//cout << P4_E_prime_new[0]<<" "<< P4_E_prime_new[1]<<" "<< P4_E_prime_new[2]<<" "<< P4_E_prime_new[3]<<" 1\n";    
-//    cout << Q2<< " "<< P4_gamma_test.Mag2()<<"   ttt\n";
-    E_beam_fermi = E_beam_new;
-    
- if (flag_fermi == 1) {
-  do {
- //for fermi motion
-    fermi_bonn();
- 	 
-                          P4_Pini_fermi.SetXYZT(px_fermi,py_fermi,pz_fermi,sqrt(MP*MP+px_fermi*px_fermi+py_fermi*py_fermi+pz_fermi*pz_fermi));
-		     
- 
- // cout<<(P4_Pini_fermi + P4_Eini_new - P4_E_prime_new).Mag() <<" yyyyyyy \n";
- //for fermi motion
-   fermi_rot(E_beam_fermi,theta_rot2,phi_rot2,E_beam_new,P4_E_prime_new,P4_E_prime_boosted); 
-   
- 
-   P4_Eini_fermi.SetXYZT(0.,0.,E_beam_fermi,E_beam_fermi);
-   W_ferm = (P4_Pini_fermi + P4_Eini_new - P4_E_prime_new).Mag();
-     
-   phi_e = P4_E_prime_boosted.Phi();
+  
+//  W_tmp = W;
+// W = 1.6125;
+dummy_int = 0;
 
-   E_E_prime_new2 = E_beam_fermi - (W_ferm*W_ferm+Q2-MP*MP)/2./MP; 
-   Theta_e_prime2 = acos(1.-Q2/E_beam_fermi/E_E_prime_new2/2.);
-    P4_E_prime_new2.SetXYZT(E_E_prime_new2*cos(phi_e)*sin(Theta_e_prime2),E_E_prime_new2*sin(phi_e)*sin(Theta_e_prime2),E_E_prime_new2*cos(Theta_e_prime2),E_E_prime_new2);
+do {
 
- //  cout << P4_E_prime_new2[0] << " "<<  P4_E_prime_new2[1] << " "<<  P4_E_prime_new2[2] << " "<< P4_E_prime_new2[3] << " yy\n"; 
-    //  cout << P4_E_prime_boosted[0] << " "<<  P4_E_prime_boosted[1] << " "<<  P4_E_prime_boosted[2] << " "<< P4_E_prime_boosted[3] << " yyii\n"; 
-
-// } while (W_ferm < 1.22741 );
- } while (W_ferm < 1.2375 );
+s12 = s12_rndm.Uniform((M1+M2)*(M1+M2),(W-M3)*(W-M3));
+s23 = s23_rndm.Uniform((M2+M3)*(M2+M3),(W-M1)*(W-M1));
+inv_m12 = sqrt(s12);
+inv_m23 = sqrt(s23); 
 
 
- W = W_ferm;
+//this variables are calculated here for the check of correct near-boundaries generation - conditions in while (...)
+s13 = W*W+M1*M1+M2*M2+M3*M3-s12-s23;
+en1 = (W*W+M1*M1-s23)/2./W;
+en2 = (W*W+M2*M2-s13)/2./W;
+en3 = (W*W+M3*M3-s12)/2./W;
+mag1 = sqrt(en1*en1 - M1*M1);
+mag2 = sqrt(en2*en2 - M2*M2);
+mag3 = sqrt(en3*en3 - M3*M3);
 
-   };
-       
-     
-  //  W_tmp = W;
-   // W = 1.6125;
-    dummy_int = 0;
- 
-    do {
+dummy_int++;
 
-   s12 = s12_rndm.Uniform((M1+M2)*(M1+M2),(W-M3)*(W-M3));
-   s23 = s23_rndm.Uniform((M2+M3)*(M2+M3),(W-M1)*(W-M1));
-   inv_m12 = sqrt(s12);
-   inv_m23 = sqrt(s23); 
-   
-   
-   //this variables are calculated here for the check of correct near-boundaries generation - conditions in while (...)
-   s13 = W*W+M1*M1+M2*M2+M3*M3-s12-s23;
-   en1 = (W*W+M1*M1-s23)/2./W;
-   en2 = (W*W+M2*M2-s13)/2./W;
-   en3 = (W*W+M3*M3-s12)/2./W;
-   mag1 = sqrt(en1*en1 - M1*M1);
-   mag2 = sqrt(en2*en2 - M2*M2);
-   mag3 = sqrt(en3*en3 - M3*M3);
-   
-   
-   dummy_int++;
-
-
-    } while ((G_BYCKLING(inv_m12*inv_m12,inv_m23*inv_m23,W*W,M2*M2,M1*M1,M3*M3) > 0.)||(isnan(acos((M1*M1+M2*M2+2*en1*en2-s12)/2./mag1/mag2)))||(isnan(acos((M1*M1+M3*M3+2*en1*en3-s13)/2./mag1/mag3)))||(en1 < M1)||(en2 < M2)||(en3 < M3)||(sqrt(s13) < M1+M3)||(sqrt(s13)>W-M2));
-   
+} while ((G_BYCKLING(inv_m12*inv_m12,inv_m23*inv_m23,W*W,M2*M2,M1*M1,M3*M3) > 0.)||(isnan(acos((M1*M1+M2*M2+2*en1*en2-s12)/2./mag1/mag2)))||(isnan(acos((M1*M1+M3*M3+2*en1*en3-s13)/2./mag1/mag3)))||(en1 < M1)||(en2 < M2)||(en3 < M3)||(sqrt(s13) < M1+M3)||(sqrt(s13)>W-M2));
   
 
 th_hadr = acos(th_hadr_rndm.Uniform(-1.,1.));
-	
-Q2nodata = Q2;
 
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%!II. WEIGHTS CALCULATION!%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//Note that weights are calculated in assumption of the 2nd set of variables,i.e.
+//s12 -> s_pim_pip and s23 -> s_pip_pr
+
+Q2nodata = Q2;
 
 if (Q2 > 1.299)Q2 = 1.299;
 if (Q2 < 0.0005)Q2 = 0.0005;
@@ -388,9 +360,6 @@ sigma_s2f_final = 0.;
 sigma_cf_final = 0.;
 sigma_sf_final = 0.;
 };
-
-//%%%%%%%%%%%%%%%%%%%%%%WEIGHTS CALCULATION%%%%%%%%%%%%%%%%%%
-
 
 //Getting cross section in given generated (W, Q2, s12, s23, theta, alpha)-point
 sigma_total = 0.;
@@ -418,7 +387,7 @@ get_xsect_near_threshold(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_fin
 
 
 if ((W>=1.8375)&&(W<=2.5375)&&(Q2>0.00002)&&(Q2<1.3)) {
-get_xsect_q2_130_w_gt_18_lt_21(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
+get_xsect_q2_130_w_gt_18_lt_21(E_beam,Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
 };
 
 if ((W>=2.5875)&&(W<=3.0375)&&(Q2>0.00002)&&(Q2<1.3)) {
@@ -457,7 +426,7 @@ if ((Q2>0.00002)&&(Q2<=0.65)) get_xsect_14_18_lowq2_fit(Q2, 1.8125, s12,s23, th_
 
 if ((Q2>0.65)&&(Q2<=1.3)) get_xsect_ripani(Q2, 1.8125, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_2, sigma_l_final_2,sigma_c2f_final_2,sigma_s2f_final_2,sigma_cf_final_2,sigma_sf_final_2);
 
-get_xsect_q2_130_w_gt_18_lt_21(Q2, 1.8375, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_1, sigma_l_final_1, sigma_c2f_final_1,sigma_s2f_final_1,sigma_cf_final_1,sigma_sf_final_1); 
+get_xsect_q2_130_w_gt_18_lt_21(E_beam,Q2, 1.8375, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_1, sigma_l_final_1, sigma_c2f_final_1,sigma_s2f_final_1,sigma_cf_final_1,sigma_sf_final_1); 
 
 sigma_t_final = 1./0.025;
 sigma_t_final = sigma_t_final*(sigma_t_final_2*fabs(1.8375-W)+sigma_t_final_1*fabs(1.8125-W));
@@ -481,7 +450,7 @@ sigma_sf_final = sigma_sf_final*(sigma_sf_final_2*fabs(1.8375-W)+sigma_sf_final_
 
 
 if ((W>=2.5375)&&(W<=2.5875)&&(Q2>0.00001)&&(Q2<1.3)) {
-get_xsect_q2_130_w_gt_18_lt_21(Q2, 2.5375, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_2, sigma_l_final_2,sigma_c2f_final_2,sigma_s2f_final_2,sigma_cf_final_2,sigma_sf_final_2);
+get_xsect_q2_130_w_gt_18_lt_21(E_beam,Q2, 2.5375, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_2, sigma_l_final_2,sigma_c2f_final_2,sigma_s2f_final_2,sigma_cf_final_2,sigma_sf_final_2);
 
 get_xsect_25_30(Q2,2.5875, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final_1, sigma_l_final_1, sigma_c2f_final_1,sigma_s2f_final_1,sigma_cf_final_1,sigma_sf_final_1); 
  
@@ -586,7 +555,7 @@ sigma_total = sigma_total + sqrt(2.*eps_l*(eps_t+1))*(sigma_cf_final*cos(ph_hadr
 if ((isnan(sigma_total))||(isnan(V_flux))) cout<<W_old<< " "<<W<<" "<<Q2_old<< " "<< Q2<< sigma_total<<" "<<sigma_t_final<< " "<< sigma_l_final<<" "<< sigma_c2f_final<< " "<< eps_l<<" oo2\n";
 
 
-//Adding additional rad corr weight factor, is needed
+//Adding additional rad corr weight factor, if needed
 if ((flag_radmod == 1)||(flag_radmod == 2)) {
 sigma_total = sigma_total*cr_rad_fact;
 if ((isnan(sigma_total))||(isnan(cr_rad_fact))) cout<< sigma_total<<" "<<cr_rad_fact<<" oo\n";
@@ -621,87 +590,74 @@ V_flux = V_flux*W*(W*W-MP*MP);
 sigma_total = sigma_total*V_flux;    
 };
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//%%%%%%%Obtaining the final particle four-momenta in the lab frame%%%%%%%%%
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%!III. OBTAINING THE FINAL PARTICLE FOUR-MOMENTA IN THE LAB FRAME!%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 //   cout <<"qqq1  "<<th_hadr <<"  "<< ph_hadr <<"  "<<alph_hadr<<  "\n";
-    
+ 
     
 //Second set of varibles. FOR 1-PIM, 2-PIP, 3-P
 anti_rot(W, Q2, phi_e, E_beam_fermi, inv_m12, inv_m23, th_hadr, alph_hadr,  ph_hadr,  MPIM, MPIP, MP, P4_PIM, P4_PIP,  P4_Pfin);
   
- if (flag_fermi ==1) fermi_anti_rot(theta_rot2,phi_rot2,P4_PIM,P4_PIP, P4_Pfin,P4_E_prime_new2,P4_Eini_fermi); 
-  
-  
-// cout << P4_Eini_fermi[0]<<" "<< P4_Eini_fermi[1]<<" "<< P4_Eini_fermi[2]<<" "<< P4_Eini_fermi[3]<<" 2\n";
-//cout << P4_E_prime_new2[0]<<" "<< P4_E_prime_new2[1]<<" "<< P4_E_prime_new2[2]<<" "<< P4_E_prime_new2[3]<<" 2\n";
-
 //First set of varibles. FOR 1-P, 2-PIP, 3-PIM
-//anti_rot(W, Q2, phi_e, E_beam, inv_m12, inv_m23, th_hadr, alph_hadr,  ph_hadr, MP,MPIP, MPIM, P4_Pfin,P4_PIP, P4_PIM);
+//anti_rot(W, Q2, phi_e, E_beam_fermi, inv_m12, inv_m23, th_hadr, alph_hadr,  ph_hadr, MP,MPIP, MPIM, P4_Pfin,P4_PIP, P4_PIM);
    
 // Third set of variables. FOR 1-PIP, 2-PIM, 3-P 
-//anti_rot(W, Q2, phi_e, E_beam, inv_m12, inv_m23, th_hadr, alph_hadr,  ph_hadr, MPIP,MPIM, MP, P4_PIP,P4_PIM, P4_Pfin);
+//anti_rot(W, Q2, phi_e, E_beam_fermi, inv_m12, inv_m23, th_hadr, alph_hadr,  ph_hadr, MPIP,MPIM, MP, P4_PIP,P4_PIM, P4_Pfin);
 	
 //-------------------------------------------------------------------------------------  
     
 //This is transformation back-to-cms, which is needed here only for testing purposes.
 
 //Second set of varibles. FOR 1-PIM, 2-PIP, 3-P
-// rot(Q2, E_beam, P4_E_prime,P4_PIM, P4_PIP,  P4_Pfin, inv_m12, inv_m23, th_hadr, alph_hadr, ph_hadr);
-// rot(Q2, E_beam_fermi, P4_E_prime_new2,P4_PIM, P4_PIP,  P4_Pfin, inv_m12, inv_m23, th_hadr, alph_hadr, ph_hadr);
+if (flag_fermi ==0) rot(Q2,E_beam_fermi,P4_E_prime_new,P4_PIM,P4_PIP,P4_Pfin,inv_m12_tst, inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);
+if (flag_fermi ==1) rot(Q2,E_beam_fermi,P4_E_prime_boosted,P4_PIM,P4_PIP,P4_Pfin,inv_m12_tst, inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);
 
 //First set of varibles. FOR 1-P, 2-PIP, 3-PIM
-//rot(Q2, E_beam, P4_E_prime,P4_Pfin, P4_PIP,  P4_PIM, inv_m12, inv_m23, th_hadr, alph_hadr, ph_hadr);
+/*if (flag_fermi ==0) rot(Q2,E_beam_fermi,P4_E_prime_new,P4_Pfin,P4_PIP,P4_PIM,inv_m12_tst,inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);
+if (flag_fermi ==1) rot(Q2,E_beam_fermi,P4_E_prime_boosted,P4_Pfin,P4_PIP,P4_PIM,inv_m12_tst,inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);*/
   
-// Third set of variables. FOR 1-PIP, 2-PIM, 3-P
-// rot(Q2, E_beam, P4_E_prime,P4_PIP, P4_PIM,  P4_Pfin, inv_m12, inv_m23, th_hadr, alph_hadr, ph_hadr);
-  
- // cout <<"qqq2  "<<th_hadr <<"  "<< ph_hadr <<"  "<<alph_hadr<<  "\n";
+//Third set of variables. FOR 1-PIP, 2-PIM, 3-P
+/*if (flag_fermi ==0) rot(Q2,E_beam_fermi,P4_E_prime_new,P4_PIP,P4_PIM,P4_Pfin,inv_m12_tst,inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);
+if (flag_fermi ==1) rot(Q2,E_beam_fermi,P4_E_prime_boosted,P4_PIP,P4_PIM,P4_Pfin,inv_m12_tst,inv_m23_tst,th_hadr_tst,alph_hadr_tst,ph_hadr_tst);*/
 
-       	
+//test
+//if ((fabs(th_hadr-th_hadr_tst)>0.001)||(fabs(ph_hadr-ph_hadr_tst)>0.001)||(fabs(alph_hadr-alph_hadr_tst)>0.001)) cout <<"ALARM!  Four-momenta of the final particles are probably WRONG!\n";     
+if (fabs(th_hadr-th_hadr_tst)>0.001) cout <<"ALARM!  Four-momenta of the final particles are probably WRONG!\n";
+ 
+// cout <<"qqq2  "<<th_hadr_tst <<"  "<< ph_hadr_tst <<"  "<<alph_hadr_tst<<  "\n";
+//------------------------------------------------------------
+
+//In the Fermi mode - transformation of the momenta form quasiLab to Lab
+if (flag_fermi ==1) fermi_anti_rot(W,Q2,E_beam_new,E_beam_fermi, phi_e,theta_rot2,P4_PIM,P4_PIP, P4_Pfin,P4_E_prime_new);
+
 	
-	//do not remove. this is the nan-check before writing all momenta to output file
-	if ((isnan(P4_E_prime[0]))||(isnan(P4_E_prime[1]))||(isnan(P4_E_prime[2]))||(isnan(P4_E_prime[3]))) cout << P4_E_prime[0]<< " "<< P4_E_prime[1]<< " "<<P4_E_prime[2]<< " "<<P4_E_prime[3]<<" "<<W<<" "<<Q2<< " final electron is nan \n";
+//do not remove. this is the nan-check before writing all momenta to the output file
+if ((isnan(P4_E_prime[0]))||(isnan(P4_E_prime[1]))||(isnan(P4_E_prime[2]))||(isnan(P4_E_prime[3]))) cout << P4_E_prime[0]<< " "<< P4_E_prime[1]<< " "<<P4_E_prime[2]<< " "<<P4_E_prime[3]<<" "<<W<<" "<<Q2<< " final electron is nan \n";
 	
-	if ((isnan(P4_Pfin[0]))||(isnan(P4_Pfin[1]))||(isnan(P4_Pfin[2]))||(isnan(P4_Pfin[3]))) cout << P4_Pfin[0]<< " "<< P4_Pfin[1]<< " "<<P4_Pfin[2]<< " "<<P4_Pfin[3]<<" "<<W<<" "<<Q2<< " final proton is nan \n";
+if ((isnan(P4_Pfin[0]))||(isnan(P4_Pfin[1]))||(isnan(P4_Pfin[2]))||(isnan(P4_Pfin[3]))) cout << P4_Pfin[0]<< " "<< P4_Pfin[1]<< " "<<P4_Pfin[2]<< " "<<P4_Pfin[3]<<" "<<W<<" "<<Q2<< " final proton is nan \n";
 	
-	if ((isnan(P4_PIP[0]))||(isnan(P4_PIP[1]))||(isnan(P4_PIP[2]))||(isnan(P4_PIP[3]))) cout << P4_PIP[0]<< " "<< P4_PIP[1]<< " "<<P4_PIP[2]<< " "<<P4_PIP[3]<<" "<<W<<" "<<Q2<< " pip is nan \n";
+if ((isnan(P4_PIP[0]))||(isnan(P4_PIP[1]))||(isnan(P4_PIP[2]))||(isnan(P4_PIP[3]))) cout << P4_PIP[0]<< " "<< P4_PIP[1]<< " "<<P4_PIP[2]<< " "<<P4_PIP[3]<<" "<<W<<" "<<Q2<< " pip is nan \n";
 		
-	if ((isnan(P4_PIM[0]))||(isnan(P4_PIM[1]))||(isnan(P4_PIM[2]))||(isnan(P4_PIM[3]))) cout << P4_PIM[0]<< " "<< P4_PIM[1]<< " "<<P4_PIM[2]<< " "<<P4_PIM[3]<<" "<<W<<" "<<Q2<< " pim is nan \n";
+if ((isnan(P4_PIM[0]))||(isnan(P4_PIM[1]))||(isnan(P4_PIM[2]))||(isnan(P4_PIM[3]))) cout << P4_PIM[0]<< " "<< P4_PIM[1]<< " "<<P4_PIM[2]<< " "<<P4_PIM[3]<<" "<<W<<" "<<Q2<< " pim is nan \n";
 	
 	
-//	cout << i<<" "<<x_EL<<" "<<y_EL<<" "<<z_EL<<" ixyz\n";
 
-
-//writing generated events into desired input file
-out_file_write(i,sigma_total, W, Q2,  P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,z_EL,x_EL,y_EL);
+//writing generated events into the desired input file+filling the root-tree with weights
+out_file_fill(i,sigma_total, W, Q2,  P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,z_EL,x_EL,y_EL);
 
 //filling out histograms   
-hist_fill(E_beam,W,W_old,Q2,Q2_old,phi_e,z_EL,s12,s23, th_hadr,alph_hadr,ph_hadr,sigma_t_final,sigma_l_final,eps_l,sigma_total,P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,P4_Eini_new,P4_Eini_fermi,P4_E_prime_new,P4_E_prime_new2);
-
-
-//filling the root tree with the cross section weight and components of the fermi momentum
- p_el_test = (P4_E_prime.Vect()).Mag();
- t21->Fill();  
+hist_fill(E_beam,W,W_old,Q2,Q2_old,phi_e,z_EL,s12,s23, th_hadr,alph_hadr,ph_hadr,sigma_t_final,sigma_l_final,eps_l,sigma_total,P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,P4_Eini_new,P4_E_prime_new);
   
-    };//end event-loop
+};//end event-loop
     
-  
-//Writing root tree  
-    TFile *outFile = new TFile("tree_sigma.root","recreate");
-    outFile->cd();
-    t21->Write("", TObject::kOverwrite);
-    outFile->Write();
-    outFile->Close();
-    t21->Delete(); 
+    
+//closing output file including root-tree with weights
+out_file_close();
 
-    
-    //closing output file
-    out_file_close();
-    
-   //Writing histograms into the root tree 
-    hist_write();
+//Writing histograms into the root file 
+hist_write();
     
   
 /*for (Short_t j=0;j<=26;j++){

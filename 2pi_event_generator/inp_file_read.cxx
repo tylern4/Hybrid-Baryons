@@ -150,6 +150,7 @@ getline (cin,qqq);
    getline (cin,qqq);
     qqq = qqq.substr(0, qqq.find(" ",0));
     flag_bos= atof(qqq.c_str());
+#ifdef BOS    
         switch (flag_bos) {
     case 0:  cout << "Ouput BOS flag  " << flag_bos << "  - no BOS output" << "\n";
     break;
@@ -158,8 +159,14 @@ getline (cin,qqq);
      case 2:  cout << "Ouput BOS flag  " << flag_bos << "  -  output with PART bank" << "\n";
     break;    
     };    
-    
-   
+#endif    
+  
+#ifndef BOS
+if (!(flag_bos==0)){
+flag_bos=0;
+cout << "Ouput BOS flag  " << flag_bos << "  - no BOS output by default (for BOS output compile make bos) " << "\n";
+};
+#endif     
     
    getline (cin,qqq);
     out_bos_file = qqq.substr(0, qqq.find(" ",0));
@@ -175,7 +182,8 @@ getline (cin,qqq);
     break;
     };
 
-    
+
+ 
      getline (cin,qqq);
     out_lund_file = qqq.substr(0, qqq.find(" ",0));
     cout << "LUND output file name " << out_lund_file <<"\n";
@@ -213,6 +221,9 @@ getline (cin,qqq);
      case 1:  cout << "Flux flag " << flag_flux << "  -  under influence of electrons (like data)" << "\n";
     break;
     };
+    
+if((!(flag_radmod == 0))&&(flag_fermi==1))   cout <<"\nCAUTION! Fermi mode flag = "<<  flag_fermi<<" and Rad mode flag = "<<flag_radmod<<".\nIn this EG these two modes are combined naively. It is recommended to use TWOPEG-D version, where Fermi mode and Rad mode are combined properly.\n";
+//It is not recommended to combine these two modes in this EG. If you want to combine Fermi mode with Rad mode properly, please, use TWOPEG-D version. See TWOPEG-CLAS-NOTE for detailes.
 cout<<"\n";    
 cout <<"----------------------------------------\n";
 cout<<"\n";    

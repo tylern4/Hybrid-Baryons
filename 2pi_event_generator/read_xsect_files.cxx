@@ -298,7 +298,7 @@ Q2_ARR[2] = 1.30;
 //Float_t dtheta = (THETA_ARR[5] - THETA_ARR[0])/5.;
 
 
-cout<<"Reading Ripani cross sections \n";
+cout<<"Reading Ripani   cross sections \n";
 //loop over files for Ripani
 for (Short_t i=0; i<=50; i++) {
 
@@ -2637,7 +2637,7 @@ SIGMA_ARR_FED[i][6][11][is23-1][is12-1][itheta-1][ialpha-1] = 0.;
 };
 
 
-cout<<"Reading Fedotov cross sections \n";
+cout<<"Reading Fedotov  cross sections \n";
 
 for (Short_t i=0; i<=55; i++) {
 
@@ -2851,7 +2851,7 @@ if ((q2bin==6)&&(wbin==4)) SIGMA_ARR_FED[j][q2bin][wbin][is23-1][is12-1][itheta-
 };
 
 
-cout<< "Reading model cross sections at Q2 = 1.3 GeV2 \n";
+cout<< "Reading model    cross sections at Q2 = 1.3 GeV2 \n";
 for (Short_t i=0; i<=20; i++) {
 wbin = i;
 

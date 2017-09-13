@@ -5,38 +5,20 @@
 #include "TFile.h"
 #include "TLine.h"
 #include "TTree.h"
-#include "TH1.h"
-#include "TH2.h"
-#include "TH3.h"
-#include "TF1.h"
-#include "TF2.h"
-#include "TF3.h"
-#include "TMacro.h"
-#include "TCanvas.h"
-#include "TVirtualFitter.h"
 #include "TMath.h"
 #include <math.h>
-#include <TLorentzVector.h>
-#include "TGraphErrors.h"
-#include "TGraph.h"
 #include "TH1F.h"
 #include "TH1D.h"
 #include "TH2F.h"
 #include "TH2D.h"
 #include "TH3F.h"
-#include "THnSparse.h"
-#include "TText.h"
-#include "TStyle.h"
-#include "TGObject.h"
-#include "TObject.h"
-#include "TSystem.h"
-#include "TMinuit.h"
 #include <TRint.h>
 #include <stdio.h>
 #include <dlfcn.h>
 
 
 #endif
+extern    TH1F *h_e_beam_eff;
 extern    TH1F *h_W;
 extern    TH1F *h_Q2;
 extern    TH1F *h_phi_e;
@@ -53,12 +35,6 @@ extern    TH1F *h_0_miss;
 extern    TH1F *h_pim_miss;
 extern    TH1F *h_0_miss_2;
 extern    TH1F *h_pim_miss_2;
-extern    TH1F *h_0_miss_fermi;
-extern    TH1F *h_pim_miss_fermi;
-extern    TH1F *h_0_miss_fermi_2;
-extern    TH1F *h_pim_miss_fermi_2;
-extern    TH1F *h_0_miss_en_fermi;
-extern    TH1F *h_0_miss_en_fermi_2;
 extern    TH1F *h_fermi_bonn;
 extern    TH1F *h_0_miss_en;
 extern    TH1F *h_0_miss_en_2;
