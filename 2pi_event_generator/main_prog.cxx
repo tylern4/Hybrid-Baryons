@@ -164,24 +164,28 @@ read_fit_param_files();
     P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
  
      
-   //Reasonably changing kinematical variables if needed
-    if (Q2_max > 4.*E_beam*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.)) {
-    Q2_max = 4.*E_beam*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.);
-    cout << "maximum Q2 has been changed to " << Q2_max << "\n";
-    };
+   //Reasonably changing max&min limits of kinematical variables if needed
+    
     if (Q2_min < 4.*E_beam*E_eprime_min*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.)) {
     Q2_min = 4.*E_beam*E_eprime_min*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.);
     cout << "minimum Q2 has been changed to " << Q2_min << "\n";
-    };   
-    if (W_max*W_max > (MP*MP+2.*MP*(E_beam-E_eprime_min) - Q2_min)) {
-    W_max = sqrt(MP*MP+2.*MP*(E_beam-E_eprime_min)- Q2_min);
+    }; 
+     if (W_min < (1.2375)) {
+    W_min = 1.2375;
+    cout << "minimum W has been changed to " << W_min << "\n";
+    };  
+    
+  
+    if (W_max*W_max > (2*E_beam*(2*E_beam*MP+MP*MP)-Q2_min*(MP+2*E_beam))/2/E_beam) {
+    W_max = sqrt((2*E_beam*(2*E_beam*MP+MP*MP)-Q2_min*(MP+2*E_beam))/2/E_beam);
     cout << "maximum W has been changed to " << W_max << "\n";
     };
-    if (W_min < (MP + MPIP + MPIM + 0.01)) {
-    W_min = MP + MPIP + MPIM + 0.01;
-    cout << "minimum W has been changed to " << W_min << "\n";
+       
+    if (Q2_max > 2*E_beam*(2*E_beam*MP-W_min+MP*MP)/(MP+2*E_beam)) {
+    Q2_max = 2*E_beam*(2*E_beam*MP-W_min*W_min+MP*MP)/(MP+2*E_beam);
+    cout << "maximum Q2 has been changed to " << Q2_max << "\n";
     };
-    
+     
     
     
 //Defining some histograms

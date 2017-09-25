@@ -1,6 +1,6 @@
 1000000       // Number of events to be generated
 2.039      // Beam energy (GeV)
-1.7            // W minimum (GeV) 
+1.4            // W minimum (GeV) 
 1.7           // Wmaximum (GeV)
 0.4       // Q2 minimum (GeV^2)
 0.5     // Q2 maximum (GeV^2)
@@ -19,7 +19,7 @@
 8.897, 8.897    // Radiation length of target windows initial,final (cm)
 13, 13           // Target windows Z initial, final
 27, 27           // Target windows A initial, final
-1                  // Output BOS file 0 - no, 1 - MCTK,MCVX banks, 2 - PART bank
+0                  // Output BOS file 0 - no, 1 - MCTK,MCVX banks, 2 - PART bank
 out.bos         // BOS output file name
 0                 // Otput LUND file 0 - no, 1 - yes
 out.lund        // LUND output file name
