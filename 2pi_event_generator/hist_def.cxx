@@ -106,7 +106,7 @@ h_phi_e = new TH1F("phi_e","phi_e",100,phi_e_min,phi_e_max);
 h_zel = new TH1F("Z_EL","Z_EL",100,Targ_off-Targ_len/2.-1.,Targ_off+Targ_len/2.+1.);
 h_nu = new TH1F("nu","nu",100,-1.*E_beam,E_beam);
 
-h_Q2vsW = new TH2F("Q2vsW","Q2vsWW",69,W_min,W_max,4,Q2_min,Q2_max);
+h_Q2vsW = new TH2F("Q2vsW","Q2vsWW",100,W_min,W_max,100,Q2_min,Q2_max);
 h_Q2vsW2 = new TH2F("Q2vsW2","Q2vsWW2",69,W_min,W_max,4,Q2_min,Q2_max);
 h_dalitz = new TH2F("dalitz","dalitz",100,MPIM+MPIP,W_max-MP,100,MPIP+MP,W_max-MPIM);
 

@@ -97,7 +97,7 @@ global();
     
     Float_t E_beam, E_beam_fermi, theta_rot2,E_E_prime_ferm,Theta_e_prime_ferm,W_ferm;
     Float_t Wnew, Q2new, E_beam_new, W_tmp;
-    Float_t W,Q2,phi_e,W_old,Q2nodata,Q2_old;
+    Float_t W,Q2,phi_e,W_old,Q2nodata,Q2_old, Q2lim1, Q2lim2;
     Float_t nu,E_E_prime,Theta_e_prime,E_E_prime_new;
     Float_t M1,M2,M3;
     Float_t inv_m12,inv_m23,inv_m13,th_hadr,alph_hadr,ph_hadr,s12,s23,s13,en1,en2,en3,mag1,mag2,mag3; 
@@ -157,7 +157,7 @@ Me= part1->Mass();
 inp_file_read(E_beam);
 //Reading diff cross section from the tables in .dat files (filling out GLOBAL arrays)
 read_xsect_files();
-//Reading fit parameterms, which are needed for cross section exprapolation
+//Reading fit parameterms, which are needed for cross section extrapolation
 read_fit_param_files();
    
     P4_Pini.SetXYZT(0.,0.,0.,MP); 
@@ -166,27 +166,42 @@ read_fit_param_files();
      
    //Reasonably changing max&min limits of kinematical variables if needed
     
-    if (Q2_min < 4.*E_beam*E_eprime_min*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.)) {
-    Q2_min = 4.*E_beam*E_eprime_min*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.);
-    cout << "minimum Q2 has been changed to " << Q2_min << "\n";
-    }; 
      if (W_min < (1.2375)) {
     W_min = 1.2375;
     cout << "minimum W has been changed to " << W_min << "\n";
-    };  
+    }; 
+      
+    if (W_max*W_max > MP*MP +2.*MP*(E_beam - E_eprime_min)) {
+    W_max = sqrt(MP*MP +2.*MP*(E_beam - E_eprime_min));
+    };
+    
+    Q2lim1 = 2*E_beam*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.);
+    Q2lim1 = Q2lim1*(2*E_beam*MP-W_max*W_max+MP*MP);
+    Q2lim1 = Q2lim1/(MP+2*E_beam*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.));
+    
+    if (Q2_min < Q2lim1) {
+    Q2_min =Q2lim1;
+    cout << "minimum Q2 has been changed to " << Q2_min << "\n";
+    };
+ 
+   
+    Q2lim2 = 2*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.);
+    Q2lim2 = Q2lim2*(2*E_beam*MP-W_min*W_min+MP*MP);
+    Q2lim2 = Q2lim2/(MP+2*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.));
     
   
-    if (W_max*W_max > (2*E_beam*(2*E_beam*MP+MP*MP)-Q2_min*(MP+2*E_beam))/2/E_beam) {
-    W_max = sqrt((2*E_beam*(2*E_beam*MP+MP*MP)-Q2_min*(MP+2*E_beam))/2/E_beam);
-    cout << "maximum W has been changed to " << W_max << "\n";
-    };
-       
-    if (Q2_max > 2*E_beam*(2*E_beam*MP-W_min+MP*MP)/(MP+2*E_beam)) {
-    Q2_max = 2*E_beam*(2*E_beam*MP-W_min*W_min+MP*MP)/(MP+2*E_beam);
+    if (Q2_max > Q2lim2) {
+    Q2_max = Q2lim2;
     cout << "maximum Q2 has been changed to " << Q2_max << "\n";
     };
      
-    
+   
+    if (W_max*W_max > MP*MP +2.*MP*(E_beam - E_eprime_min) -Q2_min) {
+    W_max = sqrt(MP*MP +2.*MP*(E_beam - E_eprime_min) -Q2_min);
+    cout << "maximum W has been changed to " << W_max << "\n";
+    };
+  
+
     
 //Defining some histograms
 hist_def(E_beam);
@@ -255,8 +270,17 @@ Q2 = Q2_rndm.Uniform(Q2_min,Q2_max);
 nu=(W*W+Q2-MP*MP)/2./MP;
 E_E_prime=E_beam-nu;
 
-} while ((nu > E_beam-E_eprime_min)||(isnan(acos(1.-Q2/E_beam/E_E_prime/2.)))||(isnan(acos((Q2+2.*E_beam*nu)/2./E_beam/(sqrt(Q2+nu*nu))))));
+    Q2lim1 = 2*E_beam*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.);
+    Q2lim1 = Q2lim1*(2*E_beam*MP-W*W+MP*MP);
+    Q2lim1 = Q2lim1/(MP+2*E_beam*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.));
 
+    Q2lim2 = 2*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.);
+    Q2lim2 = Q2lim2*(2*E_beam*MP-W*W+MP*MP);
+    Q2lim2 = Q2lim2/(MP+2*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.));
+    
+} while ((nu>E_beam-E_eprime_min)||(Q2>Q2lim2)||(Q2<Q2lim1)||(isnan(acos((Q2+2.*E_beam*nu)/2./E_beam/(sqrt(Q2+nu*nu))))));
+
+//isnan(acos(1.-Q2/E_beam/E_E_prime/2.))
 E_E_prime=E_beam-nu;
 Theta_e_prime = acos(1.-Q2/E_beam/E_E_prime/2.);
     
