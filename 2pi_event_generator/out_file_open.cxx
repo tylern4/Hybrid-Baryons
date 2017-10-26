@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "global.h"
-
+#include "TTree.h"
 #include <sys/stat.h>
-
 #include <sstream>
 #include <fstream>
+#include <iomanip>
+#include <math.h>
  using namespace std;
 
 int out_file_open() {
@@ -23,7 +24,7 @@ remove(out_bos_file.c_str());
 char mess[256];
 initbos();
 bankList( &bcs_, "E=", "HEADPARTMCTKMCVXMCEV" );
-printf( mess, "OPEN BOSOUTPUT UNIT=1 FILE=\"%s\" WRITE STATUS=NEW RECL=3600", out_bos_file.c_str() );
+sprintf( mess, "OPEN BOSOUTPUT UNIT=1 FILE=\"%s\" WRITE STATUS=NEW RECL=3600", out_bos_file.c_str() );
      fparm_c( mess );
 };//end of BOS output flag check
 #endif     
