@@ -330,7 +330,7 @@ E_beam_fermi = E_beam_new;
 if (flag_fermi == 1) {
 do {
 
-fermi_bonn(fermi_R_rndm.Uniform(0.,1.),fermi_R1_rndm.Uniform(0.,1.),fermi_theta_rndm.Uniform(-1.,1.),fermi_phi_rndm.Uniform(0.,2.*M_PI));
+fermi_bonn(fermi_R_rndm.Uniform(0.,0.9999679),fermi_R1_rndm.Uniform(0.,1.),fermi_theta_rndm.Uniform(-1.,1.),fermi_phi_rndm.Uniform(0.,2.*M_PI));
 
 
 //The four-momentum of the moving initial proton in the Lab frame
