@@ -243,7 +243,15 @@ srand (time(NULL));
  TRandom3 ph_hadr_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));	   
  TRandom3 r_vert_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
  TRandom3 phi_vert_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
- 
+//This is for Fermi motion only 
+ TRandom3 fermi_R_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
+ TRandom3 fermi_R1_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
+ TRandom3 fermi_theta_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
+ TRandom3 fermi_phi_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.)); 
+//This is for radeff 
+ TRandom3 phot_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.)); 
+ TRandom3 hardini_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.));
+ TRandom3 hardfin_rndm(UInt_t(((float) rand() / (float)(RAND_MAX))*4000000000.)); 
  
 // Start to generate electrons    
 for (Int_t i=1; i<=Nevents; i++) {
@@ -300,7 +308,8 @@ Q2new = Q2;
 //Radiative effects
 if ((flag_radmod == 1)||(flag_radmod == 2)){
 
-radcorr(E_beam,Q2,W,Wnew,Q2new,E_beam_new,e_rad_phot,cr_rad_fact);
+
+radcorr(phot_rndm.Uniform(0.,1.),hardini_rndm.Uniform(0.,1.),hardfin_rndm.Uniform(0.,1.), E_beam,Q2,W,Wnew,Q2new,E_beam_new,e_rad_phot,cr_rad_fact);
 h_eradgam->Fill(e_rad_phot,1.);
 W = Wnew;
 Q2 = Q2new;
@@ -321,7 +330,8 @@ E_beam_fermi = E_beam_new;
 if (flag_fermi == 1) {
 do {
 
-fermi_bonn();
+fermi_bonn(fermi_R_rndm.Uniform(0.,1.),fermi_R1_rndm.Uniform(0.,1.),fermi_theta_rndm.Uniform(-1.,1.),fermi_phi_rndm.Uniform(0.,2.*M_PI));
+
 
 //The four-momentum of the moving initial proton in the Lab frame
 P4_Pini_fermi.SetXYZT(px_fermi,py_fermi,pz_fermi,sqrt(MP*MP+px_fermi*px_fermi+py_fermi*py_fermi+pz_fermi*pz_fermi));
@@ -657,10 +667,10 @@ if (fabs(th_hadr-th_hadr_tst)>0.001) cout <<"ALARM!  Four-momenta of the final p
 // cout <<"qqq2  "<<th_hadr_tst <<"  "<< ph_hadr_tst <<"  "<<alph_hadr_tst<<  "\n";
 //------------------------------------------------------------
 
-//In the Fermi mode - transformation of the momenta form quasiLab to Lab
+//In the Fermi mode - transformation of the momenta from quasiLab to Lab
 if (flag_fermi ==1) fermi_anti_rot(W,Q2,E_beam_new,E_beam_fermi, phi_e,theta_rot2,P4_PIM,P4_PIP, P4_Pfin,P4_E_prime_new);
 
-	
+//cout << phi_e<<" ppp\n";	
 //do not remove. this is the nan-check before writing all momenta to the output file
 if ((isnan(P4_E_prime[0]))||(isnan(P4_E_prime[1]))||(isnan(P4_E_prime[2]))||(isnan(P4_E_prime[3]))) cout << P4_E_prime[0]<< " "<< P4_E_prime[1]<< " "<<P4_E_prime[2]<< " "<<P4_E_prime[3]<<" "<<W<<" "<<Q2<< " final electron is nan \n";
 	
@@ -670,7 +680,7 @@ if ((isnan(P4_PIP[0]))||(isnan(P4_PIP[1]))||(isnan(P4_PIP[2]))||(isnan(P4_PIP[3]
 		
 if ((isnan(P4_PIM[0]))||(isnan(P4_PIM[1]))||(isnan(P4_PIM[2]))||(isnan(P4_PIM[3]))) cout << P4_PIM[0]<< " "<< P4_PIM[1]<< " "<<P4_PIM[2]<< " "<<P4_PIM[3]<<" "<<W<<" "<<Q2<< " pim is nan \n";
 	
-	
+//cout << P4_PIP.Phi()<<" oo\n";	
 
 //writing generated events into the desired input file+filling the root-tree with weights
 out_file_fill(i,sigma_total, W, Q2,  P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,z_EL,x_EL,y_EL);

@@ -2,8 +2,7 @@
 #define FERMI_BONN_H
 
 
-
-void fermi_bonn();
+void fermi_bonn(Double_t R, Double_t R1, Double_t th_cos,Double_t ph);
 
 
 

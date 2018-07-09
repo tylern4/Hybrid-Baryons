@@ -2,6 +2,7 @@
 #define GLOBAL_H
 #include "TTree.h"  
 
+#ifdef BOS
 extern "C" 
 {     
 #include <signal.h>
@@ -34,7 +35,7 @@ extern "C"
    extern   BOSbank bcs_ ;
    extern  BOSbank wcs_ ; 
 }
- 
+#endif  
   using namespace std;  
 
 extern TTree*t21 ;
