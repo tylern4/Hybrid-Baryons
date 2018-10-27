@@ -121,7 +121,7 @@ if ( ( MCVX = (clasMCVX_t*)makeBank( &bcs_, "MCVX", 0, sizeof(mcvx_t)/4, 1 ) ) )
       MCVX->mcvx[0].tof = 0.;
       MCVX->mcvx[0].flag = 0;
     }    //end MCVX bank creation   
-};//end if flag_bos==1
+}//end if flag_bos==1
 
 //-------------------------------------------------
 
@@ -194,12 +194,12 @@ if ( ( PART = (clasPART_t*)makeBank( &bcs_, "PART", 0, sizeof(part_t)/4, 4) ) )
     PART->part[3].flags = 0.; 
             
     }  //end PART bank creation     
-};//end if flag_bos==2
+}//end if flag_bos==2
 
 putBOS( &bcs_, 1, "E" );
 dropAllBanks( &bcs_, "E");
 cleanBanks( &bcs_ );
-};//end if ((flag_bos == 1)||(flag_bos == 2))
+}//end if ((flag_bos == 1)||(flag_bos == 2))
 #endif
       
 
@@ -228,13 +228,13 @@ out_lund_stream <<"4  1.  1.  0  0  "<<i<< "  0  "<<std::fixed<<std::setprecisio
        out_lund_stream <<P4_3[1]<<"  "<<P4_3[2]<<"  "<<P4_3[3]<<"  ";
        out_lund_stream <<"0.1396  0.0000  0.0000  "<<z_EL<<"\n";
        
-    };       
+    }       
     
 //III. Filling the root tree with the cross section weights and components of the fermi momentum
 p_el_test = (P4_E.Vect()).Mag();
 t21->Fill();
 
- };
+ }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //This subroutine fills the histogram, which are needed for illustrative and testing puposes. 
@@ -304,7 +304,7 @@ h_odn_inv_m12[int((W_old-1.225)/0.025)]->Fill(sqrt(s12),sigma_total);
 h_odn_inv_m23[int((W_old-1.225)/0.025)]->Fill(sqrt(s23),sigma_total);
 h_odn_alpha[int((W_old-1.225)/0.025)]->Fill(alph_hadr,sigma_total);
 h_odn_theta[int((W_old-1.225)/0.025)]->Fill(th_hadr,sigma_total);
-};
+}
 
 //Single-fold differentil yield for 2.1625 < W < 3.0375 GeV.  
 if ((W>=2.1625)&&(W<=3.0375)&&(Q2>=0.0001)&&(Q2<=1.3))  {
@@ -312,7 +312,7 @@ h_odn_wwide_inv_m12[int((W-2.1625)/0.05)]->Fill(sqrt(s12),sigma_total);
 h_odn_wwide_inv_m23[int((W-2.1625)/0.05)]->Fill(sqrt(s23),sigma_total);
 h_odn_wwide_alpha[int((W-2.1625)/0.05)]->Fill(alph_hadr,sigma_total);
 h_odn_wwide_theta[int((W-2.1625)/0.05)]->Fill(th_hadr,sigma_total);
-};
+}
 
 //Single-fold differentil yield for 3.0875 < W < 4.5375 GeV.  
 if ((W>=3.0875)&&(W<=4.5375)&&(Q2>=0.0001))  {
@@ -320,7 +320,7 @@ h_odn_wgt3_inv_m12[int((W-3.0875)/0.1)]->Fill(sqrt(s12),sigma_total);
 h_odn_wgt3_inv_m23[int((W-3.0875)/0.1)]->Fill(sqrt(s23),sigma_total);
 h_odn_wgt3_alpha[int((W-3.0875)/0.1)]->Fill(alph_hadr,sigma_total);
 h_odn_wgt3_theta[int((W-3.0875)/0.1)]->Fill(th_hadr,sigma_total);
-};
+}
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       
 //Integral w-yield for 0.1< Q2 < 1.3 GeV2.   
@@ -329,7 +329,7 @@ h_odn_w_dep_t[int((Q2-0.1)/0.1)]->Fill(W,sigma_t_final);
 h_odn_w_dep_l[int((Q2-0.1)/0.1)]->Fill(W,eps_l*sigma_l_final);
 h_odn_w_dep_l2[int((Q2-0.1)/0.1)]->Fill(W,sigma_l_final);
 h_odn_w_dep_tot[int((Q2-0.1)/0.1)]->Fill(W,sigma_total); 
-};
+}
    
 //Integral q2-yield for 1.25< Q2 < 2.075 GeV2.    
 if ((W>1.25)&&(W<=2.075))  { 
@@ -337,26 +337,26 @@ h_odn_q2_dep_t[int((W-1.25)/0.025)]->Fill(Q2,sigma_t_final);
 h_odn_q2_dep_l[int((W-1.25)/0.025)]->Fill(Q2,eps_l*sigma_l_final);
 h_odn_q2_dep_l2[int((W-1.25)/0.025)]->Fill(Q2,sigma_l_final);
 h_odn_q2_dep_tot[int((W-1.25)/0.025)]->Fill(Q2,sigma_total);
-};
+}
      
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       
 /*
 if ((Q2>=0.00049)&&(Q2<=0.00051))  {
 h_int_crsect_t[0]->Fill(W,xsect_int_test_t);
 h_int_crsect_l[0]->Fill(W,xsect_int_test_l);
-};
+}
           
 if ((Q2>=0.0005)&&(Q2<=1.2505))  {
 h_int_crsect_t[int((Q2-0.0005)/0.05)+1]->Fill(W,xsect_int_test_t);
 h_int_crsect_l[int((Q2-0.0005)/0.05)+1]->Fill(W,xsect_int_test_l);
-};
+}
           
 if ((Q2>=1.29)&&(Q2<=1.3))  {
 h_int_crsect_t[26]->Fill(W,xsect_int_test_t);
 h_int_crsect_l[26]->Fill(W,xsect_int_test_l);
-};  */ 
+}  */ 
 
-};
+}
 
 
  

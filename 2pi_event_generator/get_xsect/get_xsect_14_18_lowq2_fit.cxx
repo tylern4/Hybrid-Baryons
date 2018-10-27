@@ -21,7 +21,7 @@ Float_t eps_l = Q2*eps_t/nu/nu;
 
 //cout << E_beam<<" "<<W<<" "<<Q2<<" "<<nu<<" "<<theta_el<<" " <<Q2/E_beam/(E_beam - nu)/2 <<" "<<eps_t<<" "<< eps_l << "\n";
 return eps_l;
-};
+}
 
 Float_t getEpsT (Float_t E_beam, Float_t W, Float_t Q2) {
 
@@ -30,7 +30,7 @@ Float_t theta_el = acos(1.- Q2/E_beam/(E_beam - nu)/2.);
 Float_t eps_t = 1./(1.+ 2.*(1. + nu*nu/Q2)*tan(theta_el/2.)*tan(theta_el/2.));
 Float_t eps_l = Q2*eps_t/nu/nu;
 return eps_t;
-};
+}
 
 
 
@@ -38,7 +38,7 @@ return eps_t;
 Float_t func_sigma_t (Float_t  x, Short_t wbin) {
 Float_t func = pow((x+FIT_PARAM_SIGMA_T[0][wbin]), FIT_PARAM_SIGMA_T[1][wbin])*FIT_PARAM_SIGMA_T[2][wbin]+FIT_PARAM_SIGMA_T[3][wbin];
 return func;
-};
+}
 
 Float_t pol2 (Float_t  x, Short_t wbin, Short_t i) {
  Float_t func;
@@ -46,7 +46,7 @@ if (i==1) func =  FIT_PARAM_SIGMA_L[2][wbin]*x*x + FIT_PARAM_SIGMA_L[1][wbin]*x 
 if (i==2) func =  FIT_PARAM_SIGMA_C2F[2][wbin]*x*x + FIT_PARAM_SIGMA_C2F[1][wbin]*x + FIT_PARAM_SIGMA_C2F[0][wbin];  
 if (i==4) func =  FIT_PARAM_SIGMA_CF[2][wbin]*x*x + FIT_PARAM_SIGMA_CF[1][wbin]*x + FIT_PARAM_SIGMA_CF[0][wbin];  
 return func;
-};
+}
 
 
 
@@ -95,7 +95,7 @@ interpol(4,Q2_bin,Wright_bin,s12left_wright_bin,s12right_wright_bin,s23left_wrig
 
 
 interpol(4,Q2_bin,Wleft_bin,s12left_wleft_bin,s12right_wleft_bin,s23left_wleft_bin,s23right_wleft_bin,thetaleft_bin,thetaright_bin,alphaleft_bin,alpharight_bin,s12gen,s23gen,thetagen,alphagen,sigma_wleft[i],i);
-};
+}
 //Here we Q2-scale sigma_t, sigma_t, sigma_c2f and sigma_cf with the fit_functions (func_sigma_t and corresponding pol2) for Wright_bin and Wleft_bin
 
 
@@ -155,7 +155,7 @@ sigma_final[i] = 1./fabs(W_ARR[Wright_bin]-W_ARR[Wleft_bin]);
 sigma_final[i] = sigma_final[i]*(sigma_wright[i]*fabs(W_ARR[Wleft_bin]-Wgen)+sigma_wleft[i]*fabs(W_ARR[Wright_bin]-Wgen));
 
 
-};
+}
 
 
 //We get explicitly different sigmas from the array
@@ -190,11 +190,11 @@ A_tmp[8] = 57.32;
 //if ((Wgen>=1.7125)&&(Wgen<=1.8125)) {  
 //sigma_t_wright_gol = sigma_t_wright_gol*func_sigma_t(Q2gen,Wright_bin)/func_sigma_t(0.005,Wright_bin);
 //sigma_t_wleft_gol = sigma_t_wleft_gol*func_sigma_t(Q2gen,Wleft_bin)/func_sigma_t(0.005,Wleft_bin);
-//};
+//}
 //if ((Wgen>1.6125)&&(Wgen<=1.7125)) {
 sigma_t_wright_gol = sigma_t_wright_gol*func_sigma_t(Q2gen,Wright_bin)/A_tmp[Wright_bin-8];
 sigma_t_wleft_gol = sigma_t_wleft_gol*func_sigma_t(Q2gen,Wleft_bin)/A_tmp[Wleft_bin-8];
-//};
+//}
 
 //1dim W-interpolation
 sigma_t_gol = 1./fabs(W_ARR[Wright_bin]-W_ARR[Wleft_bin]);
@@ -203,12 +203,12 @@ sigma_t_gol = sigma_t_gol*(sigma_t_wright_gol*fabs(W_ARR[Wleft_bin]-Wgen)+sigma_
 //Mixing Ripani and Golovach cross sections
 sigma_t_final = (Q2gen-0.0003)/0.65*sigma_t_final + (0.65-Q2gen)/0.65*sigma_t_gol;
 
-};
+}
 
 
 
 
  return;
-};
+}
 
 

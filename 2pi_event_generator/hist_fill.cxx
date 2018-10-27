@@ -90,7 +90,7 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
   h_odn_inv_m23[int((W_old-1.225)/0.025)]->Fill(sqrt(s23),sigma_total);
   h_odn_alpha[int((W_old-1.225)/0.025)]->Fill(alph_hadr,sigma_total);
   h_odn_theta[int((W_old-1.225)/0.025)]->Fill(th_hadr,sigma_total);
-  };
+  }
   
  //Single-fold differentil yield for 2.1625 < W < 3.0375 GeV.  
    if ((W>=2.1625)&&(W<=3.0375)&&(Q2>=0.0001)&&(Q2<=1.3))  {
@@ -98,7 +98,7 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
   h_odn_wwide_inv_m23[int((W-2.1625)/0.05)]->Fill(sqrt(s23),sigma_total);
   h_odn_wwide_alpha[int((W-2.1625)/0.05)]->Fill(alph_hadr,sigma_total);
   h_odn_wwide_theta[int((W-2.1625)/0.05)]->Fill(th_hadr,sigma_total);
-  };
+  }
   
   
   //Single-fold differentil yield for 3.0875 < W < 4.5375 GeV.  
@@ -107,7 +107,7 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
   h_odn_wgt3_inv_m23[int((W-3.0875)/0.1)]->Fill(sqrt(s23),sigma_total);
   h_odn_wgt3_alpha[int((W-3.0875)/0.1)]->Fill(alph_hadr,sigma_total);
   h_odn_wgt3_theta[int((W-3.0875)/0.1)]->Fill(th_hadr,sigma_total);
-  };
+  }
 
 
 
@@ -119,7 +119,7 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
      h_odn_w_dep_l[int((Q2-0.1)/0.1)]->Fill(W,eps_l*sigma_l_final);
      h_odn_w_dep_l2[int((Q2-0.1)/0.1)]->Fill(W,sigma_l_final);
      h_odn_w_dep_tot[int((Q2-0.1)/0.1)]->Fill(W,sigma_total); 
-     };
+     }
     
     
    //Integral q2-yield for 1.25< Q2 < 2.075 GeV2.    
@@ -128,7 +128,7 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
      h_odn_q2_dep_l[int((W-1.25)/0.025)]->Fill(Q2,eps_l*sigma_l_final);
      h_odn_q2_dep_l2[int((W-1.25)/0.025)]->Fill(Q2,sigma_l_final);
      h_odn_q2_dep_tot[int((W-1.25)/0.025)]->Fill(Q2,sigma_total);
-       };
+       }
      
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
 
@@ -137,15 +137,15 @@ P4_Eini.SetXYZT(0.,0.,E_beam,E_beam);
     if ((Q2>=0.00049)&&(Q2<=0.00051))  {
      h_int_crsect_t[0]->Fill(W,xsect_int_test_t);
      h_int_crsect_l[0]->Fill(W,xsect_int_test_l);
-      };
+      }
           
     if ((Q2>=0.0005)&&(Q2<=1.2505))  {
      h_int_crsect_t[int((Q2-0.0005)/0.05)+1]->Fill(W,xsect_int_test_t);
      h_int_crsect_l[int((Q2-0.0005)/0.05)+1]->Fill(W,xsect_int_test_l);
-      };
+      }
           
     if ((Q2>=1.29)&&(Q2<=1.3))  {
      h_int_crsect_t[26]->Fill(W,xsect_int_test_t);
      h_int_crsect_l[26]->Fill(W,xsect_int_test_l);
-      };  */ 
-};
+      }  */ 
+}

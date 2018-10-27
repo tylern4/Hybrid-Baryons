@@ -188,7 +188,7 @@ sigma_inter = sigma_inter*factor;
 
 //if (isnan(sigma_inter)) cout <<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_left_bin]<<" 16"<<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_right_bin][s12_left_bin][theta_left_bin][alpha_right_bin]<<" 15"<<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_left_bin][alpha_right_bin]<<" 14"<<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_right_bin][s12_left_bin][theta_right_bin][alpha_left_bin]<<" 13"<< SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_right_bin]<<" 12"<<  " interpol \n";
  
-};
+}
 
 if (dim==2){
 
@@ -212,7 +212,7 @@ sigma_inter = sigma_inter*factor;
 
 //cout <<sigma_wleft_q2left[0] <<"  qqint\n";
 
-};
+}
 
  return;
-};
+}

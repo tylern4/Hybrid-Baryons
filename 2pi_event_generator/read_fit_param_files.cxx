@@ -69,8 +69,8 @@ getline(input_t,xsect);
 FIT_PARAM_SIGMA_T[2][iw] = atof(xsect.c_str());
 getline(input_t,xsect);
 FIT_PARAM_SIGMA_T[3][iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_t.close();
 
 
@@ -87,8 +87,8 @@ getline(input_l,xsect);
 FIT_PARAM_SIGMA_L[1][iw] = atof(xsect.c_str());
 getline(input_l,xsect);
 FIT_PARAM_SIGMA_L[2][iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_l.close();
 
 
@@ -105,8 +105,8 @@ getline(input_c2f,xsect);
 FIT_PARAM_SIGMA_C2F[1][iw] = atof(xsect.c_str());
 getline(input_c2f,xsect);
 FIT_PARAM_SIGMA_C2F[2][iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_c2f.close();
 
 
@@ -123,8 +123,8 @@ getline(input_cf,xsect);
 FIT_PARAM_SIGMA_CF[1][iw] = atof(xsect.c_str());
 getline(input_cf,xsect);
 FIT_PARAM_SIGMA_CF[2][iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_cf.close();
 
 
@@ -144,8 +144,8 @@ getline(input_int_rip065,dummy);
 getline(input_int_rip065,dummy);
 getline(input_int_rip065,dummy);
 getline(input_int_rip065,dummy);
-};
-};
+}
+}
 input_int_rip065.close();
 
 file=file_names[5];
@@ -157,8 +157,8 @@ for (Int_t iw = 0; iw <=16; iw++) {
 getline(input_int_gol0,dummy);
 getline(input_int_gol0,xsect);
 SIGMA_T_INT_GOLOVA[iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_int_gol0.close();
 
 
@@ -174,8 +174,8 @@ getline(input_fed_t,xsect);
 FIT_PARAM_SIGMA_T_FED[0][iw] = atof(xsect.c_str());
 getline(input_fed_t,xsect);
 FIT_PARAM_SIGMA_T_FED[1][iw] = atof(xsect.c_str());
-};
-};
+}
+}
 input_fed_t.close();
 
 
@@ -194,8 +194,8 @@ getline(input_fed_l,xsect);
 FIT_PARAM_SIGMA_L_FED[2][iw] = atof(xsect.c_str());
 
 
-};
-};
+}
+}
 input_fed_l.close();
 
 
@@ -215,8 +215,8 @@ getline(input_fed_c2f,xsect);
 FIT_PARAM_SIGMA_C2F_FED[2][iw] = atof(xsect.c_str());
 
 
-};
-};
+}
+}
 input_fed_c2f.close();
 
 
@@ -234,8 +234,8 @@ FIT_PARAM_SIGMA_CF_FED[1][iw] = atof(xsect.c_str());
 getline(input_fed_cf,xsect);
 FIT_PARAM_SIGMA_CF_FED[2][iw] = atof(xsect.c_str());
 
-};
-};
+}
+}
 input_fed_cf.close();
 
 
@@ -244,6 +244,6 @@ input_fed_cf.close();
 
 
  return;
-};
+}
 
 

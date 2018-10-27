@@ -42,4 +42,4 @@ sigma_total = sigma_total*func_sigma_t(Q2gen,16)/func_sigma_t(0,16)*(1. + Ratio_
 //sigma_total = sigma_total*func_sigma_t(Q2gen,16)/func_sigma_t(0,16);
 
  //cout <<Wgen<<" "<< sigma_t_wright_gol << " "<<sigma_t_wleft_gol<<"\n";
-}; 
+} 

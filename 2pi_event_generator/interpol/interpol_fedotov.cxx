@@ -185,7 +185,7 @@ sigma_inter = sigma_inter*factor;
 //cout <<  s12_left_bin << " A "<< s12_right_bin <<" B "<<s23_left_bin <<" w " <<s23_right_bin <<" rt "<< theta_left_bin <<" "<<theta_right_bin <<" b "<<alpha_left_bin<<" "<< alpha_right_bin<<"\n";
 //if (sigma_inter>=1.) cout  <<SIGMA_ARR_FED[flag_sigma][Q2bin][Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_left_bin]<<"\n";
 
-};
+}
 
 if (dim==2){
 
@@ -208,7 +208,7 @@ sigma_inter = sigma_inter + sigma_wleft_q2right[flag_sigma]*fabs(W_ARR_FED[Wrigh
 sigma_inter = sigma_inter*factor;
 
 //cout <<sigma_wleft_q2left[0] <<"  qqint\n";
-};
+}
 
  return;
-};
+}

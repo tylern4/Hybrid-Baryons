@@ -186,13 +186,13 @@ sigma_inter = sigma_inter*factor;
 //cout <<  s12_left_bin << " A "<< s12_right_bin <<" B "<<s23_left_bin <<" w " <<s23_right_bin <<" rt "<< theta_left_bin <<" "<<theta_right_bin <<" b "<<alpha_left_bin<<" "<< alpha_right_bin<<"\n";
 //if (sigma_inter>=1.) cout  <<SIGMA_ARR_phot_gt_3[Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_left_bin]<<"\n";
 
-};
+}
 
 if (dim==2){
 
 
 cout << " no 2dim interpol here \n";
-};
+}
 
  return;
-};
+}

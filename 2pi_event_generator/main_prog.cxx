@@ -77,7 +77,7 @@
 //Byckling function declaration
      Float_t G_BYCKLING(Float_t x, Float_t y, Float_t z, Float_t u, Float_t v, Float_t w) {
      return x*x*y+x*y*y+z*z*u+z*u*u+v*v*w+v*w*w+x*z*w+x*u*v+y*z*v+y*u*w-x*y*(z+u+v+w)-z*u*(x+y+v+w)-v*w*(x+y+z+u);
-     };
+     }
 
 
 int main(int argc, char** argv) {
@@ -169,11 +169,11 @@ read_fit_param_files();
      if (W_min < (1.2375)) {
     W_min = 1.2375;
     cout << "minimum W has been changed to " << W_min << "\n";
-    }; 
+    } 
       
     if (W_max*W_max > MP*MP +2.*MP*(E_beam - E_eprime_min)) {
     W_max = sqrt(MP*MP +2.*MP*(E_beam - E_eprime_min));
-    };
+    }
     
     Q2lim1 = 2*E_beam*sin(Theta_min*M_PI/180./2.)*sin(Theta_min*M_PI/180./2.);
     Q2lim1 = Q2lim1*(2*E_beam*MP-W_max*W_max+MP*MP);
@@ -182,7 +182,7 @@ read_fit_param_files();
     if (Q2_min < Q2lim1) {
     Q2_min =Q2lim1;
     cout << "minimum Q2 has been changed to " << Q2_min << "\n";
-    };
+    }
  
    
     Q2lim2 = 2*E_beam*sin(Theta_max*M_PI/180./2.)*sin(Theta_max*M_PI/180./2.);
@@ -193,13 +193,13 @@ read_fit_param_files();
     if (Q2_max > Q2lim2) {
     Q2_max = Q2lim2;
     cout << "maximum Q2 has been changed to " << Q2_max << "\n";
-    };
+    }
      
    
     if (W_max*W_max > MP*MP +2.*MP*(E_beam - E_eprime_min) -Q2_min) {
     W_max = sqrt(MP*MP +2.*MP*(E_beam - E_eprime_min) -Q2_min);
     cout << "maximum W has been changed to " << W_max << "\n";
-    };
+    }
   
 
     
@@ -314,7 +314,7 @@ h_eradgam->Fill(e_rad_phot,1.);
 W = Wnew;
 Q2 = Q2new;
 
-};//end if rad mode
+}//end if rad mode
    
 //for rad_eff !!!
 P4_Eini_new.SetXYZT(0.,0.,E_beam_new, E_beam_new);
@@ -346,7 +346,7 @@ fermi_rot(E_beam_fermi,theta_rot2,E_beam_new,P4_E_prime_new,P4_E_prime_boosted);
 phi_e = P4_E_prime_boosted.Phi();
 W = W_ferm;
 h_e_beam_eff->Fill(W_ferm,1.);
-};
+}
        
   
 //  W_tmp = W;
@@ -397,40 +397,40 @@ sigma_c2f_final = 0.;
 sigma_s2f_final = 0.;
 sigma_cf_final = 0.;
 sigma_sf_final = 0.;
-};
+}
 
 //Getting cross section in given generated (W, Q2, s12, s23, theta, alpha)-point
 sigma_total = 0.;
 
 if ((W>=1.4125)&&(W<=1.8125)&&(Q2>=0.65)&&(Q2<=1.3)) {
 get_xsect_ripani(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr, sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final);
-};
+}
 
 if ((W>=1.6125)&&(W<=1.8125)&&(Q2>0.000001)&&(Q2<0.65)) {
 get_xsect_14_18_lowq2_fit(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr, sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final);
-};
+}
 
 if (((W>=1.3125)&&(W<=1.4375)&&(Q2>0.275)&&(Q2<0.575))||((W>=1.4125)&&(W<=1.4875)&&(Q2>0.275)&&(Q2<0.525))||((W>=1.4125)&&(W<=1.5125)&&(Q2>0.275)&&(Q2<0.425))||((W>=1.4125)&&(W<=1.5375)&&(Q2>0.225)&&(Q2<0.375))||((W>=1.4125)&&(W<=1.5625)&&(Q2>0.225)&&(Q2<0.275))){
  get_xsect_fedotov(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr, sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final);
-};
+}
 
  if (((W>=1.4125)&&(W<=1.4375)&&(Q2>=0.575)&&(Q2<=0.65))||((W>=1.4375)&&(W<=1.4875)&&(Q2>=0.525)&&(Q2<=0.65))||((W>=1.4875)&&(W<=1.5125)&&(Q2>=0.425)&&(Q2<=0.65))||((W>=1.5125)&&(W<=1.5375)&&(Q2>=0.325)&&(Q2<=0.65))||((W>=1.5375)&&(W<=1.5625)&&(Q2>=0.275)&&(Q2<=0.65))||((W>=1.5625)&&(W<=1.5875)&&(Q2>=0.225)&&(Q2<=0.65))||((W>=1.3125)&&(W<1.4125)&&(Q2>=0.575)&&(Q2<=1.3))||((W>=1.3125)&&(W<1.5125)&&(Q2>=0.0002)&&(Q2<=0.275))||((W>=1.5125)&&(W<=1.5875)&&(Q2>=0.0002)&&(Q2<=0.225))){
 get_xsect_rip_fed_join(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final); 
- };
+ }
  
 
 if ((W>=1.2375)&&(W<1.3125)&&(Q2>0.00002)&&(Q2<1.3)) {
 get_xsect_near_threshold(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
-};
+}
 
 
 if ((W>=1.8375)&&(W<=2.5375)&&(Q2>0.00002)&&(Q2<1.3)) {
 get_xsect_q2_130_w_gt_18_lt_21(E_beam,Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
-};
+}
 
 if ((W>=2.5875)&&(W<=3.0375)&&(Q2>0.00002)&&(Q2<1.3)) {
 get_xsect_25_30(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
-};
+}
 
 
 if ((W>=1.5875)&&(W<=1.6125)&&(Q2>0.00001)&&(Q2<0.65)) {
@@ -455,7 +455,7 @@ sigma_cf_final = sigma_cf_final*(sigma_cf_final_2*fabs(1.5875-W)+sigma_cf_final_
 
 sigma_sf_final = 1./0.025;
 sigma_sf_final = sigma_sf_final*(sigma_sf_final_2*fabs(1.5875-W)+sigma_sf_final_1*fabs(1.6125-W));
-};
+}
 
 
 if ((W>=1.8125)&&(W<=1.8375)&&(Q2>0.00002)&&(Q2<=1.3)) {
@@ -483,7 +483,7 @@ sigma_cf_final = sigma_cf_final*(sigma_cf_final_2*fabs(1.8375-W)+sigma_cf_final_
 
 sigma_sf_final = 1./0.025;
 sigma_sf_final = sigma_sf_final*(sigma_sf_final_2*fabs(1.8375-W)+sigma_sf_final_1*fabs(1.8125-W));
-};
+}
 
 
 
@@ -509,12 +509,12 @@ sigma_cf_final = sigma_cf_final*(sigma_cf_final_2*fabs(2.5875-W)+sigma_cf_final_
 
 sigma_sf_final = 1./0.05;
 sigma_sf_final = sigma_sf_final*(sigma_sf_final_2*fabs(2.5875-W)+sigma_sf_final_1*fabs(2.5375-W));
-};
+}
 
 
  if ((W>=3.1375)&&(W<=4.5375)&&(Q2>0.00001)&&(Q2<1.3)) {
 get_xsect_q2_13_wgt_3(Q2, W, s12,s23, th_hadr, alph_hadr, ph_hadr,sigma_t_final, sigma_l_final, sigma_c2f_final,sigma_s2f_final,sigma_cf_final,sigma_sf_final );
-};
+}
 
 if ((W>=3.0375)&&(W<=3.1375)&&(Q2>0.00001)&&(Q2<1.3)) {
 
@@ -540,7 +540,7 @@ sigma_cf_final = sigma_cf_final*(sigma_cf_final_2*fabs(3.1375-W)+sigma_cf_final_
 
 sigma_sf_final = 1./0.1;
 sigma_sf_final = sigma_sf_final*(sigma_sf_final_2*fabs(3.1375-W)+sigma_sf_final_1*fabs(3.0375-W));
-};
+}
 
 //Extending to the region Q2 > 1.3 GeV2
 if (Q2nodata > 1.299){
@@ -552,7 +552,7 @@ sigma_s2f_final = sigma_s2f_final*Func_q2_dep(Q2nodata)/Func_q2_dep(1.299);
 sigma_cf_final = sigma_cf_final*Func_q2_dep(Q2nodata)/Func_q2_dep(1.299);
 sigma_sf_final = sigma_sf_final*Func_q2_dep(Q2nodata)/Func_q2_dep(1.299);
 
-};
+}
 
 Q2 = Q2nodata;
 
@@ -563,7 +563,7 @@ sigma_c2f_final = 0.;
 sigma_s2f_final = 0.;
 sigma_cf_final = 0.;
 sigma_sf_final = 0.;
-};
+}
 
 
 
@@ -597,7 +597,7 @@ if ((isnan(sigma_total))||(isnan(V_flux))) cout<<W_old<< " "<<W<<" "<<Q2_old<< "
 if ((flag_radmod == 1)||(flag_radmod == 2)) {
 sigma_total = sigma_total*cr_rad_fact;
 if ((isnan(sigma_total))||(isnan(cr_rad_fact))) cout<< sigma_total<<" "<<cr_rad_fact<<" oo\n";
-};
+}
 
 
 //multiply sigma_total by virtual photon flux
@@ -612,7 +612,7 @@ V_flux = V_flux/(1.-eps_t)/Q2_old;
 V_flux = V_flux*W_old*(W_old*W_old-MP*MP);
 
 sigma_total = sigma_total*V_flux;    
-};
+}
 
 
 if ((flag_flux==1)&&(flag_fermi == 1)){
@@ -626,7 +626,7 @@ V_flux = V_flux/(1.-eps_t)/Q2;
 V_flux = V_flux*W*(W*W-MP*MP);
 
 sigma_total = sigma_total*V_flux;    
-};
+}
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%!III. OBTAINING THE FINAL PARTICLE FOUR-MOMENTA IN THE LAB FRAME!%%%%%%%
@@ -688,7 +688,7 @@ out_file_fill(i,sigma_total, W, Q2,  P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,z_EL,x_EL
 //filling out histograms   
 hist_fill(E_beam,W,W_old,Q2,Q2_old,phi_e,z_EL,s12,s23, th_hadr,alph_hadr,ph_hadr,sigma_t_final,sigma_l_final,eps_l,sigma_total,P4_E_prime,P4_Pfin, P4_PIP,P4_PIM,P4_Eini_new,P4_E_prime_new);
   
-};//end event-loop
+}//end event-loop
     
     
 //closing output file including root-tree with weights
@@ -708,8 +708,8 @@ hist_write();
   ofs  << 1.2375 +0.025*i<< "\n";    
   ofs <<h_int_crsect_t[j]->GetBinContent(i) << "\n";  
   ofs <<h_int_crsect_l[j]->GetBinContent(i) << "\n"; 
- };
-  }; */
+ }
+  } */
 
  
   return 0;

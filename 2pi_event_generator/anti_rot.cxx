@@ -11,7 +11,7 @@ using namespace std;
 //Byckling function declaration
      Float_t G_BYCKLING1(Float_t x, Float_t y, Float_t z, Float_t u, Float_t v, Float_t w) {
      return x*x*y+x*y*y+z*z*u+z*u*u+v*v*w+v*w*w+x*z*w+x*u*v+y*z*v+y*u*w-x*y*(z+u+v+w)-z*u*(x+y+v+w)-v*w*(x+y+z+u);
-     };
+     }
 //----------------------------------------------------
 //WE ASSUMED THAT IN REACTION A + B = 1 + 2 + 3
 //A - VIRTUAL PHOTON
@@ -147,7 +147,7 @@ cout << P4_3[0] << " "<< P4_3[1] << " "<< P4_3[2] << " "<< P4_3[3] << " t\n";
 
 
 cout <<" "<<P4_1.Mag()<<" "<< P4_2.Mag()<<" " << P4_3.Mag()<<" " <<"   "<<G_BYCKLING1(M12*M12,M23*M23,W*W,m2*m2,m1*m1,m3*m3)<<" "<< (m1*m1+m2*m2+2*P4_1[3]*P4_2[3]-M12*M12)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_2[3]*P4_2[3]-m2*m2)) <<" "<< (m1*m1+m3*m3+2*P4_1[3]*P4_3[3]-M13*M13)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_3[3]*P4_3[3]-m3*m3)) <<" \n"; 
-};
+}
 //Here we transfom our final hadrons 4-momenta into the system described above
   P4_1.RotateY(theta_hadr);
   P4_1.RotateZ(phi_hadr); 
@@ -216,4 +216,4 @@ P3_G.SetTheta(acos((Q2+2.*E_beam*E_gamma_lab)/2./E_beam/(sqrt(Q2+E_gamma_lab*E_g
     
  return;
  
- };
+ }
