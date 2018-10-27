@@ -2,3 +2,4 @@
 *.o
 *.exe
 build
+2pi_event_generator/inp

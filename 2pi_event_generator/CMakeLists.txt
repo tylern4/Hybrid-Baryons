@@ -11,6 +11,7 @@ add_library(2pilib STATIC
   fermi_rot.cxx
   global.cxx
   hist_def.cxx
+  hist_fill.cxx
   hist_write.cxx
   inp_file_read.cxx
   out_file_close.cxx

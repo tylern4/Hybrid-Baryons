@@ -141,10 +141,9 @@ Float_t sigma_wright_q2right[6];
 Float_t sigma_wleft_q2right[6];
 Float_t sigma_wleft_q2left[6];
 
-const char *data_dir;
 std::ofstream out_lund_stream;
-std::ostringstream data_dir_2pi;
-std::ostringstream PATH;
+std::string data_dir_2pi;
+std::string PATH;
 
 void global() {
   // Starting values
