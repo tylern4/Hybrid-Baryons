@@ -31,7 +31,7 @@ setcxx:
 twopeg_$(BOS).exe: $(OBJS)
 	$(CXX) -g -o $@ $^ -L/usr/lib64 -L/u/home/gleb/lib/LinuxRHFC8 -lpid -ltag -llac -lseb -lst -lclasutil -lsc -lc_bos_io -ldc -lec -lcc -ltrk -ldc -lc_bos_io -lsc -lmapmanager -lfputil -lfpack -lrecutl -lonline_dummy -lc_cern -lclasutil -lbos -lfpack -lbankdefs -L/u/home/gleb/cern/2005/lib -lpacklib -lkernlib -lnsl -lgfortran -lmathlib -lpacklib -lkernlib -lpawlib $(ROOTGLIBS)  -lEG 
 %.o: %.cxx
-	$(CXX) -g -c $(ROOTINCLUDE) -c $<  -o $@
+	$(CXX) -g -c $(ROOTCFLAGS) -c $<  -o $@
 	
 
 nobos: remove twopeg_$(NOBOS).exe
