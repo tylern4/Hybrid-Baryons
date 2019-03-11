@@ -1,16 +1,20 @@
-#include <iomanip>
-#include <string>
-#include <stdio.h> 
-#include <math.h>
-#include <TLorentzVector.h>
-#include <iostream>
-#include "global.h"
+#include "interpol_fedotov.h"
 
 using namespace std;
 
 void interpol_fedotov(Short_t dim,Short_t Q2bin, Short_t Wbin, Short_t a_l_bin, Short_t a_r_bin, Short_t b_l_bin, Short_t b_r_bin, Short_t c_l_bin, Short_t c_r_bin,Short_t d_l_bin, Short_t d_r_bin,  Float_t a, Float_t b, Float_t c, Float_t d, Float_t &sigma_inter, Short_t flag_sigma){
 
-if ((dim!=2)&&(dim!=4)) cout << "ERROR: wrong dim of interpolation \n";
+ if(abs(flag_sigma) > 6 || abs(Q2bin) > 7 || abs(Wbin) > 12) {
+  std::cerr << "ERROR: wrong dim of interpolation \n";
+  return;
+ }
+
+
+
+if ((dim!=2)&&(dim!=4)) {
+ std::cerr << "ERROR: wrong dim of interpolation \n";
+ return;
+}
 
 if (dim==4) {
 

@@ -1,10 +1,4 @@
-#include <iomanip>
-#include <string>
-#include <stdio.h> 
-#include <math.h>
-#include <TLorentzVector.h>
-#include <iostream>
-#include "global.h"
+#include "fermi_bonn.h"
 
 using namespace std;
 

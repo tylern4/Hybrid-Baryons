@@ -1,15 +1,4 @@
-#include "TFile.h"
-#include "TMath.h"
-#include <stdio.h>
-#include <dlfcn.h>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <TLorentzVector.h>
-#include "global.h"
-#include "hist_def.h"
-#include <fstream>
-#include <iomanip>
+#include "out_file_fill.h"
  using namespace std; 
  
 //This file contains two subroutines: 

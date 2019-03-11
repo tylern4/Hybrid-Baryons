@@ -1,97 +1,58 @@
-#include "TROOT.h"
-#include "TFile.h"
-#include "TLine.h"
-#include "TTree.h"
-#include "TH1.h"
-#include "TH2.h"
-#include "TH3.h"
-#include "THnSparse.h"
-#include "TF1.h"
-#include "TF2.h"
-#include "TF3.h"
-#include "TMacro.h"
-#include "TCanvas.h"
-#include "TVirtualFitter.h"
-#include "TMath.h"
-#include <math.h>
-#include "TGraphErrors.h"
-#include "TGraph.h"
-#include "TH1F.h"
-#include "TH1D.h"
-#include "TH2F.h"
-#include "TH2D.h"
-#include "TH3F.h"
-#include "TText.h"
-#include "TStyle.h"
-#include "TGObject.h"
-#include "TObject.h"
-#include "TSystem.h"
-#include "TMinuit.h"
-#include <TRint.h>
-#include <stdio.h>
-#include <dlfcn.h>
-#include "global.h"
-#include <stdio.h>
-#include <dlfcn.h>
-#include <sstream>
-#include <TLorentzVector.h>
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
-#include <cstring> 
-#include <cstdlib>
+#include "hist_def.h"
 
  using namespace std;
- 
- TH1F *h_W, *h_Q2, *h_phi_e, *h_zel,*h_nu;
- TH2F *h_Q2vsW, *h_Q2vsW2, *h_dalitz;
 
- TH1F *h_0_miss, *h_pim_miss, *h_0_miss_2, *h_pim_miss_2;
- TH1F *h_fermi_bonn, *h_0_miss_en, *h_0_miss_en_2,*h_eradgam;
- 
- TH1F *h_e_beam_eff;
-   
-//Single-fold differentil yield for 1.225 < W < 2.15 GeV.
- TH1F *h_odn_inv_m12[37];
- TH1F *h_odn_inv_m23[37];
- TH1F *h_odn_alpha[37];
- TH1F *h_odn_theta[37]; 
- TH1F *h_odn_theta_2[37];
-      
-//Single-fold differentil yield for 2.1625 < W < 3.0375 GeV.   
- TH1F *h_odn_wwide_inv_m12[18];
- TH1F *h_odn_wwide_inv_m23[18];
- TH1F *h_odn_wwide_alpha[18];
- TH1F *h_odn_wwide_theta[18]; 
- TH1F *h_odn_wwide_theta_2[18];
- 
-//Single-fold differentil yield for 3.0875 < W < 4.5375 GeV.  
- TH1F *h_odn_wgt3_inv_m12[15];
- TH1F *h_odn_wgt3_inv_m23[15];
- TH1F *h_odn_wgt3_alpha[15];
- TH1F *h_odn_wgt3_theta[15]; 
- TH1F *h_odn_wgt3_theta_2[15];
-          
-//Integral w-yield for 0.1< Q2 < 1.3 GeV2. 
- TH1F *h_odn_w_dep_t[12];
- TH1F *h_odn_w_dep_l[12];
- TH1F *h_odn_w_dep_l2[12];
- TH1F *h_odn_w_dep_tot[12];
-  
-//Integral q2-yield for 1.25< Q2 < 2.075 GeV2.    
- TH1F *h_odn_q2_dep_t[33];
- TH1F *h_odn_q2_dep_l[33];
- TH1F *h_odn_q2_dep_l2[33];
- TH1F *h_odn_q2_dep_tot[33];
-      
-      
-//     TH1F *h_int_crsect_t[27];
-//     TH1F *h_int_crsect_l[27];
-        
-      
-      
+   TH1F *h_e_beam_eff;
+   TH1F *h_W;
+   TH1F *h_Q2;
+   TH1F *h_phi_e;
+   TH2F *h_Q2vsW;
+   TH2F *h_Q2vsW2;
+   TH2F *h_Q2vsW_t;
+   TH2F *h_Q2vsW_l;
+   TH1F *h_nu;
+   TH1F *h_zel;
+   TH2F *h_dalitz;
+
+
+   TH1F *h_0_miss;
+   TH1F *h_pim_miss;
+   TH1F *h_0_miss_2;
+   TH1F *h_pim_miss_2;
+   TH1F *h_fermi_bonn;
+   TH1F *h_0_miss_en;
+   TH1F *h_0_miss_en_2;
+   TH1F *h_eradgam;
+
+
+   TH1F *h_odn_inv_m12[37];
+   TH1F *h_odn_inv_m23[37];
+   TH1F *h_odn_alpha[37];
+   TH1F *h_odn_theta[37];
+   TH1F *h_odn_theta_2[37];
+
+   TH1F *h_odn_wwide_inv_m12[18];
+   TH1F *h_odn_wwide_inv_m23[18];
+   TH1F *h_odn_wwide_alpha[18];
+   TH1F *h_odn_wwide_theta[18];
+   TH1F *h_odn_wwide_theta_2[18];
+
+   TH1F *h_odn_wgt3_inv_m12[15];
+   TH1F *h_odn_wgt3_inv_m23[15];
+   TH1F *h_odn_wgt3_alpha[15];
+   TH1F *h_odn_wgt3_theta[15];
+   TH1F *h_odn_wgt3_theta_2[15];
+
+   TH1F *h_odn_w_dep_t[12];
+   TH1F *h_odn_w_dep_l[12];
+   TH1F *h_odn_w_dep_l2[12];
+   TH1F *h_odn_w_dep_tot[12];
+
+   TH1F *h_odn_q2_dep_t[33];
+   TH1F *h_odn_q2_dep_l[33];
+   TH1F *h_odn_q2_dep_l2[33];
+   TH1F *h_odn_q2_dep_tot[33];
+
      int hist_def(Float_t E_beam){
      
 Float_t phi_e_min = 0;

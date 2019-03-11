@@ -1,13 +1,4 @@
-#include "TMath.h"
-#include <stdio.h>
-#include <dlfcn.h>
-#include <TGClient.h>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include "global.h"
-#include "hist_def.h"
-#include <fstream>
+#include "out_file_close.h"
  using namespace std;
 
 //This file contains two subroutines:

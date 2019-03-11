@@ -132,16 +132,16 @@ cout << "DATA DIR IS " << data_dir_2pi.str() << endl;
  
  
 //This needed for taking masses of the particles from pdg_table located in ROOT_DIR
-const char *HOME_ROOT;
-const char *HOME_ROOT1;
+//const char *HOME_ROOT;
+//const char *HOME_ROOT1;
 //HOME_ROOT = getenv("ROOT");
-system("root_home=`root-config --etcdir`");
-HOME_ROOT = getenv("root_home");
-ostringstream ROOT_DIR;
-ROOT_DIR << HOME_ROOT << "/pdg_table.txt";
+//system("root_home=`root-config --etcdir`");
+// HOME_ROOT = getenv("root_home");
+// ostringstream ROOT_DIR;
+// ROOT_DIR << HOME_ROOT << "/pdg_table.txt";
 
 TDatabasePDG *pdg = new TDatabasePDG();
-pdg->ReadPDGTable(ROOT_DIR.str().c_str());
+//pdg->ReadPDGTable(ROOT_DIR.str().c_str());
 TParticlePDG *part1 = new TParticlePDG();
 part1 = pdg->GetParticle("proton");
 MP= part1->Mass();

@@ -1,17 +1,4 @@
-#include <iomanip>
-#include <string>
-#include <stdio.h> 
-#include <math.h>
-#include <TLorentzVector.h>
-#include <iostream>
-#include "global.h"
-#include "interpol_int.h"
-#include "get_xsect_14_18_lowq2_fit.h"
-#include "TH1.h"
-#include "TF1.h"
-#include "Math/WrappedTF1.h"
-#include "Math/GaussIntegrator.h"
-#include "TMath.h"
+#include "radcorr.h"
 
     //Min Energy of radiated photon for radcorr
     Float_t delta = 0.01;

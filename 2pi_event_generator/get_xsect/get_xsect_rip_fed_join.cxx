@@ -1,16 +1,4 @@
-#include <iomanip>
-#include <string>
-#include <stdio.h> 
-#include <math.h>
-#include <TLorentzVector.h>
-#include <iostream>
-#include "global.h"
-#include "get_xsect_fedotov.h"
-#include "get_xsect_14_18_lowq2_fit.h"
-#include "get_xsect_ripani.h"
-#include "interpol.h"
-#include "interpol_fedotov.h"
-#include "interpol_int.h"
+#include "get_xsect_rip_fed_join.h"
 using namespace std;
 
 
@@ -95,7 +83,7 @@ Short_t Wleft_bin_fed,Wright_bin_fed, Wleft_bin_rip,Wright_bin_rip,s12left_wleft
 
 Short_t s12left_wleft_bin_rip,s12right_wleft_bin_rip,s12left_wright_bin_rip,s12right_wright_bin_rip,s23left_wleft_bin_rip,s23right_wleft_bin_rip,s23left_wright_bin_rip,s23right_wright_bin_rip,thetaleft_bin_rip,thetaright_bin_rip,alphaleft_bin_rip,alpharight_bin_rip;
 
-Short_t Q2_bin_fed_l,Q2_bin_fed_r ,Q2_bin_rip;
+Short_t Q2_bin_fed_l = 0,Q2_bin_fed_r=0,Q2_bin_rip = 0;
 
 Float_t Q2_edge_r,Q2_edge_l, Q2_up,Q2_down ;
 

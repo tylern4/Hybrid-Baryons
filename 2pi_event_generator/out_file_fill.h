@@ -1,6 +1,18 @@
 #ifndef OUT_FILE_WRITE_H 
 #define OUT_FILE_WRITE_H
 
+#include "TFile.h"
+#include "TMath.h"
+#include <stdio.h>
+#include <dlfcn.h>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <TLorentzVector.h>
+#include "global.h"
+#include "hist_def.h"
+#include <fstream>
+#include <iomanip>
 
 void out_file_fill(int i, Float_t sigma, Float_t W, Float_t Q2, TLorentzVector &P4_E,TLorentzVector &P4_1, TLorentzVector &P4_2, TLorentzVector &P4_3,Float_t z_EL, Float_t x_EL,  Float_t y_EL);
 
