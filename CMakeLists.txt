@@ -13,6 +13,11 @@ find_package(ROOT REQUIRED COMPONENTS RIO Net EG)
 include(${ROOT_USE_FILE})
 set(CMAKE_CXX_FLAGS "-Ofast -Wno-return-type ${ROOT_CXX_FLAGS}")
 
+OPTION(USE_CLIPP "Use clipp for command line options" OFF) # Off by default
+IF(USE_CLIPP)
+    ADD_DEFINITIONS(-DUSE_CLIPP)
+ENDIF(USE_CLIPP)
+
 
 include_directories(2pi_event_generator)
 include_directories(2pi_event_generator/get_xsect)

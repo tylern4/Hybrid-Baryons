@@ -1,19 +1,18 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
-#include <RQ_OBJECT.h>
-#include <dlfcn.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include "TDatabasePDG.h"
 #include "TParticle.h"
 #include "TParticlePDG.h"
 #include "TROOT.h"
 #include "TTree.h"
-#include "clipp.h"
+#include <RQ_OBJECT.h>
+#include <dlfcn.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
 
 #ifdef BOS
 extern "C" {

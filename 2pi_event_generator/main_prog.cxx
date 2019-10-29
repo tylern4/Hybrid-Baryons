@@ -1,14 +1,3 @@
-#include <RQ_OBJECT.h>
-#include <TCanvas.h>
-#include <TGButton.h>
-#include <TGClient.h>
-#include <TGFrame.h>
-#include <TRandom.h>
-#include <TRint.h>
-#include <TRootEmbeddedCanvas.h>
-#include <dlfcn.h>
-#include <stdio.h>
-#include <iostream>
 #include "TCanvas.h"
 #include "TDatabasePDG.h"
 #include "TF1.h"
@@ -34,6 +23,23 @@
 #include "TText.h"
 #include "TTree.h"
 #include "TVirtualFitter.h"
+#include <RQ_OBJECT.h>
+#include <TCanvas.h>
+#include <TGButton.h>
+#include <TGClient.h>
+#include <TGFrame.h>
+#include <TLorentzVector.h>
+#include <TRandom.h>
+#include <TRandom3.h>
+#include <TRint.h>
+#include <TRootEmbeddedCanvas.h>
+#include <dlfcn.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "anti_rot.h"
 #include "get_xsect_near_threshold.h"
@@ -61,14 +67,12 @@
 #include "interpol_int.h"
 #include "radcorr.h"
 
-#include <TLorentzVector.h>
-#include <TRandom3.h>
-#include <stdlib.h>
-#include <time.h>
-#include <fstream>
-#include <sstream>
 #include "global.h"
 #include "rot.h"
+
+#ifdef USE_CLIPP
+#include "clipp.h"
+#endif
 
 using namespace std;
 
@@ -133,7 +137,7 @@ int main(int argc, char **argv) {
   // This is a directory for cross section files taking. By default it is /data
   data_dir = getenv("data_dir_2pi");
   if (data_dir == NULL) {
-    std::cerr << "Set data_dir_2pi";
+    std::cerr << "Set data_dir_2pi\n";
     exit(1);
   }
   data_dir_2pi << data_dir;
@@ -158,6 +162,7 @@ int main(int argc, char **argv) {
   part1 = pdg->GetParticle("e-");
   Me = static_cast<Float_t>(part1->Mass());
 
+#ifdef USE_CLIPP
   // Reading input parameters
   if (argc > 1) {
     Nevents = 10000;
@@ -246,10 +251,12 @@ int main(int argc, char **argv) {
       cout << clipp::make_man_page(cli, *argv);
       exit(1);
     }
-
   } else {
+#endif
     inp_file_read(E_beam);
+#ifdef USE_CLIPP
   }
+#endif
 
   // Reading diff cross section from the tables in .dat files (filling out
   // GLOBAL arrays)
@@ -426,7 +433,7 @@ int main(int argc, char **argv) {
       W = Wnew;
       Q2 = Q2new;
 
-    }  // end if rad mode
+    } // end if rad mode
 
     // for rad_eff !!!
     P4_Eini_new.SetXYZT(0., 0., E_beam_new, E_beam_new);
@@ -507,8 +514,10 @@ int main(int argc, char **argv) {
 
     Q2nodata = Q2;
 
-    if (Q2 > 1.299) Q2 = 1.299;
-    if (Q2 < 0.0005) Q2 = 0.0005;
+    if (Q2 > 1.299)
+      Q2 = 1.299;
+    if (Q2 < 0.0005)
+      Q2 = 0.0005;
 
     if (W < 1.2375) {
       sigma_t_final = 0.;
@@ -780,10 +789,13 @@ int main(int argc, char **argv) {
 
     sigma_total = 0.;
 
-    if ((isnan(eps_l)) || (isnan(eps_t))) cout << eps_l << " " << eps_t << "\n";
+    if ((isnan(eps_l)) || (isnan(eps_t)))
+      cout << eps_l << " " << eps_t << "\n";
 
-    if (!(eps_l > 0.) && !(eps_l < 0)) eps_l = 0.;
-    if (!(eps_t > 0.) && !(eps_t < 0)) eps_t = 0.;
+    if (!(eps_l > 0.) && !(eps_l < 0))
+      eps_l = 0.;
+    if (!(eps_t > 0.) && !(eps_t < 0))
+      eps_t = 0.;
 
     // combining structure function into the full cross section
     sigma_total = sigma_t_final;
@@ -934,7 +946,7 @@ int main(int argc, char **argv) {
               sigma_total, P4_E_prime, P4_Pfin, P4_PIP, P4_PIM, P4_Eini_new,
               P4_E_prime_new);
 
-  }  // end event-loop
+  } // end event-loop
 
   // closing output file including root-tree with weights
   out_file_close();
