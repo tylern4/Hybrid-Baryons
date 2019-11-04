@@ -19,9 +19,9 @@ IF(USE_CLIPP)
 ENDIF(USE_CLIPP)
 
 
-include_directories(2pi_event_generator)
-include_directories(2pi_event_generator/get_xsect)
-include_directories(2pi_event_generator/interpol)
+include_directories(${CMAKE_SOURCE_DIR}/2pi_event_generator)
+include_directories(${CMAKE_SOURCE_DIR}/2pi_event_generator/get_xsect)
+include_directories(${CMAKE_SOURCE_DIR}/2pi_event_generator/interpol)
 
 add_library(2pi_event_generator_lib STATIC
         2pi_event_generator/anti_rot.cxx
@@ -66,6 +66,6 @@ add_library(2pi_event_generator_lib STATIC
         )
 
 
-add_executable(2pi_event_generator 2pi_event_generator/main_prog.cxx)
+add_executable(2pi_event_generator ${CMAKE_SOURCE_DIR}/2pi_event_generator/main_prog.cxx)
 target_link_libraries(2pi_event_generator 2pi_event_generator_lib ${ROOT_LIBRARIES})
 install(TARGETS 2pi_event_generator RUNTIME DESTINATION bin)

@@ -1,9 +1,3 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
 #include "get_xsect_14_18_lowq2_fit.h"
 #include "get_xsect_gol2.h"
 #include "get_xsect_golovach.h"
@@ -11,22 +5,37 @@
 #include "global.h"
 #include "interpol_int.h"
 #include "interpol_rip3.h"
+#include <TLorentzVector.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string>
 using namespace std;
 
 Short_t getWbin_rip3(Float_t W) {
-  if ((W >= 2.5875) && (W <= 2.6375)) return 0;
-  if ((W >= 2.6375) && (W <= 2.6875)) return 1;
-  if ((W >= 2.6875) && (W <= 2.7375)) return 2;
-  if ((W >= 2.7375) && (W <= 2.7875)) return 3;
-  if ((W >= 2.7875) && (W <= 2.8375)) return 4;
-  if ((W >= 2.8375) && (W <= 2.8875)) return 5;
-  if ((W >= 2.8875) && (W <= 2.9375)) return 6;
-  if ((W >= 2.9375) && (W <= 2.9875)) return 7;
-  if ((W >= 2.9875) && (W <= 3.0375)) return 8;
+  if ((W >= 2.5875) && (W <= 2.6375))
+    return 0;
+  if ((W >= 2.6375) && (W <= 2.6875))
+    return 1;
+  if ((W >= 2.6875) && (W <= 2.7375))
+    return 2;
+  if ((W >= 2.7375) && (W <= 2.7875))
+    return 3;
+  if ((W >= 2.7875) && (W <= 2.8375))
+    return 4;
+  if ((W >= 2.8375) && (W <= 2.8875))
+    return 5;
+  if ((W >= 2.8875) && (W <= 2.9375))
+    return 6;
+  if ((W >= 2.9375) && (W <= 2.9875))
+    return 7;
+  if ((W >= 2.9875) && (W <= 3.0375))
+    return 8;
 
   if ((W < 2.58749) || (W > 3.038)) {
-    cout << "Error, wrong W range " << W << " e234"
-         << "\n";
+    std::cerr << "Error, wrong W range " << W << " e234"
+              << "\n";
     return -100;
   }
 }

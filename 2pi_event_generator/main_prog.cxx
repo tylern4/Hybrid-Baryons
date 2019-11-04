@@ -173,7 +173,7 @@ int main(int argc, char **argv) {
     Q2_max = 3.5;
     Theta_min = 1.0;
     Theta_max = 50.0;
-    E_eprime_min = 0.01;
+    E_eprime_min = 0.001;
     Targ_rad = 0.6;
     Targ_len = 2.0;
     Targ_off = -0.4;
@@ -403,10 +403,10 @@ int main(int argc, char **argv) {
                                   sin(Theta_max * M_PI / 180. / 2.));
 
     } while ((nu > E_beam - E_eprime_min) || (Q2 > Q2lim2) || (Q2 < Q2lim1) ||
-             (isnan(acos((Q2 + 2. * E_beam * nu) / 2. / E_beam /
-                         (sqrt(Q2 + nu * nu))))));
+             (std::isnan(acos((Q2 + 2. * E_beam * nu) / 2. / E_beam /
+                              (sqrt(Q2 + nu * nu))))));
 
-    // isnan(acos(1.-Q2/E_beam/E_E_prime/2.))
+    // std::isnan(acos(1.-Q2/E_beam/E_E_prime/2.))
     E_E_prime = E_beam - nu;
     Theta_e_prime = acos(1. - Q2 / E_beam / E_E_prime / 2.);
 
@@ -497,10 +497,10 @@ int main(int argc, char **argv) {
 
     } while ((G_BYCKLING(inv_m12 * inv_m12, inv_m23 * inv_m23, W * W, M2 * M2,
                          M1 * M1, M3 * M3) > 0.) ||
-             (isnan(acos((M1 * M1 + M2 * M2 + 2 * en1 * en2 - s12) / 2. / mag1 /
-                         mag2))) ||
-             (isnan(acos((M1 * M1 + M3 * M3 + 2 * en1 * en3 - s13) / 2. / mag1 /
-                         mag3))) ||
+             (std::isnan(acos((M1 * M1 + M2 * M2 + 2 * en1 * en2 - s12) / 2. /
+                              mag1 / mag2))) ||
+             (std::isnan(acos((M1 * M1 + M3 * M3 + 2 * en1 * en3 - s13) / 2. /
+                              mag1 / mag3))) ||
              (en1 < M1) || (en2 < M2) || (en3 < M3) || (sqrt(s13) < M1 + M3) ||
              (sqrt(s13) > W - M2));
 
@@ -789,7 +789,7 @@ int main(int argc, char **argv) {
 
     sigma_total = 0.;
 
-    if ((isnan(eps_l)) || (isnan(eps_t)))
+    if ((std::isnan(eps_l)) || (std::isnan(eps_t)))
       cout << eps_l << " " << eps_t << "\n";
 
     if (!(eps_l > 0.) && !(eps_l < 0))
@@ -806,7 +806,7 @@ int main(int argc, char **argv) {
                                     (sigma_cf_final * cos(ph_hadr) +
                                      sigma_sf_final * sin(ph_hadr));
 
-    if ((isnan(sigma_total)) || (isnan(V_flux)))
+    if ((std::isnan(sigma_total)) || (std::isnan(V_flux)))
       cout << W_old << " " << W << " " << Q2_old << " " << Q2 << sigma_total
            << " " << sigma_t_final << " " << sigma_l_final << " "
            << sigma_c2f_final << " " << eps_l << " oo2\n";
@@ -814,7 +814,7 @@ int main(int argc, char **argv) {
     // Adding additional rad corr weight factor, if needed
     if ((flag_radmod == 1) || (flag_radmod == 2)) {
       sigma_total = sigma_total * cr_rad_fact;
-      if ((isnan(sigma_total)) || (isnan(cr_rad_fact)))
+      if ((std::isnan(sigma_total)) || (std::isnan(cr_rad_fact)))
         cout << sigma_total << " " << cr_rad_fact << " oo\n";
     }
 
@@ -912,24 +912,24 @@ int main(int argc, char **argv) {
     // cout << phi_e<<" ppp\n";
     // do not remove. this is the nan-check before writing all momenta to the
     // output file
-    if ((isnan(P4_E_prime[0])) || (isnan(P4_E_prime[1])) ||
-        (isnan(P4_E_prime[2])) || (isnan(P4_E_prime[3])))
+    if ((std::isnan(P4_E_prime[0])) || (std::isnan(P4_E_prime[1])) ||
+        (std::isnan(P4_E_prime[2])) || (std::isnan(P4_E_prime[3])))
       cout << P4_E_prime[0] << " " << P4_E_prime[1] << " " << P4_E_prime[2]
            << " " << P4_E_prime[3] << " " << W << " " << Q2
            << " final electron is nan \n";
 
-    if ((isnan(P4_Pfin[0])) || (isnan(P4_Pfin[1])) || (isnan(P4_Pfin[2])) ||
-        (isnan(P4_Pfin[3])))
+    if ((std::isnan(P4_Pfin[0])) || (std::isnan(P4_Pfin[1])) ||
+        (std::isnan(P4_Pfin[2])) || (std::isnan(P4_Pfin[3])))
       cout << P4_Pfin[0] << " " << P4_Pfin[1] << " " << P4_Pfin[2] << " "
            << P4_Pfin[3] << " " << W << " " << Q2 << " final proton is nan \n";
 
-    if ((isnan(P4_PIP[0])) || (isnan(P4_PIP[1])) || (isnan(P4_PIP[2])) ||
-        (isnan(P4_PIP[3])))
+    if ((std::isnan(P4_PIP[0])) || (std::isnan(P4_PIP[1])) ||
+        (std::isnan(P4_PIP[2])) || (std::isnan(P4_PIP[3])))
       cout << P4_PIP[0] << " " << P4_PIP[1] << " " << P4_PIP[2] << " "
            << P4_PIP[3] << " " << W << " " << Q2 << " pip is nan \n";
 
-    if ((isnan(P4_PIM[0])) || (isnan(P4_PIM[1])) || (isnan(P4_PIM[2])) ||
-        (isnan(P4_PIM[3])))
+    if ((std::isnan(P4_PIM[0])) || (std::isnan(P4_PIM[1])) ||
+        (std::isnan(P4_PIM[2])) || (std::isnan(P4_PIM[3])))
       cout << P4_PIM[0] << " " << P4_PIM[1] << " " << P4_PIM[2] << " "
            << P4_PIM[3] << " " << W << " " << Q2 << " pim is nan \n";
 

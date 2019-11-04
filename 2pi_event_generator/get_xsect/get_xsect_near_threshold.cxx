@@ -1,9 +1,3 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
 #include "get_xsect_14_18_lowq2_fit.h"
 #include "get_xsect_fedotov.h"
 #include "get_xsect_rip_fed_join.h"
@@ -11,18 +5,27 @@
 #include "interpol_fedotov.h"
 #include "interpol_fedotov_thresh.h"
 #include "interpol_int.h"
+#include <TLorentzVector.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string>
 using namespace std;
 
 Short_t getWbin_fed_thresh(Float_t W) {
   // return int(W*10000. - 1.4125*10000.)/250;
   // return int((W-1.4125)/0.025);
 
-  if ((W >= 1.2375) && (W <= 1.2625)) return 0;
-  if ((W >= 1.2625) && (W <= 1.2875)) return 1;
-  if ((W >= 1.2875) && (W <= 1.3125)) return 2;
+  if ((W >= 1.2375) && (W <= 1.2625))
+    return 0;
+  if ((W >= 1.2625) && (W <= 1.2875))
+    return 1;
+  if ((W >= 1.2875) && (W <= 1.3125))
+    return 2;
 
   if ((W < 1.2375) || (W > 1.3125)) {
-    cout << "Error, wrong W range " << W << "\n";
+    std::cerr << "Error, wrong W range " << W << "\n";
     return -100;
   }
 }
@@ -171,7 +174,7 @@ void get_xsect_near_threshold(Float_t Q2gen, Float_t Wgen, Float_t s12gen,
       }
     }
 
-  }  // end   ((Wgen>=1.2375)&&(Wgen<=1.3125)&&(Q2gen>0.275)&&(Q2gen<0.575)){
+  } // end   ((Wgen>=1.2375)&&(Wgen<=1.3125)&&(Q2gen>0.275)&&(Q2gen<0.575)){
 
   //---------------------------------------------------------------------------------------------------------------------
 
@@ -274,7 +277,7 @@ void get_xsect_near_threshold(Float_t Q2gen, Float_t Wgen, Float_t s12gen,
              sigma_wl_fed[i] * fabs(W_ARR_FED_THRESH[Wright_bin] - Wgen));
     }
 
-  }  // end if ((Wgen>=1.2375)&&(Wgen<=1.3125)&&(Q2gen>0.002)&&(Q2gen<0.275)){
+  } // end if ((Wgen>=1.2375)&&(Wgen<=1.3125)&&(Q2gen>0.002)&&(Q2gen<0.275)){
 
   //-------------------------------------------------------------------------------
 
@@ -532,7 +535,7 @@ void get_xsect_near_threshold(Float_t Q2gen, Float_t Wgen, Float_t s12gen,
     // sigma_final[3] = 0.;
     // sigma_final[5] = 0.;
 
-  }  // end if ((Wgen>=1.3125)&&(Wgen<1.4125)&&(Q2gen>=0.575)&&(Q2gen<=1.3))
+  } // end if ((Wgen>=1.3125)&&(Wgen<1.4125)&&(Q2gen>=0.575)&&(Q2gen<=1.3))
 
   // We get explicitly different sigmas from the array
 

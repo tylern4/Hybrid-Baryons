@@ -15,7 +15,8 @@
 #include <string>
 
 #ifdef BOS
-extern "C" {
+extern "C"
+{
 #include <bosddl.h>
 #include <bostypes.h>
 #include <call.h>
@@ -35,15 +36,15 @@ extern "C" {
 #include <utility.h>
 #include <vertex.h>
 
-extern void initbos();
-extern int getBOS(BOSbank *bcs, int lun, char *list);
-extern void cleanBanks(BOSbank *bcs);
-extern void dropAllBanks(BOSbank *bcs, char *list);
-extern void *getBank(BOSbank *, const char *);
-extern void open_fpack_unit(char *filename, char *dataname, int unitnum);
-extern void close_fpack_unit(char *dataname);
-extern BOSbank bcs_;
-extern BOSbank wcs_;
+    extern void initbos();
+    extern int getBOS(BOSbank *bcs, int lun, char *list);
+    extern void cleanBanks(BOSbank *bcs);
+    extern void dropAllBanks(BOSbank *bcs, char *list);
+    extern void *getBank(BOSbank *, const char *);
+    extern void open_fpack_unit(char *filename, char *dataname, int unitnum);
+    extern void close_fpack_unit(char *dataname);
+    extern BOSbank bcs_;
+    extern BOSbank wcs_;
 }
 #endif
 using namespace std;

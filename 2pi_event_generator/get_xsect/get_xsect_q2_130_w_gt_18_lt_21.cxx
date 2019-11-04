@@ -1,49 +1,69 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
 #include "get_xsect_14_18_lowq2_fit.h"
 #include "get_xsect_golovach.h"
 #include "get_xsect_ripani.h"
 #include "global.h"
 #include "interpol_int.h"
 #include "interpol_rip2.h"
+#include <TLorentzVector.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string>
 using namespace std;
 
 Short_t getWbin_rip2(Float_t W) {
   // return int(W*10000. - 1.4125*10000.)/250;
   // return int((W-1.4125)/0.025);
 
-  if ((W >= 1.837499) && (W <= 1.8625)) return 0;
-  if ((W >= 1.8625) && (W <= 1.8875)) return 1;
-  if ((W >= 1.8875) && (W <= 1.9125)) return 2;
-  if ((W >= 1.9125) && (W <= 1.9375)) return 3;
+  if ((W >= 1.837499) && (W <= 1.8625))
+    return 0;
+  if ((W >= 1.8625) && (W <= 1.8875))
+    return 1;
+  if ((W >= 1.8875) && (W <= 1.9125))
+    return 2;
+  if ((W >= 1.9125) && (W <= 1.9375))
+    return 3;
 
-  if ((W >= 1.9375) && (W <= 1.9625)) return 4;
-  if ((W >= 1.9625) && (W <= 1.9875)) return 5;
-  if ((W >= 1.9875) && (W <= 2.0125)) return 6;
-  if ((W >= 2.0125) && (W <= 2.0375)) return 7;
+  if ((W >= 1.9375) && (W <= 1.9625))
+    return 4;
+  if ((W >= 1.9625) && (W <= 1.9875))
+    return 5;
+  if ((W >= 1.9875) && (W <= 2.0125))
+    return 6;
+  if ((W >= 2.0125) && (W <= 2.0375))
+    return 7;
 
-  if ((W >= 2.0375) && (W <= 2.0625)) return 8;
-  if ((W >= 2.0625) && (W <= 2.0875)) return 9;
+  if ((W >= 2.0375) && (W <= 2.0625))
+    return 8;
+  if ((W >= 2.0625) && (W <= 2.0875))
+    return 9;
 
-  if ((W >= 2.0875) && (W <= 2.1125)) return 10;
-  if ((W >= 2.1125) && (W <= 2.1375)) return 11;
+  if ((W >= 2.0875) && (W <= 2.1125))
+    return 10;
+  if ((W >= 2.1125) && (W <= 2.1375))
+    return 11;
 
-  if ((W >= 2.1375) && (W <= 2.1875)) return 12;
-  if ((W >= 2.1875) && (W <= 2.2375)) return 13;
-  if ((W >= 2.2375) && (W <= 2.2875)) return 14;
-  if ((W >= 2.2875) && (W <= 2.3375)) return 15;
-  if ((W >= 2.3375) && (W <= 2.3875)) return 16;
-  if ((W >= 2.3875) && (W <= 2.4375)) return 17;
-  if ((W >= 2.4375) && (W <= 2.4875)) return 18;
-  if ((W >= 2.4875) && (W <= 2.5375)) return 19;
+  if ((W >= 2.1375) && (W <= 2.1875))
+    return 12;
+  if ((W >= 2.1875) && (W <= 2.2375))
+    return 13;
+  if ((W >= 2.2375) && (W <= 2.2875))
+    return 14;
+  if ((W >= 2.2875) && (W <= 2.3375))
+    return 15;
+  if ((W >= 2.3375) && (W <= 2.3875))
+    return 16;
+  if ((W >= 2.3875) && (W <= 2.4375))
+    return 17;
+  if ((W >= 2.4375) && (W <= 2.4875))
+    return 18;
+  if ((W >= 2.4875) && (W <= 2.5375))
+    return 19;
 
   if ((W < 1.8125) || (W > 2.538)) {
-    cout << "Error, wrong W range " << W << " e677"
-         << "\n";
+    std::cerr << "Error, wrong W range " << W << " e677"
+              << "\n";
     return -100;
   }
 }
@@ -121,7 +141,7 @@ void get_xsect_q2_130_w_gt_18_lt_21(
   get_xsect_golovach(Wgen, s12gen, s23gen, thetagen, alphagen, w_left_bin_gol,
                      sigma_t_wright_gol, sigma_t_wleft_gol);
 
-  // if ((isnan(sigma_wright[0]))||(isnan(sigma_wleft[0]))) cout <<
+  // if ((std::isnan(sigma_wright[0]))||(std::isnan(sigma_wleft[0]))) cout <<
   // sigma_wright[0]<<" "<<sigma_wleft[0]<<" "<<s12gen<<"
   // "<<S12_ARR_RIP2[][Wleft_bin] <<s23gen<<" "<<s12left_wright_bin<<" "<<
   // s23left_wright_bin<<" "<<s12left_wleft_bin<<" "<<s23left_wleft_bin<<"
@@ -197,7 +217,8 @@ void get_xsect_q2_130_w_gt_18_lt_21(
     if ((E_beam > 2.45) && (E_beam < 3))
       sigma_t_final = (1. / 13. * Q2gen + 0.85) * sigma_t_final;
     // if (E_beam<2.4) sigma_t_final = (4./13.*Q2gen+0.6)*sigma_t_final;
-    if (E_beam < 2.45) sigma_t_final = (2. / 13. * Q2gen + 0.7) * sigma_t_final;
+    if (E_beam < 2.45)
+      sigma_t_final = (2. / 13. * Q2gen + 0.7) * sigma_t_final;
     // if (E_beam<2.5) sigma_t_final = 0.9*sigma_t_final;
 
     // sigma_t_final = 0.75*sigma_t_final;

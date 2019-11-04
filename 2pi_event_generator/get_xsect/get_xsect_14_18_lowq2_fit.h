@@ -1,5 +1,16 @@
 #ifndef GET_XSECT_14_18_LOWQ2_FIT_H
 #define GET_XSECT_14_18_LOWQ2_FIT_H
+#include <TLorentzVector.h>
+#include <math.h>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include "get_xsect_golovach.h"
+#include "get_xsect_ripani.h"
+#include "global.h"
+#include "interpol.h"
+#include "interpol_int.h"
 
 Float_t getEpsL(Float_t E_beam, Float_t W, Float_t Q2);
 Float_t getEpsT(Float_t E_beam, Float_t W, Float_t Q2);

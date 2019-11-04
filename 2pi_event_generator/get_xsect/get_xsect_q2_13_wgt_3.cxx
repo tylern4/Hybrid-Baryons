@@ -1,9 +1,3 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
 #include "get_xsect_14_18_lowq2_fit.h"
 #include "get_xsect_gol2.h"
 #include "get_xsect_golovach.h"
@@ -13,27 +7,47 @@
 #include "interpol_phot_wgt_3.h"
 #include "interpol_q2_13_wgt_3.h"
 #include "interpol_rip3.h"
+#include <TLorentzVector.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string>
 using namespace std;
 
 Short_t getWbin_q2_13_wgt_3(Float_t W) {
-  if ((W >= 3.1375) && (W <= 3.2375)) return 0;
-  if ((W >= 3.2375) && (W <= 3.3375)) return 1;
-  if ((W >= 3.3375) && (W <= 3.4375)) return 2;
-  if ((W >= 3.4375) && (W <= 3.5375)) return 3;
-  if ((W >= 3.5375) && (W <= 3.6375)) return 4;
-  if ((W >= 3.6375) && (W <= 3.7375)) return 5;
-  if ((W >= 3.7375) && (W <= 3.8375)) return 6;
-  if ((W >= 3.8375) && (W <= 3.9375)) return 7;
-  if ((W >= 3.9375) && (W <= 4.0375)) return 8;
-  if ((W >= 4.0375) && (W <= 4.1375)) return 9;
-  if ((W >= 4.1375) && (W <= 4.2375)) return 10;
-  if ((W >= 4.2375) && (W <= 4.3375)) return 11;
-  if ((W >= 4.3375) && (W <= 4.4375)) return 12;
-  if ((W >= 4.4375) && (W <= 4.5375)) return 13;
+  if ((W >= 3.1375) && (W <= 3.2375))
+    return 0;
+  if ((W >= 3.2375) && (W <= 3.3375))
+    return 1;
+  if ((W >= 3.3375) && (W <= 3.4375))
+    return 2;
+  if ((W >= 3.4375) && (W <= 3.5375))
+    return 3;
+  if ((W >= 3.5375) && (W <= 3.6375))
+    return 4;
+  if ((W >= 3.6375) && (W <= 3.7375))
+    return 5;
+  if ((W >= 3.7375) && (W <= 3.8375))
+    return 6;
+  if ((W >= 3.8375) && (W <= 3.9375))
+    return 7;
+  if ((W >= 3.9375) && (W <= 4.0375))
+    return 8;
+  if ((W >= 4.0375) && (W <= 4.1375))
+    return 9;
+  if ((W >= 4.1375) && (W <= 4.2375))
+    return 10;
+  if ((W >= 4.2375) && (W <= 4.3375))
+    return 11;
+  if ((W >= 4.3375) && (W <= 4.4375))
+    return 12;
+  if ((W >= 4.4375) && (W <= 4.5375))
+    return 13;
 
   if ((W < 3.1374) || (W > 4.5376)) {
-    cout << "Error, wrong W range " << W << " e234"
-         << "\n";
+    std::cerr << "Error, wrong W range " << W << " e234"
+              << "\n";
     return -100;
   }
 }
@@ -50,8 +64,10 @@ Short_t getsbin_wgt_3(Float_t sgen, Float_t Smax, Float_t Smax2, Float_t Smin) {
   if ((sgen >= Smax2) && (sgen <= Smax))
     return 11 + int((sgen - Smax2) / ((Smax - Smax2) / 4.));
 
-  if (sgen < Smin) return 0;
-  if (sgen > Smax) return 14;
+  if (sgen < Smin)
+    return 0;
+  if (sgen > Smax)
+    return 14;
 }
 
 void get_xsect_q2_13_wgt_3(Float_t Q2gen, Float_t Wgen, Float_t s12gen,

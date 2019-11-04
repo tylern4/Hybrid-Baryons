@@ -1,19 +1,21 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
 #include "global.h"
 #include "interpol_golovach.h"
+#include <TLorentzVector.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string>
 
 using namespace std;
 
 //-------
 Short_t getWbin_GOL(Float_t W) {
   // return int(W*10000. - 1.4125*10000.)/250;
-  if ((W >= 1.6125) && (W <= 2.1375)) return int((W - 1.6125) / 0.025);
-  if ((W > 2.1375) && (W <= 2.5375)) return 21 + int((W - 2.1375) / 0.05);
+  if ((W >= 1.6125) && (W <= 2.1375))
+    return int((W - 1.6125) / 0.025);
+  if ((W > 2.1375) && (W <= 2.5375))
+    return 21 + int((W - 2.1375) / 0.05);
 
   /*
 
@@ -55,8 +57,8 @@ Short_t getWbin_GOL(Float_t W) {
 
   */
 
-  cout << "Error, wrong W range"
-       << "\n";
+  std::cerr << "Error, wrong W range"
+            << "\n";
   return -100;
 }
 
@@ -64,14 +66,18 @@ Short_t getWbin_GOL(Float_t W) {
 Short_t getsbin_GOL(Float_t sgen, Float_t Smax, Float_t Smin) {
   if ((sgen >= Smin) && (sgen <= Smax))
     return int((sgen - Smin) / ((Smax - Smin) / 15.));
-  if (sgen < Smin) return 0;
-  if (sgen > Smax) return 14;
+  if (sgen < Smin)
+    return 0;
+  if (sgen > Smax)
+    return 14;
   return -100;
 }
 //--------------------
 Short_t getanglebin_GOL(Float_t anglegen, Float_t anglemax) {
-  if ((anglegen < 0.01)) return 0;
-  if ((anglegen > anglemax - 0.01)) return 12;
+  if ((anglegen < 0.01))
+    return 0;
+  if ((anglegen > anglemax - 0.01))
+    return 12;
   if ((anglegen >= 0.01) && (anglegen <= anglemax - 0.01))
     return int((anglegen - 0.01) / ((anglemax - 0.02) / 13.));
   return -100;

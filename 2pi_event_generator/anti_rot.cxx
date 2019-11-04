@@ -99,24 +99,25 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
 
   // For final hadron #2
 
-  if (!(isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
-                   2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                   (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))))
+  if (!(std::isnan(
+          acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
+               (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+               (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))))
     P4_2.SetTheta(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
                        2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
                        (sqrt(P4_2[3] * P4_2[3] - m2 * m2))));
 
-  if ((isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-                  (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                  (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
+  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
+                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+                       (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
       ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
            (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_2[3] * P4_2[3] - m2 * m2)) >
        0.))
     P4_2.SetTheta(0.);
-  if ((isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-                  (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                  (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
+  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
+                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+                       (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
       ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
            (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_2[3] * P4_2[3] - m2 * m2)) <
@@ -130,32 +131,33 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   // ph_2 = alpha_hadr;
 
   // if
-  // (isnan(th_2)&&((m1*m1+m2*m2+2*P4_1[3]*P4_2[3]-M12*M12)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_2[3]*P4_2[3]-m2*m2))>0.))
+  // (std::isnan(th_2)&&((m1*m1+m2*m2+2*P4_1[3]*P4_2[3]-M12*M12)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_2[3]*P4_2[3]-m2*m2))>0.))
   // th_2 = 0.;
   // if
-  // (isnan(th_2)&&((m1*m1+m2*m2+2*P4_1[3]*P4_2[3]-M12*M12)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_2[3]*P4_2[3]-m2*m2))<0.))
+  // (std::isnan(th_2)&&((m1*m1+m2*m2+2*P4_1[3]*P4_2[3]-M12*M12)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_2[3]*P4_2[3]-m2*m2))<0.))
   // th_2 = M_PI;
 
   // For final hadron #3
 
-  if (!(isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
-                   2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                   (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))))
+  if (!(std::isnan(
+          acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
+               (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+               (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))))
     P4_3.SetTheta(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
                        2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
                        (sqrt(P4_3[3] * P4_3[3] - m3 * m3))));
 
-  if ((isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-                  (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                  (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
+  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
+                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+                       (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
       ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
            (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_3[3] * P4_3[3] - m3 * m3)) >
        0.))
     P4_3.SetTheta(0.);
-  if ((isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-                  (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                  (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
+  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
+                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+                       (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
       ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
            (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_3[3] * P4_3[3] - m3 * m3)) <
@@ -168,9 +170,9 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   /* th_3 = acos((m1*m1+m3*m3+2*en_1*en_3-M13*M13)/2./mag_1/mag_3);
 
    if
-  ((isnan(th_3))&&((m1*m1+m3*m3+2*P4_1[3]*P4_3[3]-M13*M13)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_3[3]*P4_3[3]-m3*m3)))>0.)
+  ((std::isnan(th_3))&&((m1*m1+m3*m3+2*P4_1[3]*P4_3[3]-M13*M13)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_3[3]*P4_3[3]-m3*m3)))>0.)
   th_3 = 0.; if
-  ((isnan(th_3))&&((m1*m1+m3*m3+2*P4_1[3]*P4_3[3]-M13*M13)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_3[3]*P4_3[3]-m3*m3)))<0.)
+  ((std::isnan(th_3))&&((m1*m1+m3*m3+2*P4_1[3]*P4_3[3]-M13*M13)/2./(sqrt(P4_1[3]*P4_1[3]-m1*m1))/(sqrt(P4_3[3]*P4_3[3]-m3*m3)))<0.)
   th_3=M_PI;
 
   if (alpha_hadr > M_PI) ph_3 = alpha_hadr - M_PI;
@@ -192,7 +194,8 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   // X-axis is still in hadronic plane.  2 - rotate X-axis with the angle
   // phi_hardr in XY-plane (around Z-axis) to set X-axis is in ee'-plane
 
-  if ((isnan(P4_1.Mag())) || (isnan(P4_2.Mag())) || (isnan(P4_3.Mag()))) {
+  if ((std::isnan(P4_1.Mag())) || (std::isnan(P4_2.Mag())) ||
+      (std::isnan(P4_3.Mag()))) {
     cout << P4_1[0] << " " << P4_1[1] << " " << P4_1[2] << " " << P4_1[3]
          << " t\n";
     cout << P4_2[0] << " " << P4_2[1] << " " << P4_2[2] << " " << P4_2[3]

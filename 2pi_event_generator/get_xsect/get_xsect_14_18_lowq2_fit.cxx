@@ -1,18 +1,9 @@
-#include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <string>
-#include "get_xsect_golovach.h"
-#include "get_xsect_ripani.h"
-#include "global.h"
-#include "interpol.h"
-#include "interpol_int.h"
+#include "get_xsect_14_18_lowq2_fit.h"
 
 using namespace std;
 
-Float_t getEpsL(Float_t E_beam, Float_t W, Float_t Q2) {
+Float_t getEpsL(Float_t E_beam, Float_t W, Float_t Q2)
+{
   Float_t nu = (W * W + Q2 - MP * MP) / 2. / MP;
   Float_t theta_el = acos(1. - Q2 / E_beam / (E_beam - nu) / 2.);
   Float_t eps_t = 1. / (1. + 2. * (1. + nu * nu / Q2) * tan(theta_el / 2.) *
@@ -24,7 +15,8 @@ Float_t getEpsL(Float_t E_beam, Float_t W, Float_t Q2) {
   return eps_l;
 }
 
-Float_t getEpsT(Float_t E_beam, Float_t W, Float_t Q2) {
+Float_t getEpsT(Float_t E_beam, Float_t W, Float_t Q2)
+{
   Float_t nu = (W * W + Q2 - MP * MP) / 2. / MP;
   Float_t theta_el = acos(1. - Q2 / E_beam / (E_beam - nu) / 2.);
   Float_t eps_t = 1. / (1. + 2. * (1. + nu * nu / Q2) * tan(theta_el / 2.) *
@@ -34,7 +26,8 @@ Float_t getEpsT(Float_t E_beam, Float_t W, Float_t Q2) {
 }
 
 //-------------------------------------------------------------------------
-Float_t func_sigma_t(Float_t x, Short_t wbin) {
+Float_t func_sigma_t(Float_t x, Short_t wbin)
+{
   Float_t func =
       pow((x + FIT_PARAM_SIGMA_T[0][wbin]), FIT_PARAM_SIGMA_T[1][wbin]) *
           FIT_PARAM_SIGMA_T[2][wbin] +
@@ -42,7 +35,8 @@ Float_t func_sigma_t(Float_t x, Short_t wbin) {
   return func;
 }
 
-Float_t pol2(Float_t x, Short_t wbin, Short_t i) {
+Float_t pol2(Float_t x, Short_t wbin, Short_t i)
+{
   Float_t func;
   if (i == 1)
     func = FIT_PARAM_SIGMA_L[2][wbin] * x * x + FIT_PARAM_SIGMA_L[1][wbin] * x +
@@ -60,7 +54,8 @@ void get_xsect_14_18_lowq2_fit(
     Float_t Q2gen, Float_t Wgen, Float_t s12gen, Float_t s23gen,
     Float_t thetagen, Float_t alphagen, Float_t phigen, Float_t &sigma_t_final,
     Float_t &sigma_l_final, Float_t &sigma_c2f_final, Float_t &sigma_s2f_final,
-    Float_t &sigma_cf_final, Float_t &sigma_sf_final) {
+    Float_t &sigma_cf_final, Float_t &sigma_sf_final)
+{
   // using auxiliary functions (getWbin, getQ2bin, getsbin, getanglebin) we
   // identify the number of left and right point
   Short_t Wleft_bin = getWbin(Wgen);
@@ -102,7 +97,8 @@ void get_xsect_14_18_lowq2_fit(
   // cross-secton in that points (sigma_wright[i] and sigma_wleft[i])  0 -
   // sigma_t, 1 - sigma_l, 2 - sigma_c2f, 3 - sigma_s2f, 4 - sigma_cf, 5 -
   // sigma_sf
-  for (Short_t i = 0; i < 6; i++) {
+  for (Short_t i = 0; i < 6; i++)
+  {
     interpol(4, Q2_bin, Wright_bin, s12left_wright_bin, s12right_wright_bin,
              s23left_wright_bin, s23right_wright_bin, thetaleft_bin,
              thetaright_bin, alphaleft_bin, alpharight_bin, s12gen, s23gen,
@@ -179,7 +175,8 @@ void get_xsect_14_18_lowq2_fit(
   sigma_wleft[5] = sigma_wleft[5] * Func_q2_dep(Q2gen) / Func_q2_dep(0.65);
 
   // We are doing 1dim linear W-interpolation
-  for (Short_t i = 0; i < 6; i++) {
+  for (Short_t i = 0; i < 6; i++)
+  {
     sigma_final[i] = 1. / fabs(W_ARR[Wright_bin] - W_ARR[Wleft_bin]);
     sigma_final[i] =
         sigma_final[i] * (sigma_wright[i] * fabs(W_ARR[Wleft_bin] - Wgen) +
@@ -196,7 +193,8 @@ void get_xsect_14_18_lowq2_fit(
   Float_t sigma_t_gol;
 
   // Here we Q2-scale photoproduction Golovach cross sections (only sigma_t)
-  if ((Wgen >= 1.6125) && (Wgen <= 1.8125)) {
+  if ((Wgen >= 1.6125) && (Wgen <= 1.8125))
+  {
     get_xsect_golovach(Wgen, s12gen, s23gen, thetagen, alphagen, w_left_bin_gol,
                        sigma_t_wright_gol, sigma_t_wleft_gol);
 

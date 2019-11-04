@@ -1,10 +1,10 @@
+#include "global.h"
 #include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <math.h>
+#include <stdio.h>
 #include <string>
-#include "global.h"
 
 using namespace std;
 
@@ -13,7 +13,8 @@ void interpol_q2_13_wgt_3(Short_t dim, Short_t Wbin, Short_t a_l_bin,
                           Short_t c_l_bin, Short_t c_r_bin, Short_t d_l_bin,
                           Short_t d_r_bin, Float_t a, Float_t b, Float_t c,
                           Float_t d, Float_t &sigma_inter, Short_t flag_sigma) {
-  if ((dim != 2) && (dim != 4)) cout << "ERROR: wrong dim of interpolation \n";
+  if ((dim != 2) && (dim != 4))
+    std::cerr << "ERROR: wrong dim of interpolation \n";
 
   if (dim == 4) {
     Short_t s12_left_bin = a_l_bin;

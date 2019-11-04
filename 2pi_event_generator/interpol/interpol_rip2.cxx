@@ -1,10 +1,10 @@
+#include "global.h"
 #include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <math.h>
+#include <stdio.h>
 #include <string>
-#include "global.h"
 
 using namespace std;
 
@@ -13,7 +13,8 @@ void interpol_rip2(Short_t dim, Short_t Wbin, Short_t a_l_bin, Short_t a_r_bin,
                    Short_t c_r_bin, Short_t d_l_bin, Short_t d_r_bin, Float_t a,
                    Float_t b, Float_t c, Float_t d, Float_t &sigma_inter,
                    Short_t flag_sigma) {
-  if ((dim != 2) && (dim != 4)) cout << "ERROR: wrong dim of interpolation \n";
+  if ((dim != 2) && (dim != 4))
+    std::cerr << "ERROR: wrong dim of interpolation \n";
 
   if (dim == 4) {
     Short_t s12_left_bin = a_l_bin;
@@ -211,7 +212,7 @@ void interpol_rip2(Short_t dim, Short_t Wbin, Short_t a_l_bin, Short_t a_r_bin,
     // cout
     // <<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_left_bin]<<"\n";
 
-    // if (isnan(sigma_inter)) cout
+    // if (std::isnan(sigma_inter)) cout
     // <<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_right_bin][alpha_left_bin]<<"
     // 16"<<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_right_bin][s12_left_bin][theta_left_bin][alpha_right_bin]<<"
     // 15"<<SIGMA_ARR_RIP2[flag_sigma][Wbin][s23_left_bin][s12_right_bin][theta_left_bin][alpha_right_bin]<<"

@@ -1,10 +1,10 @@
+#include "global.h"
 #include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <math.h>
+#include <stdio.h>
 #include <string>
-#include "global.h"
 
 #include "get_xsect_gol2.h"
 #include "get_xsect_golovach.h"
@@ -17,7 +17,8 @@ using namespace std;
 Short_t getWbin_GOL2(Float_t W) {
   // return int(W*10000. - 1.4125*10000.)/250;
   // if ((W>=1.6125)&&(W<=2.1375))  return int((W-1.6125)/0.025);
-  if ((W > 2.5875) && (W <= 3.0375)) return int((W - 2.5875) / 0.05);
+  if ((W > 2.5875) && (W <= 3.0375))
+    return int((W - 2.5875) / 0.05);
 
   /*
 
@@ -59,8 +60,8 @@ Short_t getWbin_GOL2(Float_t W) {
 
   */
 
-  cout << "Error, wrong W range"
-       << "\n";
+  std::cerr << "Error, wrong W range"
+            << "\n";
   return -100;
 }
 

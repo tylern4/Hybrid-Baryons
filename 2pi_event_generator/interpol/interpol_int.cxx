@@ -1,28 +1,32 @@
+#include "global.h"
 #include <TLorentzVector.h>
-#include <math.h>
-#include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <math.h>
+#include <stdio.h>
 #include <string>
-#include "global.h"
 
 using namespace std;
 
 Short_t getWbin_int(Float_t W) {
-  if ((W > 1.2625) && (W < 3.0125)) return int((W - 1.2625) / 0.025);
+  if ((W > 1.2625) && (W < 3.0125))
+    return int((W - 1.2625) / 0.025);
 
-  cout << W << "   WRONG W-VALUE. INTERPOLATION ERROR \n";
+  std::cerr << W << "   WRONG W-VALUE. INTERPOLATION ERROR \n";
   return -100.;
 }
 
 Short_t getQ2bin_int(Float_t Q2) {
-  if ((Q2 > 0.0005) && (Q2 < 0.0255)) return 0;
+  if ((Q2 > 0.0005) && (Q2 < 0.0255))
+    return 0;
 
-  if ((Q2 > 0.0255) && (Q2 < 1.2255)) return int((Q2 - 0.0255) / 0.05) + 1;
+  if ((Q2 > 0.0255) && (Q2 < 1.2255))
+    return int((Q2 - 0.0255) / 0.05) + 1;
 
-  if ((Q2 > 1.2255) && (Q2 < 1.3)) return 25;
+  if ((Q2 > 1.2255) && (Q2 < 1.3))
+    return 25;
 
-  cout << Q2 << " WRONG Q2-VALUE. INTERPOLATION ERROR \n";
+  std::cerr << Q2 << " WRONG Q2-VALUE. INTERPOLATION ERROR \n";
 
   return -100.;
 }
@@ -38,10 +42,14 @@ void interpol_int(Float_t Q2gen, Float_t Wgen, Float_t &sigma_t_int,
 
   Q2_old = Q2gen;
   W_old = Wgen;
-  if (Q2gen > 1.29) Q2gen = 1.29;
-  if (Q2gen < 0.0006) Q2gen = 0.0006;
-  if (Wgen < 1.2626) Wgen = 1.2626;
-  if (Wgen > 3.0125) Wgen = 3.0124;
+  if (Q2gen > 1.29)
+    Q2gen = 1.29;
+  if (Q2gen < 0.0006)
+    Q2gen = 0.0006;
+  if (Wgen < 1.2626)
+    Wgen = 1.2626;
+  if (Wgen > 3.0125)
+    Wgen = 3.0124;
 
   Short_t Wleft_bin = getWbin_int(Wgen);
   Short_t Wright_bin = Wleft_bin + 1;
