@@ -2,12 +2,9 @@
 
 using namespace std;
 // Byckling function declaration
-Float_t G_BYCKLING1(Float_t x, Float_t y, Float_t z, Float_t u, Float_t v,
-                    Float_t w) {
-  return x * x * y + x * y * y + z * z * u + z * u * u + v * v * w + v * w * w +
-         x * z * w + x * u * v + y * z * v + y * u * w -
-         x * y * (z + u + v + w) - z * u * (x + y + v + w) -
-         v * w * (x + y + z + u);
+Float_t G_BYCKLING(Float_t x, Float_t y, Float_t z, Float_t u, Float_t v, Float_t w) {
+  return x * x * y + x * y * y + z * z * u + z * u * u + v * v * w + v * w * w + x * z * w + x * u * v + y * z * v +
+         y * u * w - x * y * (z + u + v + w) - z * u * (x + y + v + w) - v * w * (x + y + z + u);
 }
 //----------------------------------------------------
 // WE ASSUMED THAT IN REACTION A + B = 1 + 2 + 3
@@ -25,11 +22,9 @@ Float_t G_BYCKLING1(Float_t x, Float_t y, Float_t z, Float_t u, Float_t v,
 // calculations are shown in more details and rotations are performed via
 // matrices.
 
-void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
-              Float_t M12, Float_t M23, Float_t theta_hadr, Float_t alpha_hadr,
-              Float_t phi_hadr, Float_t m1, Float_t m2, Float_t m3,
-              TLorentzVector &P4_1, TLorentzVector &P4_2,
-              TLorentzVector &P4_3) {
+void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam, Float_t M12, Float_t M23, Float_t theta_hadr,
+              Float_t alpha_hadr, Float_t phi_hadr, Float_t m1, Float_t m2, Float_t m3, TLorentzVector &P4_1,
+              TLorentzVector &P4_2, TLorentzVector &P4_3) {
   // Energy of virtual photon is CMS-frame
   Float_t E_gamma = (W * W - Q2 - MP * MP) / 2. / W;
   // cout << MP << "\n";
@@ -37,13 +32,11 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   // 4-momenta of initial particles in CMS-frame
   TLorentzVector P4_gamma, P4_P_ini;
   P4_gamma.SetXYZT(0, 0, sqrt(E_gamma * E_gamma + Q2), E_gamma);
-  P4_P_ini.SetXYZT(0, 0, -P4_gamma[2],
-                   sqrt(MP * MP + P4_gamma[2] * P4_gamma[2]));
+  P4_P_ini.SetXYZT(0, 0, -P4_gamma[2], sqrt(MP * MP + P4_gamma[2] * P4_gamma[2]));
 
   // One of the invariant masses should be derived from the other two (according
   // to Byckling-Kajantie)
-  Float_t M13 =
-      sqrt(W * W + m1 * m1 + m2 * m2 + m3 * m3 - M12 * M12 - M23 * M23);
+  Float_t M13 = sqrt(W * W + m1 * m1 + m2 * m2 + m3 * m3 - M12 * M12 - M23 * M23);
 
   // cout << m1<< "  "<< m2 << " "<< m3<< "\n";
   // Energies and magnitudes of 3-momenta of final particles in CMS-system
@@ -67,8 +60,7 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   P4_2.SetRho(sqrt(P4_2[3] * P4_2[3] - m2 * m2));
   P4_3.SetRho(sqrt(P4_3[3] * P4_3[3] - m3 * m3));
 
-  if ((P4_1[3] * P4_1[3] - m1 * m1 < 0.) ||
-      (P4_2[3] * P4_2[3] - m2 * m2 < 0.) || (P4_3[3] * P4_3[3] - m3 * m3 < 0.))
+  if ((P4_1[3] * P4_1[3] - m1 * m1 < 0.) || (P4_2[3] * P4_2[3] - m2 * m2 < 0.) || (P4_3[3] * P4_3[3] - m3 * m3 < 0.))
     cout << " mag \n";
 
   // mag_1 = sqrt(en_1*en_1-m1*m1);
@@ -99,27 +91,20 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
 
   // For final hadron #2
 
-  if (!(std::isnan(
-          acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-               (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-               (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))))
-    P4_2.SetTheta(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_2[3] * P4_2[3] - m2 * m2))));
+  if (!(std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
+                        (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))))
+    P4_2.SetTheta(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_2[3] * P4_2[3] - m2 * m2))));
 
-  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
-      ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-           (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
+      ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_2[3] * P4_2[3] - m2 * m2)) >
        0.))
     P4_2.SetTheta(0.);
-  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
-      ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-           (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+  if ((std::isnan(acos((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_2[3] * P4_2[3] - m2 * m2))))) &&
+      ((m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_2[3] * P4_2[3] - m2 * m2)) <
        0.))
     P4_2.SetTheta(3.14159);
@@ -139,27 +124,20 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
 
   // For final hadron #3
 
-  if (!(std::isnan(
-          acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-               (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-               (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))))
-    P4_3.SetTheta(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_3[3] * P4_3[3] - m3 * m3))));
+  if (!(std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
+                        (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))))
+    P4_3.SetTheta(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_3[3] * P4_3[3] - m3 * m3))));
 
-  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
-      ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-           (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
+      ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_3[3] * P4_3[3] - m3 * m3)) >
        0.))
     P4_3.SetTheta(0.);
-  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) /
-                       2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
-                       (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
-      ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-           (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+  if ((std::isnan(acos((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
+                       (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) / (sqrt(P4_3[3] * P4_3[3] - m3 * m3))))) &&
+      ((m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
            (sqrt(P4_3[3] * P4_3[3] - m3 * m3)) <
        0.))
     P4_3.SetTheta(3.14159);
@@ -194,25 +172,17 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   // X-axis is still in hadronic plane.  2 - rotate X-axis with the angle
   // phi_hardr in XY-plane (around Z-axis) to set X-axis is in ee'-plane
 
-  if ((std::isnan(P4_1.Mag())) || (std::isnan(P4_2.Mag())) ||
-      (std::isnan(P4_3.Mag()))) {
-    cout << P4_1[0] << " " << P4_1[1] << " " << P4_1[2] << " " << P4_1[3]
-         << " t\n";
-    cout << P4_2[0] << " " << P4_2[1] << " " << P4_2[2] << " " << P4_2[3]
-         << " t\n";
-    cout << P4_3[0] << " " << P4_3[1] << " " << P4_3[2] << " " << P4_3[3]
-         << " t\n";
+  if ((std::isnan(P4_1.Mag())) || (std::isnan(P4_2.Mag())) || (std::isnan(P4_3.Mag()))) {
+    cout << P4_1[0] << " " << P4_1[1] << " " << P4_1[2] << " " << P4_1[3] << " t\n";
+    cout << P4_2[0] << " " << P4_2[1] << " " << P4_2[2] << " " << P4_2[3] << " t\n";
+    cout << P4_3[0] << " " << P4_3[1] << " " << P4_3[2] << " " << P4_3[3] << " t\n";
 
     cout << " " << P4_1.Mag() << " " << P4_2.Mag() << " " << P4_3.Mag() << " "
-         << "   "
-         << G_BYCKLING1(M12 * M12, M23 * M23, W * W, m2 * m2, m1 * m1, m3 * m3)
-         << " "
-         << (m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. /
-                (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+         << "   " << G_BYCKLING(M12 * M12, M23 * M23, W * W, m2 * m2, m1 * m1, m3 * m3) << " "
+         << (m1 * m1 + m2 * m2 + 2 * P4_1[3] * P4_2[3] - M12 * M12) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
                 (sqrt(P4_2[3] * P4_2[3] - m2 * m2))
          << " "
-         << (m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. /
-                (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
+         << (m1 * m1 + m3 * m3 + 2 * P4_1[3] * P4_3[3] - M13 * M13) / 2. / (sqrt(P4_1[3] * P4_1[3] - m1 * m1)) /
                 (sqrt(P4_3[3] * P4_3[3] - m3 * m3))
          << " \n";
   }
@@ -260,8 +230,7 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
 
   // And we define 3-vector of virtual photon in LAB-frame 1
   P3_G.SetXYZ(0., 0., 1.);
-  P3_G.SetTheta(acos((Q2 + 2. * E_beam * E_gamma_lab) / 2. / E_beam /
-                     (sqrt(Q2 + E_gamma_lab * E_gamma_lab))));
+  P3_G.SetTheta(acos((Q2 + 2. * E_beam * E_gamma_lab) / 2. / E_beam / (sqrt(Q2 + E_gamma_lab * E_gamma_lab))));
   if (phi_el < M_PI) P3_G.SetPhi(phi_el + M_PI);
   if (phi_el >= M_PI) P3_G.SetPhi(phi_el - M_PI);
 
@@ -276,8 +245,7 @@ void anti_rot(Float_t W, Float_t Q2, Float_t phi_el, Float_t E_beam,
   // of frame 2 -> frame 1 via the Euler Angles
 
   TRotation vrot;
-  vrot.SetXEulerAngles(atan2(P3_X[2], P3_Y[2]), acos(P3_G[2]),
-                       atan2(P3_G[0], -1. * P3_G[1]));
+  vrot.SetXEulerAngles(atan2(P3_X[2], P3_Y[2]), acos(P3_G[2]), atan2(P3_G[0], -1. * P3_G[1]));
 
   // And transfom our 4-momenta of final hadrons according to axes
   // transformation
