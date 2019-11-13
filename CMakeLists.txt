@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH
 
 # Add root support
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT REQUIRED COMPONENTS RIO Net EG)
+find_package(ROOT REQUIRED COMPONENTS RIO EG)
 include(${ROOT_USE_FILE})
 set(CMAKE_CXX_FLAGS "-Ofast -Wno-return-type ${ROOT_CXX_FLAGS}")
 

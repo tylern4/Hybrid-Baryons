@@ -179,14 +179,17 @@ int main(int argc, char **argv) {
     Twf_A = 27;
     flag_bos = 0;
     flag_lund = 1;
-    out_lund_file = "out.lund";
+    out_lund_file = "2pi_event_generator.dat";
     flag_radmod = 2;
     flag_fermi = 0;
     flag_flux = 1;
+    bool docker = false;
 
     bool print_help = false;
     auto cli =
-        (clipp::option("-h", "--help").set(print_help) % "print help", clipp::value("Nevents", Nevents),
+        (clipp::option("-h", "--help").set(print_help) % "print help",
+         clipp::option("--trig") & clipp::value("Nevents", Nevents) % "Number of events\t[10000]",
+         clipp::option("--docker").set(docker),
          clipp::option("-E_beam") & clipp::value("E_beam", E_beam) % "Beam En. (GeV)\t[10.6]",
          clipp::option("-W_min") & clipp::value("W_min", W_min) % "W min (GeV)\t\t[1.4]",
          clipp::option("-W_max") & clipp::value("W_max", W_max) % "W max (GeV)\t\t[2.3]",
@@ -225,6 +228,7 @@ int main(int argc, char **argv) {
       cout << clipp::make_man_page(cli, *argv);
       exit(1);
     }
+    if (docker) out_lund_file = "2pi_event_generator.dat";
   } else {
 #endif
     inp_file_read(E_beam);

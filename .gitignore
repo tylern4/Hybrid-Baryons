@@ -2,3 +2,5 @@ build
 .idea
 .vscode
 cmake-build-*
+*.lund
+*.root
