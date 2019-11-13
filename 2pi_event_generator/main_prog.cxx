@@ -184,44 +184,45 @@ int main(int argc, char **argv) {
     flag_fermi = 0;
     flag_flux = 1;
     bool docker = false;
-
     bool print_help = false;
+
     auto cli =
         (clipp::option("-h", "--help").set(print_help) % "print help",
-         clipp::option("--trig") & clipp::value("Nevents", Nevents) % "Number of events\t[10000]",
+         clipp::option("--trig") & clipp::value("Nevents", Nevents) % "Number of events [10000]",
          clipp::option("--docker").set(docker),
-         clipp::option("-E_beam") & clipp::value("E_beam", E_beam) % "Beam En. (GeV)\t[10.6]",
-         clipp::option("-W_min") & clipp::value("W_min", W_min) % "W min (GeV)\t\t[1.4]",
-         clipp::option("-W_max") & clipp::value("W_max", W_max) % "W max (GeV)\t\t[2.3]",
-         clipp::option("-Q2_min") & clipp::value("Q2_min", Q2_min) % "Q2 min (GeV^2)\t[0.05]",
-         clipp::option("-Q2_max") & clipp::value("Q2_max", Q2_max) % "Q2 max (GeV^2)\t[3.5]",
+         clipp::option("-E_beam") & clipp::value("E_beam", E_beam) % "Beam En. (GeV) [10.6]",
+         clipp::option("-W_min") & clipp::value("W_min", W_min) % "W min (GeV) [1.4]",
+         clipp::option("-W_max") & clipp::value("W_max", W_max) % "W max (GeV) [2.3]",
+         clipp::option("-Q2_min") & clipp::value("Q2_min", Q2_min) % "Q2 min (GeV^2) [0.05]",
+         clipp::option("-Q2_max") & clipp::value("Q2_max", Q2_max) % "Q2 max (GeV^2) [3.5]",
          clipp::option("-Theta_min") &
-             clipp::value("Theta_min", Theta_min) % "min theta scattered electron (deg)\t[1.0]",
+             clipp::value("Theta_min", Theta_min) % "min theta scattered electron (deg) [1.0]",
          clipp::option("-Theta_max") &
-             clipp::value("Theta_max", Theta_max) % "max theta scattered electron (deg)\t[50.0]",
+             clipp::value("Theta_max", Theta_max) % "max theta scattered electron (deg) [50.0]",
          clipp::option("-E_eprime_min") &
-             clipp::value("E_eprime_min", E_eprime_min) % "min E scattered electron (GeV)\t[0.01]",
-         clipp::option("-Targ_rad") & clipp::value("Targ_rad", Targ_rad),
-         clipp::option("-Targ_len") & clipp::value("Targ_len", Targ_len),
-         clipp::option("-Targ_off") & clipp::value("Targ_off", Targ_off),
-         clipp::option("-Targ_dens") & clipp::value("Targ_dens", Targ_dens),
-         clipp::option("-Targ_radlen") & clipp::value("Targ_radlen", Targ_radlen),
-         clipp::option("-Targ_len") & clipp::value("Targ_len", Targ_len),
-         clipp::option("-Targ_Z") & clipp::value("Targ_Z", Targ_Z),
-         clipp::option("-Targ_A") & clipp::value("Targ_A", Targ_A),
-         clipp::option("-Twi_thick") & clipp::value("Twi_thick", Twi_thick),
-         clipp::option("-Twf_thick") & clipp::value("Twf_thick", Twf_thick),
-         clipp::option("-Twi_dens") & clipp::value("Twi_dens", Twi_dens),
-         clipp::option("-Twf_dens") & clipp::value("Twf_dens", Twf_dens),
-         clipp::option("-Twi_radlen") & clipp::value("Twi_radlen", Twi_radlen),
-         clipp::option("-Twf_radlen") & clipp::value("Twf_radlen", Twf_radlen),
-         clipp::option("-Twi_Z") & clipp::value("Twi_Z", Twi_Z), clipp::option("-Twf_Z") & clipp::value("Twf_Z", Twf_Z),
-         clipp::option("-Twi_A") & clipp::value("Twi_A", Twf_dens),
-         clipp::option("-Twf_A") & clipp::value("Twf_A", Twf_dens),
-         clipp::option("-flag_radmod") & clipp::value("flag_radmod", flag_radmod),
-         clipp::option("-flag_fermi") & clipp::value("flag_fermi", flag_fermi),
-         clipp::option("-flag_flux") & clipp::value("flag_flux", flag_flux),
-         clipp::option("-output") & clipp::value("out.lund", out_lund_file));
+             clipp::value("E_eprime_min", E_eprime_min) % "min E scattered electron (GeV) [0.01]",
+         clipp::option("-Targ_rad") & clipp::value("Targ_rad", Targ_rad) % "Target Radius [0.6]",
+         clipp::option("-Targ_len") & clipp::value("Targ_len", Targ_len) % "Target length [2.0]",
+         clipp::option("-Targ_off") & clipp::value("Targ_off", Targ_off) % "Target offset [-0.4]",
+         clipp::option("-Targ_dens") & clipp::value("Targ_dens", Targ_dens) % "Target Density [0.0708]",
+         clipp::option("-Targ_radlen") & clipp::value("Targ_radlen", Targ_radlen) % "Target Radiation Length [890.4]",
+         clipp::option("-Targ_Z") & clipp::value("Targ_Z", Targ_Z) % "Target Z [1]",
+         clipp::option("-Targ_A") & clipp::value("Targ_A", Targ_A) % "Target A [2]",
+         clipp::option("-Twi_thick") & clipp::value("Twi_thick", Twi_thick) % "Target Window Thickness [15.0]",
+         clipp::option("-Twf_thick") & clipp::value("Twf_thick", Twf_thick) % "Target Window Thickness [15.0]",
+         clipp::option("-Twi_dens") & clipp::value("Twi_dens", Twi_dens) % "Target window density [2.699]",
+         clipp::option("-Twf_dens") & clipp::value("Twf_dens", Twf_dens) % "Target window density [2.699]",
+         clipp::option("-Twi_radlen") & clipp::value("Twi_radlen", Twi_radlen) % "Target Radiation length [8.897]",
+         clipp::option("-Twf_radlen") & clipp::value("Twf_radlen", Twf_radlen) % "Target Radiation length [8.897]",
+         clipp::option("-Twi_Z") & clipp::value("Twi_Z", Twi_Z) % "Target Window Z [13]",
+         clipp::option("-Twf_Z") & clipp::value("Twf_Z", Twf_Z) % "Target Window Z [13]",
+         clipp::option("-Twi_A") & clipp::value("Twi_A", Twf_dens) % "Target Window A [27]",
+         clipp::option("-Twf_A") & clipp::value("Twf_A", Twf_dens) % "Target Window A [27]",
+         clipp::option("-flag_radmod") & clipp::value("flag_radmod", flag_radmod) % "Radiative effects? [2]",
+         clipp::option("-flag_fermi") & clipp::value("flag_fermi", flag_fermi) % "Turn on off fermi motion [0]",
+         clipp::option("-flag_flux") & clipp::value("flag_flux", flag_flux) % "Photon Flux [1]",
+         clipp::option("-output") & clipp::value("out.lund", out_lund_file)) %
+        "File name\t[2pi_event_generator.dat] (if --docker options forced to be 2pi_event_generator.dat)";
 
     clipp::parse(argc, argv, cli);
     if (print_help) {
